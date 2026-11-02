@@ -17,6 +17,8 @@ CLAW = ROOT / 'OpenClaw' / 'OpenClaw-Course'
 MINI = ROOT / 'MiniMind整理版'
 MINI_MANIFEST = json.loads((MINI / '内容映射.json').read_text(encoding='utf-8'))
 MINI_PARTS = { (MINI / p['file']).resolve(): (d, p) for d in MINI_MANIFEST['documents'] for p in d['parts'] }
+# Change only navigation placement; lecture titles, text, downloads and URLs stay intact.
+MINI_GROUP_LABELS = {'MoE': '附录 A · MoE', 'LoRA': '附录 B · LoRA'}
 WARNINGS: list[dict] = []
 SOURCE_FILES: dict[str, dict] = {}
 PAGE_MAP: dict[Path, str] = {}
@@ -79,7 +81,9 @@ def outside_fences(text: str, transform):
 def register(project: str, file: Path, slug: str, title: str, group: str):
     route = f'/{project}/{slug}'
     PAGE_MAP[file.resolve()] = route
-    PAGES.append(dict(project=project, file=file, slug=slug, title=title, group=group, route=route))
+    PAGES.append(dict(project=project, file=file, slug=slug, title=title,
+                      group=MINI_GROUP_LABELS.get(group, group) if project == 'minimind' else group,
+                      route=route))
 
 
 def prepare_catalog():
@@ -261,8 +265,6 @@ def copy_resources():
     for file in (CLAW / 'assets').rglob('*'):
         if file.is_file() and file.suffix in ['.png', '.svg', '.jpg', '.webp']:
             copy_file(file, PUBLIC / 'resources' / 'openclaw' / file.relative_to(CLAW))
-    for file in (ROOT / 'videos').glob('*.mp4'):
-        copy_file(file, PUBLIC / 'resources' / 'videos' / file.name)
     for item in MINI_MANIFEST['attachments']:
         file = MINI / item['snapshot']
         copy_file(file, PUBLIC / 'resources' / 'minimind' / item['snapshot'])
@@ -284,7 +286,7 @@ def generate_pages():
             original_path = 'MiniMind/' + document['original']
             text = text.replace(MINI_MANIFEST['marker'], '', 1)
         fm = {
-            'title': p['title'], 'description': f"{p['project']} · {p['group']} · 课程讲义",
+            'title': p['title'], 'description': f"{p['project']} · {document['group'] if mini else p['group']} · 课程讲义",
             'project': p['project'], 'sourcePath': original_path,
             'originalUrl': original_url, 'outline': [2, 3],
             'downloadLabel': '下载整理后 Markdown' if p['project']=='minimind' else '下载原始 Markdown',
@@ -328,10 +330,10 @@ PROJECTS = [
          description='用一条 prompt | model | parser，读懂统一接口与组件组合。',
          topics=['Runnable', 'Adapter', '组合', 'invoke'], first='ten-minutes',
          intro='从一个问题经过 Prompt、模型和 Parser 的过程，理解 Model Adapter、Runnable 和 RunnableSequence。包含不需要 API Key 的模拟课堂示例。'),
-    dict(id='minimind', name='MiniMind', eyebrow=f"大模型训练 · {len(MINI_MANIFEST['groups'])} 个主题",
+    dict(id='minimind', name='MiniMind', eyebrow=f"大模型训练 · {len(MINI_MANIFEST['groups']) - len(MINI_GROUP_LABELS)} 个主题 + {len(MINI_GROUP_LABELS)} 组附录",
          description='从下一个 Token 到 PPO 更新，把模型结构、训练原理与源码逐层串起来。',
-         topics=['预训练与 SFT', 'Transformer', 'PPO / RLHF', 'MoE / LoRA'], first=MINI_MANIFEST['documents'][0]['parts'][0]['slug'],
-         intro='从梯度与预训练出发，按训练机制、Transformer 架构、模型源码、PPO、MoE 与 LoRA 阅读。相关原理、代码和数值例子放在同一主题下，提供完整讲义下载与源码对照。'),
+         topics=['预训练与 SFT', 'Transformer', 'PPO / RLHF', 'MoE / LoRA（附录）'], first=MINI_MANIFEST['documents'][0]['parts'][0]['slug'],
+         intro='从梯度与预训练出发，按训练机制、Transformer 架构、模型源码与 PPO 阅读；MoE 与 LoRA 作为附录，供课后选读。相关原理、代码和数值例子放在同一主题下，提供完整讲义下载与源码对照。'),
 ]
 
 
@@ -341,7 +343,7 @@ def generate_overviews():
         pages = [p for p in PAGES if p['project'] == pid]
         group_names = list(dict.fromkeys(p['group'] for p in pages))
         text = f"---\ntitle: {project['name']}\nproject: {pid}\nprojectOverview: true\n---\n\n# {project['name']}\n\n{project['intro']}\n\n"
-        text += f"[开始阅读 →](/{pid}/{project['first']}) · [返回课程首页](/) · [查看学习路线](/guide/)\n\n"
+        text += f"[开始阅读 →](/{pid}/{project['first']}) · [返回课程首页](/)\n\n"
         text += '## 你会学到什么\n\n' + ' · '.join(project['topics']) + '\n\n'
         for group in group_names:
             text += f'## {group}\n\n'
@@ -349,9 +351,7 @@ def generate_overviews():
                 if p['group'] == group:
                     text += f"- [{p['title']}]({p['route']})\n"
             text += '\n'
-        if pid == 'easyspider':
-            text += '## 动手观察\n\n[打开交互演示与配套资料 →](/labs/)\n\n在交互图解中观察 XPath、DFS 和流程图数据结构，再回到对应章节读代码。\n'
-        write(DOCS / pid / 'index.md', text)
+        write(DOCS / pid / 'index.md', text.rstrip() + '\n')
 
 
 def generate_sidebar():
@@ -363,7 +363,6 @@ def generate_sidebar():
         sidebar['/' + pid + '/'] = [
             dict(text=project['name'], items=[dict(text='项目导读', link='/' + pid + '/')])
         ] + [dict(text=group, collapsed=False, items=[dict(text=p['title'], link=p['route']) for p in pages if p['group'] == group]) for group in groups]
-    sidebar['/guide/'] = [dict(text='课程导航', items=[dict(text='如何使用这些讲义', link='/guide/'), dict(text='资料引用说明', link='/guide/unavailable')])]
     write(DOCS / '.vitepress' / 'sidebar.json', json.dumps(sidebar, ensure_ascii=False, indent=2))
     catalog = [dict(project=p['project'], title=p['title'], route=p['route'], group=p['group'], source=p['file'].relative_to(ROOT).as_posix()) for p in PAGES]
     write(PUBLIC / 'catalog.json', json.dumps(catalog, ensure_ascii=False, indent=2))
@@ -373,13 +372,16 @@ def generate_sidebar():
 
 
 def main():
-    # Clear only MiniMind outputs owned by this generator, including removed drafts.
-    for relative in ['minimind', 'public/resources/minimind', 'public/originals/minimind']:
+    # Clear generated MiniMind outputs and retired resources, keeping teacher originals.
+    for relative in ['minimind', 'public/resources/minimind', 'public/originals/minimind', 'public/resources/videos']:
         target = (DOCS / relative).resolve()
         if not target.is_relative_to(DOCS.resolve()) or target == DOCS.resolve():
             raise ValueError(target)
         if target.exists():
-            shutil.rmtree(target)
+            if target.is_dir():
+                shutil.rmtree(target)
+            else:
+                target.unlink()
     prepare_catalog()
     copy_resources()
     generate_pages()
@@ -394,7 +396,7 @@ def main():
             if warning['file'] == name:
                 unavailable += f"- `{warning['target']}`\n"
         unavailable += '\n'
-    unavailable += '## 如何阅读源码页\n\n本站源码阅读页展示讲义实际引用的本地文件快照，保留路径和行号，用于对照课堂内容，不会在网页中执行这些代码。\n\n[返回学习路线](/guide/)\n'
+    unavailable += '## 如何阅读源码页\n\n本站源码阅读页展示讲义实际引用的本地文件快照，保留路径和行号，用于对照课堂内容，不会在网页中执行这些代码。\n\n[返回课程首页](/)\n'
     write(DOCS / 'guide' / 'unavailable.md', unavailable)
     report = dict(lectures=len(PAGES), sourceFiles=len(SOURCE_FILES), copiedFiles=COPY_COUNT, warnings=unique_warnings)
     write(SITE / '内容同步报告.json', json.dumps(report, ensure_ascii=False, indent=2))

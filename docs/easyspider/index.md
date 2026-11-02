@@ -8,7 +8,7 @@ projectOverview: true
 
 沿“人选择网页元素 → 扩展生成消息 → 桌面端构建流程图 → 执行器读取 JSON”的主线，理解一个真实桌面应用怎样协作。
 
-[开始阅读 →](/easyspider/chapter-00) · [返回课程首页](/) · [查看学习路线](/guide/)
+[开始阅读 →](/easyspider/chapter-00) · [返回课程首页](/)
 
 ## 你会学到什么
 
@@ -60,9 +60,3 @@ projectOverview: true
 ## 参考与演示
 
 - [完整讲义目录](/easyspider/directory)
-
-## 动手观察
-
-[打开交互演示与配套资料 →](/labs/)
-
-在交互图解中观察 XPath、DFS 和流程图数据结构，再回到对应章节读代码。

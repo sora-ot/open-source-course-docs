@@ -49,7 +49,7 @@ onMounted(async () => {
     <div class="eyebrow">FOLLOW THE SOURCE</div><h1>对照源码，继续追踪。</h1>
     <p class="source-subtitle">讲义所引用的本地源码快照。行号用于对照课堂内容。</p>
     <p v-if="loading" role="status">正在加载源码…</p>
-    <div v-else-if="error" role="alert" class="source-error">{{ error }} <a :href="withBase('/guide/')">返回学习路线 →</a></div>
+    <div v-else-if="error" role="alert" class="source-error">{{ error }} <a :href="withBase('/')">返回课程首页 →</a></div>
     <template v-else>
       <div class="source-toolbar"><div class="source-filepath">{{ path }}<small>{{ lines.length }} 行</small></div><div class="source-actions"><input v-model="keyword" type="search" aria-label="在源码中查找" placeholder="查找代码…" @input="index = -1" @keydown.enter="find"><button @click="find">查找{{ keyword ? ' · ' + matches.length : '' }}</button><button @click="copy">{{ copied ? '已复制' : '复制' }}</button><a :href="withBase('/resources/sources/' + key)" :download="path.split('/').pop()">下载</a></div></div>
       <div class="source-code" tabindex="0" aria-label="带行号的源码">

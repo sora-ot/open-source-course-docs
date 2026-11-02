@@ -29,8 +29,7 @@ const code = [
         <h1>从源码出发，<br>理解软件<span class="accent-text">如何运转。</span></h1>
         <p class="hero-description">沿着真实项目的数据流与调用链，<br class="desktop-break">把抽象原理、代码实现和动手实践连起来。</p>
         <div class="hero-actions">
-          <a class="button-primary" :href="withBase('/guide/')">开始学习 <span aria-hidden="true">→</span></a>
-          <a class="button-secondary" href="#projects">浏览项目讲义 <span aria-hidden="true">↘</span></a>
+          <a class="button-primary" href="#projects">浏览项目讲义 <span aria-hidden="true">↘</span></a>
         </div>
         <div class="hero-footnote"><span class="mini-rule"></span> 以问题为起点 · 以完整流程为主线</div>
       </div>
@@ -73,10 +72,6 @@ const code = [
       </div>
     </section>
 
-    <section class="reading-strip">
-      <div><div class="eyebrow">READ · TRACE · BUILD</div><h2>读懂一段代码，也看见整个系统。</h2><p>左侧按章节阅读，右侧定位本页内容；随时搜索概念，回到它所在的调用链。</p></div>
-      <a :href="withBase('/labs/')">打开交互与演示 <span aria-hidden="true">↗</span></a>
-    </section>
     <footer class="course-home-footer"><span>开源软件分析与实践</span><span>真实项目 · 原理与实现 · 持续探索</span></footer>
   </main>
 </template>

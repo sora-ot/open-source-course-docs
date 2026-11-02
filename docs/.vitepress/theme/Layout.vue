@@ -3,7 +3,6 @@ import DefaultTheme from 'vitepress/theme'
 import { useData, withBase } from 'vitepress'
 import CourseHome from './components/CourseHome.vue'
 import SourceViewer from './components/SourceViewer.vue'
-import LabGallery from './components/LabGallery.vue'
 const { frontmatter } = useData()
 const names: Record<string, string> = { easyspider: 'EasySpider', openclaw: 'OpenClaw', llamafactory: 'LLaMAFactory', langchain: 'LangChain', minimind: 'MiniMind' }
 </script>
@@ -13,7 +12,6 @@ const names: Record<string, string> = { easyspider: 'EasySpider', openclaw: 'Ope
     <template #page-top>
       <CourseHome v-if="frontmatter.courseLayout === 'home'" />
       <SourceViewer v-if="frontmatter.courseLayout === 'source'" />
-      <LabGallery v-if="frontmatter.courseLayout === 'labs'" />
     </template>
     <template #doc-before>
       <div v-if="frontmatter.project" class="lecture-eyebrow">

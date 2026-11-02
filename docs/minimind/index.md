@@ -6,13 +6,13 @@ projectOverview: true
 
 # MiniMind
 
-从梯度与预训练出发，按训练机制、Transformer 架构、模型源码、PPO、MoE 与 LoRA 阅读。相关原理、代码和数值例子放在同一主题下，提供完整讲义下载与源码对照。
+从梯度与预训练出发，按训练机制、Transformer 架构、模型源码与 PPO 阅读；MoE 与 LoRA 作为附录，供课后选读。相关原理、代码和数值例子放在同一主题下，提供完整讲义下载与源码对照。
 
-[开始阅读 →](/minimind/b00-01) · [返回课程首页](/) · [查看学习路线](/guide/)
+[开始阅读 →](/minimind/b00-01) · [返回课程首页](/)
 
 ## 你会学到什么
 
-预训练与 SFT · Transformer · PPO / RLHF · MoE / LoRA
+预训练与 SFT · Transformer · PPO / RLHF · MoE / LoRA（附录）
 
 ## 基础与预训练
 
@@ -94,18 +94,17 @@ projectOverview: true
 - [61 · PPO 代码中的 GAE](/minimind/scb9fb90e-01)
 - [62 · PPO 训练完整数值例子](/minimind/b22-01)
 
-## MoE
+## 附录 A · MoE
 
 - [63 · MoE：专家路由与 Token 分发](/minimind/b23-01)
 - [64 · MoE：负载均衡与稀疏计算](/minimind/b23-02)
 - [65 · MoE 源码：前向计算与梯度路径](/minimind/b23-03)
 - [66 · MoE 源码：辅助损失与训练实现](/minimind/b23-04)
 
-## LoRA
+## 附录 B · LoRA
 
 - [67 · LoRA：低秩更新与完整工作流程](/minimind/b24-01)
 - [68 · LoRA 数学：行列式、特征值与坐标变换](/minimind/b24-02)
 - [69 · LoRA 数学：SVD 与低秩因子构造](/minimind/b24-03)
 - [70 · LoRA 前向、梯度与部署](/minimind/s4859f99c-01)
 - [71 · LoRA 训练代码](/minimind/b25-01)
-

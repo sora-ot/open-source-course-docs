@@ -11,6 +11,11 @@ DIST = Path(__file__).resolve().parents[1] / 'docs' / '.vitepress' / 'dist'
 class DocumentationHandler(SimpleHTTPRequestHandler):
     extensions_map = {**SimpleHTTPRequestHandler.extensions_map, '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.mp4': 'video/mp4'}
 
+    def list_directory(self, path):
+        # Removed sections must return 404 rather than expose a directory listing.
+        self.send_error(404, 'File not found')
+        return None
+
     def translate_path(self, path):
         target = Path(super().translate_path(path))
         if not target.exists() and target.suffix == '' and target.with_suffix('.html').exists():

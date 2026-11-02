@@ -8,7 +8,7 @@ projectOverview: true
 
 先认识 OpenClaw 与 Pi 的分层，再把模型、工具、会话、记忆和多智能体串成一次完整任务。
 
-[开始阅读 →](/openclaw/chapter-01) · [返回课程首页](/) · [查看学习路线](/guide/)
+[开始阅读 →](/openclaw/chapter-01) · [返回课程首页](/)
 
 ## 你会学到什么
 
@@ -55,4 +55,3 @@ AgentLoop · 上下文 · RAG · 多智能体
 - [会话树源码补充](/openclaw/session-tree)
 - [技能与扩展源码补充](/openclaw/skills-extensions)
 - [消息与事件源码补充](/openclaw/messages-events)
-

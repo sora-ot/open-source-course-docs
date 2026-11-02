@@ -808,63 +808,63 @@
     "project": "minimind",
     "title": "63 · MoE：专家路由与 Token 分发",
     "route": "/minimind/b23-01",
-    "group": "MoE",
+    "group": "附录 A · MoE",
     "source": "MiniMind整理版/正文/MoE/b23-01.md"
   },
   {
     "project": "minimind",
     "title": "64 · MoE：负载均衡与稀疏计算",
     "route": "/minimind/b23-02",
-    "group": "MoE",
+    "group": "附录 A · MoE",
     "source": "MiniMind整理版/正文/MoE/b23-02.md"
   },
   {
     "project": "minimind",
     "title": "65 · MoE 源码：前向计算与梯度路径",
     "route": "/minimind/b23-03",
-    "group": "MoE",
+    "group": "附录 A · MoE",
     "source": "MiniMind整理版/正文/MoE/b23-03.md"
   },
   {
     "project": "minimind",
     "title": "66 · MoE 源码：辅助损失与训练实现",
     "route": "/minimind/b23-04",
-    "group": "MoE",
+    "group": "附录 A · MoE",
     "source": "MiniMind整理版/正文/MoE/b23-04.md"
   },
   {
     "project": "minimind",
     "title": "67 · LoRA：低秩更新与完整工作流程",
     "route": "/minimind/b24-01",
-    "group": "LoRA",
+    "group": "附录 B · LoRA",
     "source": "MiniMind整理版/正文/LoRA/b24-01.md"
   },
   {
     "project": "minimind",
     "title": "68 · LoRA 数学：行列式、特征值与坐标变换",
     "route": "/minimind/b24-02",
-    "group": "LoRA",
+    "group": "附录 B · LoRA",
     "source": "MiniMind整理版/正文/LoRA/b24-02.md"
   },
   {
     "project": "minimind",
     "title": "69 · LoRA 数学：SVD 与低秩因子构造",
     "route": "/minimind/b24-03",
-    "group": "LoRA",
+    "group": "附录 B · LoRA",
     "source": "MiniMind整理版/正文/LoRA/b24-03.md"
   },
   {
     "project": "minimind",
     "title": "70 · LoRA 前向、梯度与部署",
     "route": "/minimind/s4859f99c-01",
-    "group": "LoRA",
+    "group": "附录 B · LoRA",
     "source": "MiniMind整理版/正文/LoRA/s4859f99c-01.md"
   },
   {
     "project": "minimind",
     "title": "71 · LoRA 训练代码",
     "route": "/minimind/b25-01",
-    "group": "LoRA",
+    "group": "附录 B · LoRA",
     "source": "MiniMind整理版/正文/LoRA/b25-01.md"
   }
 ]

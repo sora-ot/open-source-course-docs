@@ -65,8 +65,6 @@ export default defineConfig({
         { text: 'LangChain · 组件编排', link: '/langchain/' },
         { text: 'MiniMind · 大模型训练', link: '/minimind/' },
       ] },
-      { text: '学习路线', link: '/guide/' },
-      { text: '交互与演示', link: '/labs/' },
     ],
     sidebar,
     outline: { level: [2, 3], label: '本页目录' },

@@ -58,15 +58,15 @@
   {
     "id": "minimind",
     "name": "MiniMind",
-    "eyebrow": "大模型训练 · 8 个主题",
+    "eyebrow": "大模型训练 · 6 个主题 + 2 组附录",
     "description": "从下一个 Token 到 PPO 更新，把模型结构、训练原理与源码逐层串起来。",
     "topics": [
       "预训练与 SFT",
       "Transformer",
       "PPO / RLHF",
-      "MoE / LoRA"
+      "MoE / LoRA（附录）"
     ],
     "first": "b00-01",
-    "intro": "从梯度与预训练出发，按训练机制、Transformer 架构、模型源码、PPO、MoE 与 LoRA 阅读。相关原理、代码和数值例子放在同一主题下，提供完整讲义下载与源码对照。"
+    "intro": "从梯度与预训练出发，按训练机制、Transformer 架构、模型源码与 PPO 阅读；MoE 与 LoRA 作为附录，供课后选读。相关原理、代码和数值例子放在同一主题下，提供完整讲义下载与源码对照。"
   }
 ]
