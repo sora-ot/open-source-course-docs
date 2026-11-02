@@ -80,6 +80,22 @@ npm install --registry=https://registry.npmjs.org --proxy=null --https-proxy=nul
 
 原栏目使用的 4 个演示视频已从网站资源中移除，后续同步也会排除。删除前已核对 SHA-256，原件保留在项目外的 `../videos/`。交互图解、元素匹配、Selenium、流程图等正文仍在使用的示例和配图继续保留。
 
+`docs/public/` 中的资源会原样复制到构建网站，具体用途如下：
+
+| 路径 | 用途 |
+| --- | --- |
+| `originals/` | EasySpider、OpenClaw、LLaMAFactory、LangChain 的 Markdown 下载。 |
+| `resources/minimind/讲义/` | MiniMind 的 40 份完整整理稿下载，多个分篇共用对应完整稿。 |
+| `resources/minimind/配套资料/` | 正文配图和配套 Python 文件。 |
+| `resources/easyspider/` | 配图、交互图解，以及 HTML、JS、CSS 等示例依赖。 |
+| `resources/openclaw/` | 配图和 SVG 资源。 |
+| `resources/sources/`、`source-files.json` | 源码阅读页的文件快照和索引，按讲义引用生成。 |
+| `catalog.json`、`favicon.svg` | 讲义索引和网站图标。 |
+
+未被页面或下载讲义引用的 7 份 MiniMind PDF／PPTX 保留在网站外的 `../MiniMind/` 和 `../MiniMind整理版/配套资料/`，不再随网站发布；网站清单中的 `offlineAttachments` 记录这些文件及校验值。71 份没有下载入口的 MiniMind 分篇 Markdown 副本也已移除，完整稿下载继续保留；相同分篇保存在 `../MiniMind整理版/正文/`。清理前均核对了备份的 SHA-256。
+
+同步脚本排除这些冗余副本，并清理未进入最新源码索引的旧快照。若正文开始引用离线附件，同步会提示先将该文件从 `MINI_OFFLINE_ATTACHMENTS` 中移除再发布。不能仅凭正文中搜不到文件名就删除资源：源码文件由索引动态加载，交互示例也会通过相对路径加载依赖。
+
 转换时统一网页标题层级，支持 `\[...\]`／`\(...\)` 公式，改写本地章节、配图和源码链接；代码块内容不因转换而重写。课程资料里的原理说明、教学简化和实际框架差别由原稿解释，网站不把教学伪代码当作新的可执行框架。
 
 原文件没有随资料提供的引用，会转到“资料引用说明”；缺失配图显示文字说明，不展示损坏的图片。LLaMAFactory 的十分钟稿开头以 LoRA 引入、正文重点展开 Full SFT，站内加了阅读提示，未擅自改动教师原稿。

@@ -17,6 +17,22 @@ CLAW = ROOT / 'OpenClaw' / 'OpenClaw-Course'
 MINI = ROOT / 'MiniMind整理版'
 MINI_MANIFEST = json.loads((MINI / '内容映射.json').read_text(encoding='utf-8'))
 MINI_PARTS = { (MINI / p['file']).resolve(): (d, p) for d in MINI_MANIFEST['documents'] for p in d['parts'] }
+# These unlinked files stay in the external teacher/authoring folders. If a
+# lecture starts linking to one, remove it from this set before publishing.
+MINI_OFFLINE_ATTACHMENTS = {
+    '配套资料/LLM核心结构.pptx',
+    '配套资料/MiniMind_Pretrain_详细课堂讲义.pdf',
+    '配套资料/NLP基本知识.pptx',
+    '配套资料/代码讲解.pdf',
+    '配套资料/大模型各训练算法.pptx',
+    '配套资料/大语言模型预训练_课堂讲义.pdf',
+    '配套资料/理论讲解.pdf',
+}
+MINI_PUBLISHED_MANIFEST = {
+    **MINI_MANIFEST,
+    'attachments': [a for a in MINI_MANIFEST['attachments'] if a['snapshot'] not in MINI_OFFLINE_ATTACHMENTS],
+    'offlineAttachments': [a for a in MINI_MANIFEST['attachments'] if a['snapshot'] in MINI_OFFLINE_ATTACHMENTS],
+}
 # Change only navigation placement; lecture titles, text, downloads and URLs stay intact.
 MINI_GROUP_LABELS = {'MoE': '附录 A · MoE', 'LoRA': '附录 B · LoRA'}
 WARNINGS: list[dict] = []
@@ -133,7 +149,10 @@ def resource_url(file: Path) -> str | None:
     if file.is_relative_to(CLAW / 'assets'):
         return '/resources/openclaw/' + quote(file.relative_to(CLAW).as_posix())
     if file.is_relative_to(MINI):
-        return '/resources/minimind/' + quote(file.relative_to(MINI).as_posix())
+        rel = file.relative_to(MINI).as_posix()
+        if rel in MINI_OFFLINE_ATTACHMENTS:
+            raise ValueError(f'Lecture links to offline attachment; publish it first: {rel}')
+        return '/resources/minimind/' + quote(rel)
     return None
 
 
@@ -265,7 +284,7 @@ def copy_resources():
     for file in (CLAW / 'assets').rglob('*'):
         if file.is_file() and file.suffix in ['.png', '.svg', '.jpg', '.webp']:
             copy_file(file, PUBLIC / 'resources' / 'openclaw' / file.relative_to(CLAW))
-    for item in MINI_MANIFEST['attachments']:
+    for item in MINI_PUBLISHED_MANIFEST['attachments']:
         file = MINI / item['snapshot']
         copy_file(file, PUBLIC / 'resources' / 'minimind' / item['snapshot'])
     for item in MINI_MANIFEST['codeFiles']:
@@ -277,7 +296,6 @@ def generate_pages():
         file = p['file']
         text = file.read_text(encoding='utf-8-sig')
         original_url = f"/originals/{p['project']}/{p['slug']}.md"
-        copy_file(file, PUBLIC / original_url.lstrip('/'))
         original_path = file.relative_to(ROOT).as_posix()
         mini = MINI_PARTS.get(file.resolve())
         if mini:
@@ -285,6 +303,8 @@ def generate_pages():
             original_url = '/resources/minimind/' + quote(document['snapshot'])
             original_path = 'MiniMind/' + document['original']
             text = text.replace(MINI_MANIFEST['marker'], '', 1)
+        else:
+            copy_file(file, PUBLIC / original_url.lstrip('/'))
         fm = {
             'title': p['title'], 'description': f"{p['project']} · {document['group'] if mini else p['group']} · 课程讲义",
             'project': p['project'], 'sourcePath': original_path,
@@ -368,7 +388,19 @@ def generate_sidebar():
     write(PUBLIC / 'catalog.json', json.dumps(catalog, ensure_ascii=False, indent=2))
     write(DOCS / '.vitepress' / 'projects.json', json.dumps(PROJECTS, ensure_ascii=False, indent=2))
     write(DOCS / '.vitepress' / 'stats.json', json.dumps(dict(projects=len(PROJECTS), pages=len(PAGES), sourceDocuments=53+len(MINI_MANIFEST['documents'])),ensure_ascii=False))
-    write(DOCS / '.vitepress' / 'minimind-manifest.json', json.dumps(MINI_MANIFEST,ensure_ascii=False,indent=2))
+    write(DOCS / '.vitepress' / 'minimind-manifest.json', json.dumps(MINI_PUBLISHED_MANIFEST,ensure_ascii=False,indent=2))
+
+
+def prune_source_files():
+    # Only this generated directory is pruned; never follow links outside it.
+    folder = (PUBLIC / 'resources' / 'sources').resolve()
+    if not folder.is_relative_to(PUBLIC.resolve()) or folder == PUBLIC.resolve():
+        raise ValueError(folder)
+    for file in folder.iterdir():
+        if file.is_file() and file.name not in SOURCE_FILES:
+            if not file.resolve().is_relative_to(folder):
+                raise ValueError(file)
+            file.unlink()
 
 
 def main():
@@ -387,6 +419,7 @@ def main():
     generate_pages()
     generate_overviews()
     generate_sidebar()
+    prune_source_files()
     write(PUBLIC / 'source-files.json', json.dumps(SOURCE_FILES, ensure_ascii=False))
     unique_warnings = list({(w['file'], w['target']): w for w in WARNINGS}.values())
     unavailable = '# 资料引用说明\n\n## 当前资料中缺少的引用 {#reference}\n\n你打开的引用没有随当前课程文件夹提供。以下保留原稿引用的路径，便于核对和补齐版本；本站不以其他版本的同名文件替代。\n\n'

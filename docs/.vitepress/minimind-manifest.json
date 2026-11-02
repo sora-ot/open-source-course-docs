@@ -68475,27 +68475,6 @@
       "edited": false
     },
     {
-      "source": "LLM核心结构.pptx",
-      "snapshot": "配套资料/LLM核心结构.pptx",
-      "sha256": "5282289cf0420a7d4b644744e9aea92dc6aa39f47d85e4e47fe2a47db0d2f479",
-      "bytes": 51836856,
-      "edited": false
-    },
-    {
-      "source": "MiniMind_Pretrain_详细课堂讲义.pdf",
-      "snapshot": "配套资料/MiniMind_Pretrain_详细课堂讲义.pdf",
-      "sha256": "24ca3fb74ed492cc735991d9e35b61d320f33272699d2a9e40ba68b6d3a89a33",
-      "bytes": 2445546,
-      "edited": false
-    },
-    {
-      "source": "NLP基本知识.pptx",
-      "snapshot": "配套资料/NLP基本知识.pptx",
-      "sha256": "962dd910f1c7e40bc7f65e6e56caefd0a6551f1eae6785c2716c53d939a09edb",
-      "bytes": 3007345,
-      "edited": false
-    },
-    {
       "source": "x.MiniMind_Tokenizer训练与原理讲义.md",
       "snapshot": "讲义/基础与预训练/s0747f098-Tokenizer 训练与原理.md",
       "sha256": "fafd3298adc3bcee649c16aab3f30aa9c05bae1cd9f27176aad7e1c7f8a076be",
@@ -68543,34 +68522,6 @@
       "sha256": "fe4c0359d62ab8c2be11124a3f5ad5e100964e35b2f3e4303427dc7b42935310",
       "bytes": 36477,
       "edited": true
-    },
-    {
-      "source": "代码讲解.pdf",
-      "snapshot": "配套资料/代码讲解.pdf",
-      "sha256": "f0e5150cdc42be32160068080925a15ccd1f26a2bb5dfb7ea63d335fd94ed3fd",
-      "bytes": 4555528,
-      "edited": false
-    },
-    {
-      "source": "大模型各训练算法.pptx",
-      "snapshot": "配套资料/大模型各训练算法.pptx",
-      "sha256": "6420ce7770136fb45360faa6bf015f90281ff4b3bf25e038b4e31e1f47f03a64",
-      "bytes": 38499771,
-      "edited": false
-    },
-    {
-      "source": "大语言模型预训练_课堂讲义.pdf",
-      "snapshot": "配套资料/大语言模型预训练_课堂讲义.pdf",
-      "sha256": "524628fde106f3d484195c3ea2c2f9e5a53081e738f68791cc9ce47a04e62c62",
-      "bytes": 816355,
-      "edited": false
-    },
-    {
-      "source": "理论讲解.pdf",
-      "snapshot": "配套资料/理论讲解.pdf",
-      "sha256": "2440697619ca9f676db6405699e60515126feaeb8dfc222e47f1c266e00451da",
-      "bytes": 2397196,
-      "edited": false
     },
     {
       "source": "讲义/lm_dataset.py",
@@ -68999,6 +68950,57 @@
       "snapshot": "源码对照/minimind-master/trainer/trainer_utils.py",
       "sha256": "c613d485c8861caccc9d920e4639a8053cdfb4d69e56fa33280a631a5530234b",
       "bytes": 7089
+    }
+  ],
+  "offlineAttachments": [
+    {
+      "source": "LLM核心结构.pptx",
+      "snapshot": "配套资料/LLM核心结构.pptx",
+      "sha256": "5282289cf0420a7d4b644744e9aea92dc6aa39f47d85e4e47fe2a47db0d2f479",
+      "bytes": 51836856,
+      "edited": false
+    },
+    {
+      "source": "MiniMind_Pretrain_详细课堂讲义.pdf",
+      "snapshot": "配套资料/MiniMind_Pretrain_详细课堂讲义.pdf",
+      "sha256": "24ca3fb74ed492cc735991d9e35b61d320f33272699d2a9e40ba68b6d3a89a33",
+      "bytes": 2445546,
+      "edited": false
+    },
+    {
+      "source": "NLP基本知识.pptx",
+      "snapshot": "配套资料/NLP基本知识.pptx",
+      "sha256": "962dd910f1c7e40bc7f65e6e56caefd0a6551f1eae6785c2716c53d939a09edb",
+      "bytes": 3007345,
+      "edited": false
+    },
+    {
+      "source": "代码讲解.pdf",
+      "snapshot": "配套资料/代码讲解.pdf",
+      "sha256": "f0e5150cdc42be32160068080925a15ccd1f26a2bb5dfb7ea63d335fd94ed3fd",
+      "bytes": 4555528,
+      "edited": false
+    },
+    {
+      "source": "大模型各训练算法.pptx",
+      "snapshot": "配套资料/大模型各训练算法.pptx",
+      "sha256": "6420ce7770136fb45360faa6bf015f90281ff4b3bf25e038b4e31e1f47f03a64",
+      "bytes": 38499771,
+      "edited": false
+    },
+    {
+      "source": "大语言模型预训练_课堂讲义.pdf",
+      "snapshot": "配套资料/大语言模型预训练_课堂讲义.pdf",
+      "sha256": "524628fde106f3d484195c3ea2c2f9e5a53081e738f68791cc9ce47a04e62c62",
+      "bytes": 816355,
+      "edited": false
+    },
+    {
+      "source": "理论讲解.pdf",
+      "snapshot": "配套资料/理论讲解.pdf",
+      "sha256": "2440697619ca9f676db6405699e60515126feaeb8dfc222e47f1c266e00451da",
+      "bytes": 2397196,
+      "edited": false
     }
   ]
 }
