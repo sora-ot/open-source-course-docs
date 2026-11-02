@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="860" viewBox="0 0 1400 860" role="img"><title>多智能体协作：主助手分工，子助手并行执行，结果回传后汇总</title><rect width="100%" height="100%" fill="white"/>
+<text x="40" y="46" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="32" font-weight="700" fill="#243b53" text-anchor="start" dominant-baseline="central">多智能体协作：主助手找两个帮手，一起完成任务</text>
+<text x="40" y="99" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="24" font-weight="400" fill="#5b7184" text-anchor="start" dominant-baseline="central">用户任务：分析 OpenClaw 的消息入口和工具调用，整理成一份说明。</text>
+<rect x="400" y="155" width="600" height="100" fill="#ecf6ff" stroke="#2585ba" stroke-width="2"/>
+<text x="700" y="187" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="27" font-weight="700" fill="#17698f" text-anchor="middle" dominant-baseline="central">主助手：拆任务，启动两个子助手</text>
+<text x="700" y="227" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="400" fill="#243b53" text-anchor="middle" dominant-baseline="central">两次 sessions_spawn 均立即返回，不必等子任务做完</text>
+<path d="M540 255 L540 290 L330 290 L330 335 " fill="none" stroke="#2585ba" stroke-width="3"/><polygon points="330,335 336,322 324,322" fill="#2585ba"/>
+<path d="M860 255 L860 290 L1070 290 L1070 335 " fill="none" stroke="#2585ba" stroke-width="3"/><polygon points="1070,335 1076,322 1064,322" fill="#2585ba"/>
+<rect x="70" y="335" width="520" height="160" fill="#f6f9fd" stroke="#8eb1cb" stroke-width="2"/>
+<text x="330" y="368" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="27" font-weight="700" fill="#285b89" text-anchor="middle" dominant-baseline="central">子助手 A：查消息怎么进来</text>
+<text x="330" y="414" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="23" font-weight="400" fill="#243b53" text-anchor="middle" dominant-baseline="central">独立会话 A + 自己的 Agent Loop</text>
+<text x="330" y="456" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="22" font-weight="400" fill="#243b53" text-anchor="middle" dominant-baseline="central">阅读 Channel / Gateway / Routing</text>
+<rect x="810" y="335" width="520" height="160" fill="#f6f9fd" stroke="#8eb1cb" stroke-width="2"/>
+<text x="1070" y="368" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="27" font-weight="700" fill="#285b89" text-anchor="middle" dominant-baseline="central">子助手 B：查工具怎么调用</text>
+<text x="1070" y="414" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="23" font-weight="400" fill="#243b53" text-anchor="middle" dominant-baseline="central">独立会话 B + 自己的 Agent Loop</text>
+<text x="1070" y="456" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="22" font-weight="400" fill="#243b53" text-anchor="middle" dominant-baseline="central">阅读 Agent Loop / Tool execution</text>
+<text x="700" y="540" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="23" font-weight="400" fill="#5b7184" text-anchor="middle" dominant-baseline="central">并行执行，实际启动数量受 subagent 队列的并发上限控制</text>
+<path d="M330 495 L330 600 L540 600 L540 645 " fill="none" stroke="#36835a" stroke-width="3"/><polygon points="540,645 546,632 534,632" fill="#36835a"/>
+<path d="M1070 495 L1070 600 L860 600 L860 645 " fill="none" stroke="#36835a" stroke-width="3"/><polygon points="860,645 866,632 854,632" fill="#36835a"/>
+<text x="527.5" y="577" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="400" fill="#236642" text-anchor="middle" dominant-baseline="central">完成后回传 A 的结果</text>
+<text x="872.5" y="577" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="400" fill="#236642" text-anchor="middle" dominant-baseline="central">完成后回传 B 的结果</text>
+<rect x="400" y="645" width="600" height="110" fill="#e8f5ee" stroke="#36835a" stroke-width="2"/>
+<text x="700" y="677" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="27" font-weight="700" fill="#236642" text-anchor="middle" dominant-baseline="central">主助手：收齐结果，整理完整说明</text>
+<text x="700" y="721" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="400" fill="#243b53" text-anchor="middle" dominant-baseline="central">先回来的可以先记录；另一份回来后再汇总</text>
+<text x="700" y="813" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="23" font-weight="400" fill="#5b7184" text-anchor="middle" dominant-baseline="central">模型负责决定分工和汇总；OpenClaw 代码负责创建会话、排队、记录状态和回传结果。</text>
+</svg>

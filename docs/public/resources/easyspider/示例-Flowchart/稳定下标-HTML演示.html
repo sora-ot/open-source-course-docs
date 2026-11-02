@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>直接用 nodeList 下标作为 id：五节点 HTML</title>
+  <link rel="stylesheet" href="../../../ElectronJS/src/taskGrid/FlowChart.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f3f5f8; color: #20354b; font-family: "Microsoft YaHei", sans-serif; }
+    main { max-width: 1240px; padding: 24px; margin: auto; }
+    h1 { font-size: 25px !important; margin-bottom: 12px; }
+    h2 { font-size: 19px !important; margin-bottom: 12px; }
+    .intro { line-height: 1.8; margin-bottom: 16px; }
+    .columns { display: grid; grid-template-columns: 350px minmax(0, 1fr); gap: 20px; align-items: start; }
+    .card { padding: 18px; background: white; border: 1px solid #d5dfe9; border-radius: 10px; }
+    .canvas { border: 1px solid #cbd5e1; padding: 8px; margin-bottom: 14px; }
+    .terminal { border-radius: 50%; width: 40px; height: 40px; border: 3px solid seagreen; margin: 5px auto; background: lightcyan; text-align: center; line-height: 34px; }
+    .end { border-color: black; }
+    .loop > .caption { background: #d6d6d6; text-align: left; padding: 2px 2px 2px 5px; }
+    .default-arrow { background: lavender; }
+    .status { line-height: 1.7; overflow-wrap: anywhere; min-height: 85px; }
+    .hint { color: #52677a; line-height: 1.7; }
+    pre { overflow: auto; padding: 14px; background: #f5f7fa; border: 1px solid #e1e7ee; line-height: 1.65; margin-top: 12px; }
+    pre, pre *, code { font-family: Consolas, "Microsoft YaHei", monospace; font-size: 14px !important; }
+    .html-source { max-height: 620px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    th, td { border-bottom: 1px solid #dce4ed; padding: 8px; text-align: left; font-size: 14px !important; }
+    .bottom { margin-top: 20px; }
+    @media (max-width: 850px) { .columns { grid-template-columns: 1fr; } main { padding: 14px; } }
+  </style>
+</head>
+<body>
+<main>
+  <h1>把 id、parentId 直接设为 nodeList 下标</h1>
+  <p class="intro">仍然是“打开网页 → 循环（点击按钮）→ 提取结果”。<strong>画出的形状相同，HTML 中的编号变了。</strong><br>
+    root.sequence = [1,4,3]；循环.sequence = [2]。这是另一种编号方案的教学示例。</p>
+  <div class="columns">
+    <section class="card">
+      <h2>页面效果</h2>
+      <div class="canvas">
+        <div id="0" class="clk" data="0">
+          <div class="terminal">▶</div>
+          <p class="arrow" draggable="true" position="-1" pid="0">↓</p>
+          <div class="sequence">
+            <div class="node clk" draggable="true" data="1" datatype="0" id="1" position="0" pid="0">
+              <div><p style="margin-top: 2px">打开网页</p></div>
+            </div>
+            <p class="arrow" draggable="true" position="0" data="1" pid="0">↓</p>
+          </div>
+          <div class="loop clk" data="4" draggable="true" datatype="1" id="4" position="1" pid="0">
+            <p class="caption">循环</p>
+            <p class="arrow" draggable="true" position="-1" data="4" pid="4">↓</p>
+            <div class="sequence">
+              <div class="node clk" draggable="true" data="2" datatype="0" id="2" position="0" pid="4">
+                <div><p style="margin-top: 2px">点击按钮</p></div>
+              </div>
+              <p class="arrow" draggable="true" position="0" data="2" pid="4">↓</p>
+            </div>
+          </div>
+          <p class="arrow" draggable="true" data="4" position="1" pid="0">↓</p>
+          <div class="sequence">
+            <div class="node clk" draggable="true" data="3" datatype="0" id="3" position="2" pid="0">
+              <div><p style="margin-top: 2px">提取结果</p></div>
+            </div>
+            <p class="arrow default-arrow" draggable="true" position="2" data="3" pid="0">↓</p>
+          </div>
+        </div>
+        <div class="terminal end">■</div>
+      </div>
+      <p class="hint">点击方块或箭头，看它怎样直接定位 nodeList。淡紫色箭头仍位于全局最后面。</p>
+      <p class="status" id="status" role="status" aria-live="polite">例如：点击按钮的 id=2、pId=4，对应 nodeList[2] 和父节点 nodeList[4]。</p>
+    </section>
+    <section class="card">
+      <h2>左侧 #0 的实际 HTML</h2>
+      <p class="hint">从左侧 DOM 读取并整理缩进。浏览器会把属性名 pId、dataType 显示为小写 pid、datatype。</p>
+      <pre class="html-source"><code id="html-output"></code></pre>
+    </section>
+  </div>
+  <section class="card bottom">
+    <h2>具体改了哪些编号</h2>
+    <table>
+      <thead><tr><th>节点</th><th>nodeList 下标</th><th>原 id / parentId</th><th>本例 id / parentId</th><th>position</th></tr></thead>
+      <tbody>
+        <tr><td>打开网页</td><td>1</td><td>1 / 0</td><td>1 / 0</td><td>0</td></tr>
+        <tr><td>循环</td><td>4</td><td>2 / 0</td><td>4 / 0</td><td>1</td></tr>
+        <tr><td>点击按钮</td><td>2</td><td>4 / 2</td><td>2 / 4</td><td>0</td></tr>
+        <tr><td>提取结果</td><td>3</td><td>3 / 0</td><td>3 / 0</td><td>2</td></tr>
+      </tbody>
+    </table>
+    <pre><code>child.parentId = nd;        // 父节点的 nodeList 下标
+child.position = i;         // 仍是父 sequence 中的位置
+child.id = childIndex;      // 当前节点的 nodeList 下标
+
+// 若保留 BFS，绘制顺序仍是 [0,1,4,3,2]。
+// actionSequence 只记录遍历顺序，不再负责 id → index 的转换。
+// 点击与父节点查询直接使用 nodeList[id]、nodeList[parentId]。</code></pre>
+    <p class="hint">本页复用仓库 FlowChart.css，静态展示五节点的 HTML，并提供独立的点击定位演示。项目原有的 FlowChart.js 未修改。</p>
+  </section>
+</main>
+<script>
+  const nodeList = [
+    {index: 0, title: 'root', sequence: [1, 4, 3]},
+    {index: 1, title: '打开网页', sequence: []},
+    {index: 2, title: '点击按钮', sequence: []},
+    {index: 3, title: '提取结果', sequence: []},
+    {index: 4, title: '循环', sequence: [2]}
+  ];
+  function escapeHTML(value) {
+    return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function formatHTML(element, depth = 0) {
+    const indent = '  '.repeat(depth);
+    const tag = element.tagName.toLowerCase();
+    const attributes = Array.from(element.attributes)
+      .map(a => ' ' + a.name + '="' + escapeHTML(a.value) + '"').join('');
+    const children = Array.from(element.childNodes)
+      .filter(n => n.nodeType === 1 || (n.nodeType === 3 && n.textContent.trim()));
+    const open = indent + '<' + tag + attributes + '>';
+    if (children.every(n => n.nodeType === 3)) {
+      return open + escapeHTML(children.map(n => n.textContent.trim()).join('')) + '</' + tag + '>';
+    }
+    return open + '\n' + children.map(n => n.nodeType === 1
+      ? formatHTML(n, depth + 1)
+      : '  '.repeat(depth + 1) + escapeHTML(n.textContent.trim()))
+      .join('\n') + '\n' + indent + '</' + tag + '>';
+  }
+  function updateHTML() {
+    document.getElementById('html-output').textContent = formatHTML(document.getElementById('0'));
+  }
+  document.querySelectorAll('.clk').forEach(element => {
+    element.addEventListener('click', event => {
+      event.stopPropagation();
+      document.querySelectorAll('.node,.loop').forEach(n => n.style.removeProperty('border-color'));
+      const index = Number(element.getAttribute('data'));
+      if (index !== 0) element.style.borderColor = 'blue';
+      const pId = Number(element.getAttribute('pid') || 0);
+      document.getElementById('status').textContent =
+        'data=' + index + ' → nodeList[' + index + ']（' + nodeList[index].title + '）；' +
+        (index === 0 ? '当前为 root。' : 'pId=' + pId + ' → nodeList[' + pId + ']（' + nodeList[pId].title + '）。');
+      updateHTML();
+    });
+  });
+  document.querySelectorAll('.arrow').forEach(element => {
+    element.addEventListener('click', event => {
+      event.stopPropagation();
+      const pId = Number(element.getAttribute('pid'));
+      const position = Number(element.getAttribute('position'));
+      document.getElementById('status').textContent =
+        'pId=' + pId + ' → 父节点 nodeList[' + pId + ']（' + nodeList[pId].title + '）；' +
+        'position=' + position + ' → 在其 sequence 下标 ' + (position + 1) + ' 处插入。';
+    });
+  });
+  updateHTML();
+</script>
+</body>
+</html>

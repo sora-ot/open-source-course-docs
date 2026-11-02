@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="220" viewBox="0 0 1200 220" role="img" aria-labelledby="title"><title id="title">事件与交付：运行完成后，谁把消息送给用户</title><rect width="1200" height="220" fill="white"/>
+<path d="M 365 108 L 425 108" stroke="#24759b" stroke-width="2" fill="none"/><polygon points="425,108 413,113 413,103" fill="#24759b"/>
+<path d="M 765 108 L 825 108" stroke="#24759b" stroke-width="2" fill="none"/><polygon points="825,108 813,113 813,103" fill="#24759b"/>
+<rect x="25" y="45" width="340" height="125" fill="#f4f8fc" stroke="#24759b" stroke-width="2"/>
+<text x="195" y="76.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="700" fill="#263b50">12 Pi events / final message</text>
+<text x="195" y="107.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">产生文本、工具状态与完成信息</text>
+<text x="195" y="138.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">运行中也可以持续产生事件</text>
+<rect x="425" y="45" width="340" height="125" fill="#f4f8fc" stroke="#24759b" stroke-width="2"/>
+<text x="595" y="76.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="700" fill="#263b50">13 Event bridge + delivery</text>
+<text x="595" y="107.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">订阅事件，整理回复并调用渠道</text>
+<text x="595" y="138.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">按来源、账号及线程交付</text>
+<rect x="825" y="45" width="350" height="125" fill="#f4f8fc" stroke="#24759b" stroke-width="2"/>
+<text x="1000" y="76.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="700" fill="#263b50">回到 01 用户入口</text>
+<text x="1000" y="107.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">用户在原会话收到回复</text>
+<text x="1000" y="138.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">具体展示取决于渠道及配置</text>
+</svg>

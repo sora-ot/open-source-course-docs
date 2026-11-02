@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1130" viewBox="0 0 1440 1130" role="img"><title>Routing：按消息来源匹配配置，选定助手和会话</title><rect width="100%" height="100%" fill="white"/>
+<text x="40" y="46" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="34" font-weight="700" fill="#243b53" text-anchor="start" dominant-baseline="central">05 Routing：这条消息到底交给谁？</text>
+<text x="40" y="94" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="22" font-weight="400" fill="#5b7184" text-anchor="start" dominant-baseline="central">蓝色箭头是本条消息实际走的路；灰色箭头是没匹配上时才继续检查的分支。</text>
+<rect x="100" y="135" width="1240" height="100" fill="#ecf6ff" stroke="#2585ba" stroke-width="2"/>
+<text x="720" y="163" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="27" font-weight="700" fill="#17698f" text-anchor="middle" dominant-baseline="central">收到一条 Telegram 消息：“帮我看看代码”</text>
+<text x="720" y="201" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="23" font-weight="400" fill="#243b53" text-anchor="middle" dominant-baseline="central">channel = telegram    accountId = class-bot    peer = group : -10001</text>
+<path d="M390 235 L390 300 " fill="none" stroke="#2585ba" stroke-width="4"/><polygon points="390,300 396,287 384,287" fill="#2585ba"/>
+<rect x="100" y="300" width="580" height="110" fill="#ecf6ff" stroke="#2585ba" stroke-width="2"/>
+<text x="390" y="331" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="26" font-weight="700" fill="#17698f" text-anchor="middle" dominant-baseline="central">① 先找具体聊天对象的绑定</text>
+<text x="390" y="375" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="400" fill="#17698f" text-anchor="middle" dominant-baseline="central">渠道 + Bot 账号 + 群类型 + 群编号都符合吗？</text>
+<path d="M680 355 L850 355 " fill="none" stroke="#2585ba" stroke-width="3"/><polygon points="850,355 837,349 837,361" fill="#2585ba"/>
+<text x="765" y="328" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="400" fill="#17698f" text-anchor="middle" dominant-baseline="central">匹配上</text>
+<rect x="850" y="300" width="490" height="110" fill="#e8f5ee" stroke="#2585ba" stroke-width="2"/>
+<text x="1095" y="331" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="27" font-weight="700" fill="#17698f" text-anchor="middle" dominant-baseline="central">coding 编程助手</text>
+<text x="1095" y="375" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="20" font-weight="400" fill="#17698f" text-anchor="middle" dominant-baseline="central">本条消息在这里命中，停止查找</text>
+<path d="M390 410 L390 480 " fill="none" stroke="#a9b5bf" stroke-width="2.5"/><polygon points="390,480 396,467 384,467" fill="#a9b5bf"/>
+<text x="407" y="439" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="20" font-weight="400" fill="#768795" text-anchor="start" dominant-baseline="central">没匹配上</text>
+<rect x="100" y="480" width="580" height="110" fill="#f8fafc" stroke="#b3c0cb" stroke-width="2"/>
+<text x="390" y="511" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="26" font-weight="700" fill="#586e7e" text-anchor="middle" dominant-baseline="central">② 再找 Bot 账号的绑定</text>
+<text x="390" y="555" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="400" fill="#586e7e" text-anchor="middle" dominant-baseline="central">例如：telegram + class-bot</text>
+<path d="M680 535 L850 535 " fill="none" stroke="#b3c0cb" stroke-width="3"/><polygon points="850,535 837,529 837,541" fill="#b3c0cb"/>
+<text x="765" y="508" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="400" fill="#586e7e" text-anchor="middle" dominant-baseline="central">匹配上</text>
+<rect x="850" y="480" width="490" height="110" fill="#f4f6f8" stroke="#b3c0cb" stroke-width="2"/>
+<text x="1095" y="511" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="27" font-weight="700" fill="#586e7e" text-anchor="middle" dominant-baseline="central">teacher 课程助手</text>
+<text x="1095" y="555" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="20" font-weight="400" fill="#586e7e" text-anchor="middle" dominant-baseline="central">没有命中具体群，但命中课程 Bot 时使用</text>
+<path d="M390 590 L390 660 " fill="none" stroke="#a9b5bf" stroke-width="2.5"/><polygon points="390,660 396,647 384,647" fill="#a9b5bf"/>
+<text x="407" y="619" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="20" font-weight="400" fill="#768795" text-anchor="start" dominant-baseline="central">没匹配上</text>
+<rect x="100" y="660" width="580" height="110" fill="#f8fafc" stroke="#b3c0cb" stroke-width="2"/>
+<text x="390" y="691" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="26" font-weight="700" fill="#586e7e" text-anchor="middle" dominant-baseline="central">③ 再找渠道通用绑定</text>
+<text x="390" y="735" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="400" fill="#586e7e" text-anchor="middle" dominant-baseline="central">例如：telegram + accountId = *</text>
+<path d="M680 715 L850 715 " fill="none" stroke="#b3c0cb" stroke-width="3"/><polygon points="850,715 837,709 837,721" fill="#b3c0cb"/>
+<text x="765" y="688" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="400" fill="#586e7e" text-anchor="middle" dominant-baseline="central">匹配上</text>
+<rect x="850" y="660" width="490" height="110" fill="#f4f6f8" stroke="#b3c0cb" stroke-width="2"/>
+<text x="1095" y="691" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="27" font-weight="700" fill="#586e7e" text-anchor="middle" dominant-baseline="central">daily 日常助手</text>
+<text x="1095" y="735" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="20" font-weight="400" fill="#586e7e" text-anchor="middle" dominant-baseline="central">前面没匹配上，但符合 Telegram 通用规则</text>
+<path d="M390 770 L390 840 " fill="none" stroke="#a9b5bf" stroke-width="2.5"/><polygon points="390,840 396,827 384,827" fill="#a9b5bf"/>
+<text x="407" y="799" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="20" font-weight="400" fill="#768795" text-anchor="start" dominant-baseline="central">没匹配上</text>
+<rect x="100" y="840" width="580" height="90" fill="#f8fafc" stroke="#b3c0cb" stroke-width="2"/>
+<text x="390" y="884" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="25" font-weight="700" fill="#586e7e" text-anchor="middle" dominant-baseline="central">④ 都没匹配上：使用默认助手</text>
+<path d="M680 885 L850 885 " fill="none" stroke="#a9b5bf" stroke-width="2.5"/><polygon points="850,885 837,879 837,891" fill="#a9b5bf"/>
+<rect x="850" y="840" width="490" height="90" fill="#f4f6f8" stroke="#b3c0cb" stroke-width="2"/>
+<text x="1095" y="884" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="25" font-weight="700" fill="#586e7e" text-anchor="middle" dominant-baseline="central">daily（default: true）</text>
+<rect x="100" y="980" width="1240" height="74" fill="#f3f8fc" stroke="#9fb7ca" stroke-width="2"/>
+<text x="720" y="1016" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="24" font-weight="700" fill="#243b53" text-anchor="middle" dominant-baseline="central">选中 agentId  →  按来源和配置生成 sessionKey  →  接上聊天记录  →  进入 06 队列</text>
+<text x="100" y="1087" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="400" fill="#5b7184" text-anchor="start" dominant-baseline="central">只画本例涉及的匹配层次；正文里出现“代码”不是选中 coding 的原因。</text>
+</svg>

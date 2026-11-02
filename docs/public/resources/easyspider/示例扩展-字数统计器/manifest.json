@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "字数统计器",
+  "version": "1.0",
+  "description": "统计当前网页的字数并保存历史",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "字数统计器"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "permissions": ["storage", "activeTab", "scripting"],
+  "host_permissions": ["http://*/*", "https://*/*"]
+}

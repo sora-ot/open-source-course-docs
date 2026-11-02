@@ -1,0 +1,712 @@
+{
+  "/easyspider/": [
+    {
+      "text": "EasySpider",
+      "items": [
+        {
+          "text": "项目导读",
+          "link": "/easyspider/"
+        }
+      ]
+    },
+    {
+      "text": "认识项目",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "00 · 导读与学习路线",
+          "link": "/easyspider/chapter-00"
+        },
+        {
+          "text": "01 · 总体架构与目录",
+          "link": "/easyspider/chapter-01"
+        },
+        {
+          "text": "02 · 数据流全链路",
+          "link": "/easyspider/chapter-02"
+        }
+      ]
+    },
+    {
+      "text": "元素与任务",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "03 · Chrome 扩展与 MV3",
+          "link": "/easyspider/chapter-03"
+        },
+        {
+          "text": "04 · XPath",
+          "link": "/easyspider/chapter-04"
+        },
+        {
+          "text": "05 · 元素待选与选中",
+          "link": "/easyspider/chapter-05"
+        },
+        {
+          "text": "06 · 同类元素自动匹配",
+          "link": "/easyspider/chapter-06"
+        },
+        {
+          "text": "07 · 手动匹配与相对 XPath",
+          "link": "/easyspider/chapter-07"
+        },
+        {
+          "text": "08 · 采集参数生成",
+          "link": "/easyspider/chapter-08"
+        },
+        {
+          "text": "09 · DFS 与 BFS",
+          "link": "/easyspider/chapter-09"
+        },
+        {
+          "text": "10 · 选中子元素算法",
+          "link": "/easyspider/chapter-10"
+        }
+      ]
+    },
+    {
+      "text": "界面与通信",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "11 · Vue 3 基础",
+          "link": "/easyspider/chapter-11"
+        },
+        {
+          "text": "12 · toolkit.vue",
+          "link": "/easyspider/chapter-12"
+        },
+        {
+          "text": "13 · WebSocket",
+          "link": "/easyspider/chapter-13"
+        },
+        {
+          "text": "14 · 消息交互",
+          "link": "/easyspider/chapter-14"
+        }
+      ]
+    },
+    {
+      "text": "流程图与执行",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "15 · 流程图基本原理",
+          "link": "/easyspider/chapter-15"
+        },
+        {
+          "text": "16 · 递归执行",
+          "link": "/easyspider/chapter-16"
+        },
+        {
+          "text": "17 · Selenium",
+          "link": "/easyspider/chapter-17"
+        },
+        {
+          "text": "18 · 流程图数据结构",
+          "link": "/easyspider/chapter-18"
+        },
+        {
+          "text": "19 · 流程图渲染",
+          "link": "/easyspider/chapter-19"
+        },
+        {
+          "text": "20 · 流程图增删改查",
+          "link": "/easyspider/chapter-20"
+        },
+        {
+          "text": "21 · 消息到流程图节点",
+          "link": "/easyspider/chapter-21"
+        },
+        {
+          "text": "22 · 循环采集与参数栏",
+          "link": "/easyspider/chapter-22"
+        },
+        {
+          "text": "23 · 流程图保存与加载",
+          "link": "/easyspider/chapter-23"
+        }
+      ]
+    },
+    {
+      "text": "工程实践",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "24 · Electron",
+          "link": "/easyspider/chapter-24"
+        },
+        {
+          "text": "25 · 调试功能",
+          "link": "/easyspider/chapter-25"
+        },
+        {
+          "text": "26 · Node 与 Express",
+          "link": "/easyspider/chapter-26"
+        },
+        {
+          "text": "27 · 开发、调试与发布",
+          "link": "/easyspider/chapter-27"
+        }
+      ]
+    },
+    {
+      "text": "参考与演示",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "完整讲义目录",
+          "link": "/easyspider/directory"
+        }
+      ]
+    }
+  ],
+  "/openclaw/": [
+    {
+      "text": "OpenClaw",
+      "items": [
+        {
+          "text": "项目导读",
+          "link": "/openclaw/"
+        }
+      ]
+    },
+    {
+      "text": "架构与准备",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "01 · 整体架构",
+          "link": "/openclaw/chapter-01"
+        },
+        {
+          "text": "02 · 源码目录与规模",
+          "link": "/openclaw/chapter-02"
+        },
+        {
+          "text": "03 · TypeScript 速成",
+          "link": "/openclaw/chapter-03"
+        },
+        {
+          "text": "04 · Pi-Agent 与 OpenClaw",
+          "link": "/openclaw/chapter-04"
+        }
+      ]
+    },
+    {
+      "text": "一次任务如何运行",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "05 · 模型接口与流式传输",
+          "link": "/openclaw/chapter-05"
+        },
+        {
+          "text": "06 · AgentLoop 执行循环",
+          "link": "/openclaw/chapter-06"
+        },
+        {
+          "text": "07 · 工具系统",
+          "link": "/openclaw/chapter-07"
+        }
+      ]
+    },
+    {
+      "text": "会话与上下文",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "08 · Compaction 上下文压缩",
+          "link": "/openclaw/chapter-08"
+        },
+        {
+          "text": "09 · SessionManager",
+          "link": "/openclaw/chapter-09"
+        },
+        {
+          "text": "10 · Bootstrap、Skill 与 Extension",
+          "link": "/openclaw/chapter-10"
+        }
+      ]
+    },
+    {
+      "text": "记忆与知识检索",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "11 · 记忆系统与 RAG",
+          "link": "/openclaw/chapter-11"
+        },
+        {
+          "text": "12 · 互联网 RAG",
+          "link": "/openclaw/chapter-12"
+        }
+      ]
+    },
+    {
+      "text": "会话执行与协作",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "13 · AgentSession 运行准备",
+          "link": "/openclaw/chapter-13"
+        },
+        {
+          "text": "14 · AgentSession 执行",
+          "link": "/openclaw/chapter-14"
+        },
+        {
+          "text": "15 · 多智能体系统",
+          "link": "/openclaw/chapter-15"
+        }
+      ]
+    },
+    {
+      "text": "系统集成",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "16 · Gateway 与多渠道通信",
+          "link": "/openclaw/chapter-16"
+        },
+        {
+          "text": "17 · 路由、Session 与并发调度",
+          "link": "/openclaw/chapter-17"
+        },
+        {
+          "text": "18 · Workspace 与长期记忆",
+          "link": "/openclaw/chapter-18"
+        }
+      ]
+    },
+    {
+      "text": "源码补充",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "会话树源码补充",
+          "link": "/openclaw/session-tree"
+        },
+        {
+          "text": "技能与扩展源码补充",
+          "link": "/openclaw/skills-extensions"
+        },
+        {
+          "text": "消息与事件源码补充",
+          "link": "/openclaw/messages-events"
+        }
+      ]
+    }
+  ],
+  "/llamafactory/": [
+    {
+      "text": "LLaMAFactory",
+      "items": [
+        {
+          "text": "项目导读",
+          "link": "/llamafactory/"
+        }
+      ]
+    },
+    {
+      "text": "课堂主线",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "十分钟理解核心实现",
+          "link": "/llamafactory/ten-minutes"
+        }
+      ]
+    },
+    {
+      "text": "扩展阅读",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "源码提纲与关键代码",
+          "link": "/llamafactory/source-outline"
+        }
+      ]
+    }
+  ],
+  "/langchain/": [
+    {
+      "text": "LangChain",
+      "items": [
+        {
+          "text": "项目导读",
+          "link": "/langchain/"
+        }
+      ]
+    },
+    {
+      "text": "课堂主线",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "十分钟理解 Runnable",
+          "link": "/langchain/ten-minutes"
+        }
+      ]
+    }
+  ],
+  "/minimind/": [
+    {
+      "text": "MiniMind",
+      "items": [
+        {
+          "text": "项目导读",
+          "link": "/minimind/"
+        }
+      ]
+    },
+    {
+      "text": "基础与预训练",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "01 · 梯度、反向传播与梯度下降",
+          "link": "/minimind/b00-01"
+        },
+        {
+          "text": "02 · Tokenizer 训练与原理",
+          "link": "/minimind/s0747f098-01"
+        },
+        {
+          "text": "03 · 预训练完整流程",
+          "link": "/minimind/b01-01"
+        },
+        {
+          "text": "04 · Next Token：预测目标与损失计算",
+          "link": "/minimind/b04-01"
+        },
+        {
+          "text": "05 · Next Token：并行训练与前缀共享",
+          "link": "/minimind/b04-02"
+        },
+        {
+          "text": "06 · Next Token：反向传播与上下文学习",
+          "link": "/minimind/b04-03"
+        },
+        {
+          "text": "07 · 预训练源码：数据、模型与前向计算",
+          "link": "/minimind/s1545a2c4-01"
+        },
+        {
+          "text": "08 · 预训练源码：训练循环、评估与工程细节",
+          "link": "/minimind/s1545a2c4-02"
+        },
+        {
+          "text": "09 · 困惑度与模型评估",
+          "link": "/minimind/s1515c2c3-01"
+        }
+      ]
+    },
+    {
+      "text": "训练机制与 SFT",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "10 · 混合精度：FP16、AMP 与梯度裁剪",
+          "link": "/minimind/b02-01"
+        },
+        {
+          "text": "11 · Loss Scaling：梯度传播与数值保护",
+          "link": "/minimind/b02-02"
+        },
+        {
+          "text": "12 · 梯度累积与 Loss 平均",
+          "link": "/minimind/b03-01"
+        },
+        {
+          "text": "13 · SFT 与三种 Mask",
+          "link": "/minimind/b05-01"
+        }
+      ]
+    },
+    {
+      "text": "Transformer 架构",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "14 · Encoder 与 Decoder-only",
+          "link": "/minimind/se862b370-01"
+        },
+        {
+          "text": "15 · Attention：QKV、打分与加权求和",
+          "link": "/minimind/b06-01"
+        },
+        {
+          "text": "16 · Attention：多头结构与 QKV 的分工",
+          "link": "/minimind/b06-02"
+        },
+        {
+          "text": "17 · Attention：反向传播与共享参数",
+          "link": "/minimind/b06-03"
+        },
+        {
+          "text": "18 · MHA：多头投影、维度与参数量",
+          "link": "/minimind/b07-01"
+        },
+        {
+          "text": "19 · MHA：值向量汇合与多头梯度",
+          "link": "/minimind/b07-02"
+        },
+        {
+          "text": "20 · KV Cache：缓存原理与增量计算",
+          "link": "/minimind/b08-01"
+        },
+        {
+          "text": "21 · KV Cache：Prefill、Decode 与训练阶段",
+          "link": "/minimind/b08-02"
+        },
+        {
+          "text": "22 · GQA：分组结构与缓存开销",
+          "link": "/minimind/b08-03"
+        },
+        {
+          "text": "23 · GQA：共享梯度与 MHA、MQA 对比",
+          "link": "/minimind/b08-04"
+        },
+        {
+          "text": "24 · 位置编码：Attention 的顺序信息",
+          "link": "/minimind/b09-01"
+        },
+        {
+          "text": "25 · RoPE：旋转表示与相对位置",
+          "link": "/minimind/b09-02"
+        },
+        {
+          "text": "26 · YaRN：长上下文外推与频率缩放",
+          "link": "/minimind/b09-03"
+        },
+        {
+          "text": "27 · RoPE 与 YaRN：频率分工与综合例子",
+          "link": "/minimind/b09-04"
+        },
+        {
+          "text": "28 · 位置编码：绝对位置与正弦编码",
+          "link": "/minimind/b09-05"
+        },
+        {
+          "text": "29 · 归一化：LayerNorm、RMSNorm 与 Pre-Norm",
+          "link": "/minimind/b10-01"
+        },
+        {
+          "text": "30 · RMSNorm：数值尺度、梯度裁剪与权重",
+          "link": "/minimind/b10-02"
+        },
+        {
+          "text": "31 · SiLU 与门控 FFN",
+          "link": "/minimind/b11-01"
+        },
+        {
+          "text": "32 · MiniMind 整体架构",
+          "link": "/minimind/b13-01"
+        },
+        {
+          "text": "33 · Dense Model 重点复习",
+          "link": "/minimind/b12-01"
+        }
+      ]
+    },
+    {
+      "text": "模型源码与推理",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "34 · 理论之外的 Tensor 操作",
+          "link": "/minimind/b14-01"
+        },
+        {
+          "text": "35 · 模型源码：配置、基础组件与 RoPE",
+          "link": "/minimind/b15-01"
+        },
+        {
+          "text": "36 · 模型源码：Attention 的构造与前向计算",
+          "link": "/minimind/b15-02"
+        },
+        {
+          "text": "37 · 模型源码：FFN、MoE 与 Decoder Block",
+          "link": "/minimind/b15-03"
+        },
+        {
+          "text": "38 · 模型源码：Transformer 主干、LM Head 与 Loss",
+          "link": "/minimind/b15-04"
+        },
+        {
+          "text": "39 · 模型源码：自回归生成与实现要点",
+          "link": "/minimind/b15-05"
+        },
+        {
+          "text": "40 · 推理：generate 流程与采样策略",
+          "link": "/minimind/b16-01"
+        },
+        {
+          "text": "41 · 推理：KV Cache 调用链与流式输出",
+          "link": "/minimind/b16-02"
+        }
+      ]
+    },
+    {
+      "text": "强化学习与 PPO 原理",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "42 · 强化学习基础",
+          "link": "/minimind/s6350dbe1-01"
+        },
+        {
+          "text": "43 · 策略梯度与 Actor-Critic",
+          "link": "/minimind/s3503af2f-01"
+        },
+        {
+          "text": "44 · PPO 算法详解",
+          "link": "/minimind/se8dc6aaa-01"
+        },
+        {
+          "text": "45 · 强化学习：轨迹、价值与策略梯度",
+          "link": "/minimind/b17-01"
+        },
+        {
+          "text": "46 · 策略梯度：Advantage、Critic 与 GAE",
+          "link": "/minimind/b17-02"
+        },
+        {
+          "text": "47 · PPO：重要性采样、裁剪目标与旧策略",
+          "link": "/minimind/b17-03"
+        },
+        {
+          "text": "48 · RLHF：模型分工、奖励与参数更新",
+          "link": "/minimind/b17-04"
+        },
+        {
+          "text": "49 · RLHF 与 PPO 的 18 个关键问题",
+          "link": "/minimind/sed92650a-01"
+        },
+        {
+          "text": "50 · PPO 梯度更新与反向传播",
+          "link": "/minimind/sc84b38de-01"
+        },
+        {
+          "text": "51 · PPO 裁剪目标与通用实现",
+          "link": "/minimind/s41b0a574-01"
+        }
+      ]
+    },
+    {
+      "text": "PPO 采样与训练",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "52 · PPO 重点复习",
+          "link": "/minimind/b19-01"
+        },
+        {
+          "text": "53 · Reward Model：数据与 PyTorch 接口",
+          "link": "/minimind/b18-01"
+        },
+        {
+          "text": "54 · Reward Model：偏好损失、梯度与评分尺度",
+          "link": "/minimind/b18-02"
+        },
+        {
+          "text": "55 · Rollout 从零到完整流程",
+          "link": "/minimind/b20-01"
+        },
+        {
+          "text": "56 · Rollout 的 PyTorch 与 SGLang 实现",
+          "link": "/minimind/sbe84682d-01"
+        },
+        {
+          "text": "57 · PPO 代码：模型角色与 PyTorch 基础",
+          "link": "/minimind/b21-01"
+        },
+        {
+          "text": "58 · PPO 代码：DDP 同步、KL 监控与近似",
+          "link": "/minimind/b21-02"
+        },
+        {
+          "text": "59 · PPO 代码：采样、GAE 与 Actor-Critic 更新",
+          "link": "/minimind/b21-03"
+        },
+        {
+          "text": "60 · PPO 中的两类 KL 散度",
+          "link": "/minimind/s0c014541-01"
+        },
+        {
+          "text": "61 · PPO 代码中的 GAE",
+          "link": "/minimind/scb9fb90e-01"
+        },
+        {
+          "text": "62 · PPO 训练完整数值例子",
+          "link": "/minimind/b22-01"
+        }
+      ]
+    },
+    {
+      "text": "MoE",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "63 · MoE：专家路由与 Token 分发",
+          "link": "/minimind/b23-01"
+        },
+        {
+          "text": "64 · MoE：负载均衡与稀疏计算",
+          "link": "/minimind/b23-02"
+        },
+        {
+          "text": "65 · MoE 源码：前向计算与梯度路径",
+          "link": "/minimind/b23-03"
+        },
+        {
+          "text": "66 · MoE 源码：辅助损失与训练实现",
+          "link": "/minimind/b23-04"
+        }
+      ]
+    },
+    {
+      "text": "LoRA",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "67 · LoRA：低秩更新与完整工作流程",
+          "link": "/minimind/b24-01"
+        },
+        {
+          "text": "68 · LoRA 数学：行列式、特征值与坐标变换",
+          "link": "/minimind/b24-02"
+        },
+        {
+          "text": "69 · LoRA 数学：SVD 与低秩因子构造",
+          "link": "/minimind/b24-03"
+        },
+        {
+          "text": "70 · LoRA 前向、梯度与部署",
+          "link": "/minimind/s4859f99c-01"
+        },
+        {
+          "text": "71 · LoRA 训练代码",
+          "link": "/minimind/b25-01"
+        }
+      ]
+    }
+  ],
+  "/guide/": [
+    {
+      "text": "课程导航",
+      "items": [
+        {
+          "text": "如何使用这些讲义",
+          "link": "/guide/"
+        },
+        {
+          "text": "资料引用说明",
+          "link": "/guide/unavailable"
+        }
+      ]
+    }
+  ]
+}

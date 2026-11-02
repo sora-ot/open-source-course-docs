@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>交互讲义 · 流程图三数组与 refresh 重建可视化</title>
+<style>
+  :root{
+    --bg:#ffffff; --bg2:#f7f8fa; --bd:#e3e6ea; --tx:#1f2328;
+    --tx2:#5b6472; --green:#2f9e44; --green-l:#e9f7ec;
+    --blue:#2b6cb0; --blue-l:#e8f1fb;
+    --amber:#b7791f; --amber-l:#fdf6e3;
+    --purple:#6b46c1; --purple-l:#f0eafc;
+    --red:#c53030; --red-l:#fdeaea;
+    --mono:"Consolas","Monaco","Courier New",monospace;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg2);color:var(--tx);
+    font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
+    font-size:14px;line-height:1.7;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 80px}
+  h1{font-size:24px;font-weight:600;margin:0 0 6px;color:#111}
+  .sub{color:var(--tx2);font-size:14px;margin:0 0 28px}
+  .card{
+    background:var(--bg);border:1px solid var(--bd);border-radius:10px;
+    padding:20px 22px;margin-bottom:22px;
+  }
+  .card h2{
+    font-size:17px;font-weight:600;margin:0 0 4px;color:#111;
+    display:flex;align-items:center;gap:8px;
+  }
+  .card h2 .no{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:24px;height:24px;border-radius:6px;background:var(--green);
+    color:#fff;font-size:13px;font-weight:600;flex:0 0 auto;
+  }
+  .card .desc{color:var(--tx2);font-size:13.5px;margin:0 0 16px}
+  code,pre{font-family:var(--mono)}
+  pre{
+    background:#1e232b;color:#d6e2ee;padding:14px 16px;border-radius:8px;
+    overflow-x:auto;font-size:13px;line-height:1.6;margin:12px 0;
+  }
+  code.inl{
+    background:var(--bg2);border:1px solid var(--bd);border-radius:4px;
+    padding:1px 5px;font-size:12.5px;color:#b1306f;
+  }
+  .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+  button{
+    font-family:inherit;font-size:13.5px;padding:7px 14px;border-radius:7px;
+    border:1px solid var(--bd);background:#fff;color:var(--tx);cursor:pointer;
+    transition:.15s;
+  }
+  button:hover{border-color:var(--green);color:var(--green)}
+  button.primary{background:var(--green);border-color:var(--green);color:#fff}
+  button.primary:hover{background:#268a38;color:#fff}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  @media(max-width:860px){.cols,.cols3{grid-template-columns:1fr}}
+  .panel{background:var(--bg2);border-radius:8px;padding:14px 16px}
+  .panel h3{font-size:14px;margin:0 0 8px;color:#111;font-weight:600}
+  .panel h3 small{color:var(--tx2);font-weight:400}
+  .tree{
+    background:var(--bg);border:1px solid var(--bd);border-radius:8px;
+    padding:14px 10px;font-family:var(--mono);font-size:13px;line-height:2.2;
+  }
+  .tree .lv1{padding-left:26px}
+  .tree .lv2{padding-left:52px}
+  .tag{
+    display:inline-block;padding:1px 8px;border-radius:5px;
+    border:1px solid var(--bd);background:var(--bg2);transition:.2s;
+  }
+  .tag.cur{background:var(--blue-l);border-color:var(--blue);color:var(--blue);font-weight:600}
+  .tag.done{background:var(--green-l);border-color:var(--green);color:var(--green)}
+  .meta{color:var(--tx2);font-size:12px}
+  .meta b{color:var(--green)}
+  .arraybox{
+    font-family:var(--mono);font-size:12.5px;min-height:52px;
+    background:var(--bg);border:1px solid var(--bd);border-radius:8px;
+    padding:10px 12px;display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;
+  }
+  .cell{
+    display:inline-block;padding:2px 8px;border-radius:5px;
+    border:1px solid var(--bd);background:var(--bg2);white-space:nowrap;
+  }
+  .cell.new{background:var(--green-l);border-color:var(--green);color:var(--green);font-weight:600}
+  .cell.q{background:var(--amber-l);border-color:var(--amber);color:var(--amber)}
+  .log{
+    margin-top:12px;background:#fff;border:1px solid var(--bd);border-radius:8px;
+    padding:10px 14px;height:190px;overflow-y:auto;font-family:var(--mono);
+    font-size:12.5px;line-height:1.8;
+  }
+  .log .ok{color:var(--green)}
+  .log .no{color:var(--red)}
+  .log .info{color:var(--blue)}
+  .log .hl{color:var(--purple);font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}
+  th,td{border:1px solid var(--bd);padding:7px 10px;text-align:left}
+  th{background:var(--bg2);font-weight:600}
+  .note{
+    border-left:3px solid var(--green);background:var(--green-l);
+    padding:10px 14px;border-radius:0 6px 6px 0;margin:12px 0;font-size:13.5px;
+  }
+  .note.warn{border-color:var(--amber);background:var(--amber-l)}
+  .flow{font-family:var(--mono);font-size:12.5px;line-height:2}
+  .foot{text-align:center;color:var(--tx2);font-size:12.5px;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>交互讲义 · 流程图三数组与 refresh 重建可视化</h1>
+  <p class="sub">配合《18. 流程图核心数据结构》《19. 流程图的渲染与刷新》食用。点按钮看三个数组怎么一步步协作。</p>
+
+  <!-- ===== 模块 1：三数组总览 ===== -->
+  <div class="card">
+    <h2><span class="no">1</span>流程图的三兄弟：nodeList / actionSequence / queue</h2>
+    <p class="desc">
+      一张流程图，其实只有三个数组在配合。点「加一个节点」，看 nodeList 怎么增长。
+    </p>
+    <div class="cols3">
+      <div class="panel">
+        <h3>nodeList <small>仓库</small></h3>
+        <div class="arraybox" id="nl-box"></div>
+        <div class="meta" style="margin-top:8px">所有节点，按创建顺序存放</div>
+      </div>
+      <div class="panel">
+        <h3>actionSequence <small>字典</small></h3>
+        <div class="arraybox" id="as-box"></div>
+        <div class="meta" style="margin-top:8px">id → nodeList 下标（渲染时重排）</div>
+      </div>
+      <div class="panel">
+        <h3>queue <small>队列</small></h3>
+        <div class="arraybox" id="q-box"></div>
+        <div class="meta" style="margin-top:8px">只在 refresh 时用的 BFS 队列</div>
+      </div>
+    </div>
+    <div class="bar" style="margin-top:14px">
+      <button class="primary" id="btn-add">＋ 在 root 下加一个节点</button>
+      <button id="btn-add-reset">重置为 [root]</button>
+      <span class="meta">注意：加节点只动 <b>nodeList</b> 和 <b>root.sequence</b>，<b>actionSequence 要等 refresh 才会更新</b>。</span>
+    </div>
+    <div class="note">
+      <b>三句话记住</b>：
+      <code class="inl">nodeList</code> 是仓库（东西都在这）；
+      <code class="inl">actionSequence</code> 是字典（编号→货架号）；
+      <code class="inl">queue</code> 是队伍（渲染时按顺序点名）。
+    </div>
+  </div>
+
+  <!-- ===== 模块 2：refresh 的 BFS 重建 ===== -->
+  <div class="card">
+    <h2><span class="no">2</span>refresh() 用 BFS 重建编号</h2>
+    <p class="desc">
+      下面这棵图：root 有两个孩子 A、B；A 有一个孩子 C。<br>
+      点「单步」，看 refresh 如何一级一级出队、给节点发新 id、并把 index 记进 actionSequence。
+    </p>
+
+    <div class="bar">
+      <button class="primary" id="btn-step">▶ 单步</button>
+      <button id="btn-run">⏩ 一次跑完</button>
+      <button id="btn-reset">重置</button>
+      <span class="meta">已发编号 idd = <b id="idd">1</b></span>
+    </div>
+
+    <div class="cols">
+      <div class="panel">
+        <h3>图结构 <small>（括号：下标 / 位置）</small></h3>
+        <div class="tree" id="fc-tree">
+          <div><span class="tag" id="t0">root</span> <span class="meta" id="m0"></span></div>
+          <div class="lv1"><span class="tag" id="t1">A</span> <span class="meta" id="m1"></span></div>
+          <div class="lv2"><span class="tag" id="t3">C</span> <span class="meta" id="m3"></span></div>
+          <div class="lv1"><span class="tag" id="t2">B</span> <span class="meta" id="m2"></span></div>
+        </div>
+        <div class="meta" style="margin-top:8px">
+          固定关系：<code class="inl">root.sequence=[1,2]</code>
+          &nbsp; <code class="inl">A.sequence=[3]</code>
+          &nbsp; <code class="inl">B/C.sequence=[]</code>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>queue <small>（正在排队待处理的节点下标）</small></h3>
+        <div class="arraybox" id="q2-box"></div>
+        <h3 style="margin-top:14px">actionSequence <small>（已写好的 id→下标）</small></h3>
+        <div class="arraybox" id="as2-box"></div>
+      </div>
+    </div>
+
+    <div class="log" id="log2"><span class="info">点击「单步」跟踪 refresh 的过程…</span></div>
+
+    <div class="note warn">
+      <b>最容易搞混的一点</b>：
+      <code class="inl">nodeList</code> 里 <b>sequence 装的是下标</b>（所以是单层 <code class="inl">nodeList[...]</code>）；
+      而 <code class="inl">parentId</code> 装的是 <b>id</b>（要先用 <code class="inl">actionSequence[parentId]</code> 翻译回下标）。
+    </div>
+  </div>
+
+  <!-- ===== 模块 3：加循环 / 判断时的 sequence 变化 ===== -->
+  <div class="card">
+    <h2><span class="no">3</span>加循环、加判断时，sequence 怎么变</h2>
+    <p class="desc">插入新节点，本质就是往"父节点的 sequence"里 splice 一项。</p>
+
+    <div class="cols">
+      <div class="panel">
+        <h3>加一个普通节点</h3>
+        <div class="flow">
+          <div>原：root.sequence = [1, 2]</div>
+          <div>在锚点(position=0)后插入新节点 idx=3</div>
+          <div style="margin-top:6px">→ splice(1, 0, 3)</div>
+          <div style="color:var(--green)">新：root.sequence = [1, <b>3</b>, 2]</div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>加一个循环（option=8）</h3>
+        <div class="flow">
+          <div>新节点：type=1, sequence=[]</div>
+          <div>锚点自动跳进循环内部：</div>
+          <div style="color:var(--amber)">nowArrow = { position:-1, pId:新节点id }</div>
+          <div class="meta" style="margin-top:6px">所以你接着加的节点，都会落进循环体</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px">
+      <h3 style="font-size:14px;margin:0 0 6px">加一个判断（option=9）：自动生两个分支</h3>
+      <pre>t["type"] = 2;                              // 判断节点
+nt  = { type:3, option:10, title:"无条件" };  // 分支1
+nt2 = { type:3, option:10, title:"无条件" };  // 分支2
+t["sequence"].push(nt.index);   // 判断 → 分支1
+t["sequence"].push(nt2.index);  // 判断 → 分支2
+nodeList.push(nt); nodeList.push(nt2);</pre>
+      <div class="meta">判断节点自己不干活，它靠 sequence 里的"分支"来分岔 —— 判断与分支是连体婴。</div>
+    </div>
+  </div>
+
+  <!-- ===== 模块 4：速查 ===== -->
+  <div class="card">
+    <h2><span class="no">4</span>要点速查</h2>
+    <table>
+      <tr><th>名词</th><th>含义</th><th>怎么用</th></tr>
+      <tr><td><code class="inl">nodeList</code></td><td>所有节点的扁平仓库</td><td>按创建顺序；删除先断开父 sequence 引用，再标记子树 <code class="inl">id=-1</code></td></tr>
+      <tr><td><code class="inl">index</code></td><td>在 nodeList 里的下标</td><td>基本不变</td></tr>
+      <tr><td><code class="inl">id</code></td><td>BFS 逻辑编号</td><td>每次 refresh 重发</td></tr>
+      <tr><td><code class="inl">parentId</code></td><td>父节点的 id</td><td>先 <code class="inl">actionSequence[parentId]</code></td></tr>
+      <tr><td><code class="inl">position</code></td><td>在父 sequence 里排第几</td><td>splice 插入用 <code class="inl">position+1</code></td></tr>
+      <tr><td><code class="inl">sequence</code></td><td>有序孩子清单（装 index）</td><td>单层 <code class="inl">nodeList[seq[i]]</code></td></tr>
+      <tr><td><code class="inl">actionSequence</code></td><td>id → 下标 的字典</td><td><code class="inl">nodeList[actionSequence[id]]</code></td></tr>
+    </table>
+    <div class="note">
+      <b>一句话</b>：加节点 = 造对象 + splice 进父的 sequence + refresh；
+      refresh = 清画布 + BFS 重排 id/parentId/position + 重画 DOM。
+    </div>
+  </div>
+
+  <p class="foot">EasySpider 源码讲义 · 交互附录 · 对照 <code class="inl">ElectronJS/src/taskGrid/FlowChart.js</code> 与 <code class="inl">logic.js</code> 阅读</p>
+
+  <div class="foot" style="border-top:1px dashed var(--bd);padding-top:14px">
+    ⬅️ 相关讲义：<a style="color:var(--green)" href="18.流程图核心数据结构.md">18. 流程图核心数据结构</a>
+    　｜　<a style="color:var(--green)" href="19.流程图渲染机制.md">19. 流程图的渲染与刷新</a>
+    　｜　<a style="color:var(--green)" href="20.流程图的增删改查.md">20. 流程图的增删改查</a>
+    　｜　🏠 <a style="color:var(--green)" href="README.md">返回目录</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  function $(id){return document.getElementById(id);}
+
+  /* ================= 模块 1：三数组总览 ================= */
+  var nl = [{name:"root", idx:0}];
+  var as = [0];
+  var q  = [];
+
+  function renderMod1(newIdx){
+    // nodeList
+    $("nl-box").innerHTML = nl.map(function(n,i){
+      var cls = (newIdx===i)?"cell new":"cell";
+      return '<span class="'+cls+'">['+i+'] '+n.name+'</span>';
+    }).join("") || '<span class="meta">[ ]</span>';
+    // actionSequence
+    $("as-box").innerHTML = '<span class="cell">'+as.join("</span><span class='cell'>")+'</span>';
+    // queue
+    $("q-box").innerHTML = q.length? q.map(function(x){
+      return '<span class="cell q">'+x+'</span>';
+    }).join("") : '<span class="meta">[ 空 ]（refresh 时才用）</span>';
+  }
+  var mod1Count = 0;
+  $("btn-add").onclick=function(){
+    mod1Count++;
+    var idx = nl.length;
+    var node = {name:"节点"+String.fromCharCode(64+idx), idx:idx}; // A,B,C...
+    nl.push(node);
+    // 挂到 root.sequence：这里用 root.seq 概念上表示
+    // nodeList 增长，但 actionSequence 不变
+    renderMod1(idx);
+  };
+  $("btn-add-reset").onclick=function(){
+    nl=[{name:"root",idx:0}]; as=[0]; q=[]; mod1Count=0; renderMod1(-1);
+  };
+  renderMod1(-1);
+
+  /* ================= 模块 2：refresh BFS ================= */
+  var GRAPH = {
+    0:{name:"root", seq:[1,2]},
+    1:{name:"A",    seq:[3]},
+    2:{name:"B",    seq:[]},
+    3:{name:"C",    seq:[]}
+  };
+  var events=[], evIdx=0, running=false;
+
+  function buildEvents(){
+    events=[];
+    // 每步都留一份快照
+    var nl2 = {};
+    for(var k in GRAPH){ nl2[k]={id:0,parentId:0,position:0}; }
+    var nameOf={0:"root",1:"A",2:"B",3:"C"};
+    var qq=[0], aSeq=[0], idd=1;
+
+    events.push({type:"init", q:qq.slice(), a:aSeq.slice(), idd:idd,
+                 snap:JSON.parse(JSON.stringify(nl2)),
+                 msg:'初始化：<b>idd=1</b>，<b>queue=[0]</b>，<b>actionSequence=[0]</b>（root 先入队、入字典）'});
+
+    while(qq.length){
+      var nd=qq.shift();
+      events.push({type:"dequeue", nd:nd, q:qq.slice(), a:aSeq.slice(), idd:idd,
+                   snap:JSON.parse(JSON.stringify(nl2)),
+                   msg:'出队：<span class="hl">'+nameOf[nd]+'</span>（下标='+nd+'）→ 准备处理它的子节点'});
+      var seq=GRAPH[nd].seq;
+      for(var i=0;i<seq.length;i++){
+        var child=seq[i];
+        nl2[child].parentId=nl2[nd].id;
+        nl2[child].position=i;
+        nl2[child].id=idd++;
+        qq.push(child);
+        aSeq.push(child);
+        events.push({type:"assign", nd:nd, child:child, q:qq.slice(), a:aSeq.slice(), idd:idd,
+                     snap:JSON.parse(JSON.stringify(nl2)),
+                     msg:'给 <span class="hl">'+nameOf[child]+'</span> 发编号：'+
+                         'id=<b>'+(idd-1)+'</b>，parentId=<b>'+nl2[child].parentId+'</b>'+
+                         '，position=<b>'+i+'</b>；'+
+                         '入队 queue=['+qq.join(",")+']，入字典 actionSequence=['+aSeq.join(",")+']'});
+      }
+    }
+    events.push({type:"done", q:qq.slice(), a:aSeq.slice(), idd:idd,
+                 snap:JSON.parse(JSON.stringify(nl2)),
+                 msg:'✅ 队列空，遍历结束。此时每个节点的 id = 它在 BFS 里排第几。'});
+  }
+
+  function paintTree(snap, curIdx){
+    for(var k in GRAPH){
+      var tag=$("t"+k), meta=$("m"+k);
+      var s=snap[k];
+      tag.classList.remove("cur","done");
+      tag.textContent=GRAPH[k].name;
+      if(s.id>0 || k==="0"){
+        meta.innerHTML='<span class="meta">id=<b>'+s.id+'</b> pos='+s.position+' pid='+s.parentId+'</span>';
+        tag.classList.add("done");
+      } else {
+        meta.innerHTML='<span class="meta">id 未分配</span>';
+      }
+      if(curIdx!==undefined && String(k)===String(curIdx)) tag.classList.add("cur");
+      if(curIdx!==undefined && String(k)===String(curIdx)) tag.classList.remove("done");
+    }
+  }
+  function paintArr(box, arr, isQueue){
+    box.innerHTML = arr.length? arr.map(function(x){
+      return '<span class="cell '+(isQueue?"q":"")+'">'+x+'</span>';
+    }).join("") : '<span class="meta">[ 空 ]</span>';
+  }
+  function paintLog(msg){
+    var d=document.createElement("div");
+    d.innerHTML=msg;
+    $("log2").appendChild(d);
+    $("log2").scrollTop=$("log2").scrollHeight;
+  }
+
+  function stepOnce(){
+    if(evIdx>=events.length){ return false; }
+    var e=events[evIdx++];
+    $("idd").textContent=e.idd;
+    paintTree(e.snap, e.type==="assign"? e.child : (e.type==="dequeue"? e.nd : undefined));
+    paintArr($("q2-box"), e.q, true);
+    paintArr($("as2-box"), e.a, false);
+    paintLog(e.msg);
+    return true;
+  }
+
+  $("btn-step").onclick=function(){
+    if(!running){ running=true; buildEvents(); }
+    if(!stepOnce()) paintLog('<span class="ok">（已结束，点「重置」可重来）</span>');
+  };
+  $("btn-run").onclick=function(){
+    if(!running){ running=true; buildEvents(); }
+    var guard=0;
+    while(stepOnce() && guard++<100){}
+    paintLog('<span class="ok">（已跑完）</span>');
+  };
+  $("btn-reset").onclick=function(){
+    running=false; evIdx=0; events=[];
+    $("idd").textContent="1";
+    for(var k in GRAPH){ $("t"+k).classList.remove("cur","done"); $("m"+k).innerHTML=""; }
+    $("q2-box").innerHTML='<span class="meta">[ 空 ]</span>';
+    $("as2-box").innerHTML='<span class="meta">[ 空 ]</span>';
+    $("log2").innerHTML='<span class="info">点击「单步」跟踪 refresh 的过程…</span>';
+  };
+
+  // 初始展示空态
+  paintArr($("q2-box"), [], true);
+  paintArr($("as2-box"), [], false);
+  for(var k2 in GRAPH){ $("m"+k2).innerHTML='<span class="meta">id 未分配</span>'; }
+})();
+</script>
+</body>
+</html>

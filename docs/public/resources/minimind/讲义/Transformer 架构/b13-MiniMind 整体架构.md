@@ -1,0 +1,2529 @@
+# MiniMind 整体架构
+
+
+这张图可以从三个尺度来理解：
+
+1. **左侧：整个大语言模型的完整流程**
+2. **中间：一个 Transformer Layer 的整体结构**
+3. **右侧：GQA 与 FFN 的内部细节**
+
+当 Embedding、RMSNorm、QKV、RoPE、GQA、Causal Mask、Softmax、KV Cache、SiLU、FFN、Residual 等子概念都已经理解之后，就不应该再把它们看成彼此独立的模块，而应该把整张图理解成：
+
+\[
+\boxed{\text{一个 token 序列如何穿过整个 MiniMind，最终预测下一个 token}}
+\]
+
+---
+
+<a id="origin-17"></a>
+## 1. 整个模型到底在做什么？
+
+假设输入文本：
+
+```text
+hello
+```
+
+首先经过 Tokenizer：
+
+```text
+hello
+  ↓
+token id
+```
+
+假设：
+
+```text
+hello → 1234
+```
+
+然后通过 Embedding Table 查表得到这个 token 的初始向量：
+
+\[
+x_1^{(0)}=E[1234]
+\]
+
+假设：
+
+\[
+d_{model}=512
+\]
+
+那么：
+
+\[
+x_1^{(0)}\in\mathbb{R}^{512}
+\]
+
+此时，这个向量只是 token 的初始表示。
+
+接下来，它会进入多个 Transformer Layer。
+
+---
+
+<a id="origin-63"></a>
+## 2. 为什么图中 Transformer Layer 旁边有一个 ×K？
+
+图中只画出了一个：
+
+```text
+Transformer Layer k
+```
+
+但实际模型中会重复很多层：
+
+```text
+Embedding
+    ↓
+Transformer Layer 1
+    ↓
+Transformer Layer 2
+    ↓
+Transformer Layer 3
+    ↓
+...
+    ↓
+Transformer Layer K
+```
+
+因此图中的：
+
+```text
+× K
+```
+
+表示：
+
+> Transformer Layer 会重复 K 次。
+
+每一层都会继续更新每个 token 的 hidden state。
+
+---
+
+<a id="origin-101"></a>
+## 3. 一个 Transformer Layer 本质上只做两件大事
+
+从中间的紫色结构来看，一个 Transformer Layer 主要包含：
+
+```text
+GQA
+↓
+FFN
+```
+
+更加准确地说，是：
+
+\[
+\boxed{\text{Attention 子层}+\text{FFN 子层}}
+\]
+
+但每一个子层都有 Residual Connection。
+
+因此，第 \(k\) 层可以写成两个公式。
+
+首先是 Attention：
+
+\[
+H_1
+=
+X^{(k)}
++
+GQA(RMSNorm(X^{(k)}))
+\]
+
+然后是 FFN：
+
+\[
+X^{(k+1)}
+=
+H_1
++
+FFN(RMSNorm(H_1))
+\]
+
+这两个公式基本就是中间整个 Transformer Layer 的数学本质。
+
+---
+
+<a id="origin-145"></a>
+## 4. 为什么 GQA 和 FFN 后面都有一个加号？
+
+图中的：
+
+\[
+\oplus
+\]
+
+表示：
+
+\[
+\boxed{\text{Residual Connection}}
+\]
+
+也就是残差连接。
+
+所以 Attention 并不是简单地：
+
+```text
+X
+↓
+GQA
+↓
+输出
+```
+
+而是：
+
+```text
+X ─────────────────┐
+↓                  │
+GQA                 │
+↓                  │
+⊕ ←────────────────┘
+↓
+H1
+```
+
+数学上：
+
+\[
+H_1=X+GQA(RMSNorm(X))
+\]
+
+同理，FFN 也是：
+
+```text
+H1 ────────────────┐
+↓                  │
+FFN                 │
+↓                  │
+⊕ ←────────────────┘
+↓
+H2
+```
+
+对应：
+
+\[
+H_2
+=
+H_1
++
+FFN(RMSNorm(H_1))
+\]
+
+所以 Residual 的作用可以理解为：
+
+> 不直接丢掉原来的 hidden state，而是在原来的表示基础上不断增加新的信息。
+
+---
+
+<a id="origin-217"></a>
+## 5. 进入 GQA：第一步是 RMSNorm
+
+现在进入右边绿色的 GQA 模块。
+
+假设当前 Transformer Layer 的输入为：
+
+\[
+X
+\]
+
+首先进行：
+
+\[
+X_N=RMSNorm(X)
+\]
+
+因此结构是：
+
+```text
+X
+↓
+RMSNorm
+↓
+Attention
+```
+
+这种结构叫：
+
+\[
+\boxed{Pre\text{-}Norm}
+\]
+
+也就是：
+
+> 在进入 Attention 之前先做归一化。
+
+---
+
+<a id="origin-255"></a>
+## 6. RMSNorm 后，通过 Linear 得到 Q、K、V
+
+归一化后的 hidden state：
+
+\[
+X_N
+\]
+
+分别经过三个投影：
+
+\[
+Q=X_NW_Q
+\]
+
+\[
+K'=X_NW_K
+\]
+
+\[
+V'=X_NW_V
+\]
+
+其中：
+
+\[
+W_Q,\quad W_K,\quad W_V
+\]
+
+是训练得到的模型参数。
+
+而：
+
+\[
+Q,\quad K',\quad V'
+\]
+
+是当前 forward 动态计算出来的中间结果。
+
+---
+
+<a id="origin-295"></a>
+## 7. 为什么图里写的是 K'、V'？
+
+因为这里使用的是：
+
+\[
+\boxed{GQA}
+\]
+
+也就是 Grouped Query Attention。
+
+假设：
+
+\[
+N_Q=32
+\]
+
+表示有 32 个 Query Head。
+
+但是 KV Head 只有：
+
+\[
+N_{KV}=8
+\]
+
+因此 \(Q\) 有 32 个 Head，而 \(K',V'\) 只有 8 个 Head。
+
+可以写成：
+
+\[
+Q:[B,L,32,d_{head}]
+\]
+
+而：
+
+\[
+K',V':[B,L,8,d_{head}]
+\]
+
+这也是为什么图里把它们写成：
+
+\[
+K',V'
+\]
+
+表示：
+
+> 这是尚未扩展到和 Query Head 数量一致的 K/V。
+
+---
+
+<a id="origin-345"></a>
+## 8. Q 和 K 为什么要经过 RoPE？
+
+接下来图中：
+
+```text
+Q  → RoPE
+K' → RoPE
+```
+
+而 \(V'\) 没有经过 RoPE。
+
+原因是 RoPE 主要参与：
+
+\[
+QK^T
+\]
+
+也就是 Attention Score 的计算。
+
+Attention 的核心问题是：
+
+> 当前 token 应该关注谁？
+
+所以需要让 Q 和 K 感知位置信息。
+
+经过 RoPE 后：
+
+\[
+q_i
+\]
+
+和：
+
+\[
+k_j
+\]
+
+的内积能够包含：
+
+\[
+i-j
+\]
+
+这样的相对位置信息。
+
+而 V 的主要作用是：
+
+> 匹配成功以后真正读取什么信息。
+
+因此 V 不需要通过 RoPE。
+
+---
+<a id="origin-397"></a>
+## 9. 为什么 Q、K 在 RoPE 之前还要再做一次 Norm？
+
+在 MiniMind 的 GQA 中，数据流大致是：
+
+```text
+Hidden State
+     ↓
+  RMSNorm
+     ↓
+Linear Projection
+     ↓
+ Q      K      V
+ ↓      ↓
+Norm   Norm
+ ↓      ↓
+RoPE   RoPE
+ ↓      ↓
+     Attention
+```
+
+这里很容易产生一个疑问：
+
+> 前面明明已经对 hidden state 做过一次 RMSNorm，为什么生成 Q、K 以后，还要再分别做一次 Norm？
+
+原因主要是：
+
+\[
+\boxed{
+\text{前面的 RMSNorm 稳定 Hidden State，
+后面的 QK-Norm 稳定 Attention Score}
+}
+\]
+
+这两次 Norm 解决的不是完全相同的问题。
+
+---
+
+<a id="origin-434"></a>
+## 10. Attention Score 本质上取决于 Q 和 K
+
+Attention 的核心计算是：
+
+\[
+S
+=
+\frac{QK^T}{\sqrt{d_{head}}}
+\]
+
+对于两个 token：
+
+\[
+i,\quad j
+\]
+
+对应的 Attention Score 是：
+
+\[
+s_{ij}
+=
+\frac{q_i k_j^T}{\sqrt{d_{head}}}
+\]
+
+而向量点积可以写成：
+
+\[
+q_i k_j^T
+=
+\|q_i\|
+\|k_j\|
+\cos\theta
+\]
+
+因此 Attention Score 不仅与两个向量的方向有关，还与：
+
+\[
+\|q_i\|
+\]
+
+和：
+
+\[
+\|k_j\|
+\]
+
+的大小有关。
+
+也就是说：
+
+\[
+\boxed{
+Attention\ Score
+=
+\text{Q 的长度}
+\times
+\text{K 的长度}
+\times
+\text{方向相似度}
+}
+\]
+
+这就可能带来一个问题。
+
+---
+
+<a id="origin-500"></a>
+## 11. 如果 Q、K 的模长变得很大，会发生什么？
+
+假设本来：
+
+\[
+q_i k_j^T=2
+\]
+
+那么经过 Softmax 后，概率分布可能比较平缓。
+
+但是如果训练过程中：
+
+\[
+\|q_i\|
+\]
+
+和：
+
+\[
+\|k_j\|
+\]
+
+不断增大，使得：
+
+\[
+q_i k_j^T=50
+\]
+
+甚至：
+
+\[
+100
+\]
+
+那么 Softmax 就非常容易进入饱和状态。
+
+例如：
+
+\[
+Softmax([2,1,0])
+\]
+
+可能得到相对平滑的概率分布。
+
+但是：
+
+\[
+Softmax([100,50,0])
+\]
+
+几乎会变成：
+
+\[
+[1,0,0]
+\]
+
+也就是说：
+
+> Attention 变得过于尖锐。
+
+这会导致：
+
+- Attention Logits 数值过大
+- Softmax 过早饱和
+- 梯度集中在少数位置
+- 训练更不稳定
+- 某些 Head 的 Q/K 范数可能越来越大
+
+因此我们希望控制：
+
+\[
+q_i
+\]
+
+和：
+
+\[
+k_i
+\]
+
+的数值尺度。
+
+这就是 QK-Norm 的主要目的。
+
+---
+
+<a id="origin-586"></a>
+## 12. QK-Norm 做了什么？
+
+假设某一个 Attention Head 中：
+
+\[
+q_i\in\mathbb{R}^{d_{head}}
+\]
+
+例如：
+
+\[
+d_{head}=128
+\]
+
+那么可以对这个 128 维 Query 向量做 RMSNorm：
+
+\[
+\hat q_i
+=
+RMSNorm(q_i)
+\]
+
+同样：
+
+\[
+\hat k_i
+=
+RMSNorm(k_i)
+\]
+
+RMSNorm 的核心是先计算：
+
+\[
+RMS(q_i)
+=
+\sqrt{
+\frac{1}{d_{head}}
+\sum_{m=1}^{d_{head}}
+q_{im}^2
++\epsilon
+}
+\]
+
+然后：
+
+\[
+\hat q_i
+=
+\frac{q_i}{RMS(q_i)}
+\odot \gamma_Q
+\]
+
+K 同理：
+
+\[
+\hat k_i
+=
+\frac{k_i}{RMS(k_i)}
+\odot \gamma_K
+\]
+
+这样就可以把不同 token、不同 Head 的 Q/K 数值尺度控制在更加稳定的范围内。
+
+于是 Attention Score 变成：
+
+\[
+S
+=
+\frac{\hat Q\hat K^T}
+{\sqrt{d_{head}}}
+\]
+
+从而降低 Attention Logits 失控的风险。
+
+---
+
+<a id="origin-662"></a>
+## 13. 前面不是已经有 RMSNorm 了吗？
+
+有，但是前面的 RMSNorm 归一化的是：
+
+\[
+X
+\]
+
+也就是进入 Attention 之前的 hidden state。
+
+例如：
+
+\[
+\hat X=RMSNorm(X)
+\]
+
+然后才计算：
+
+\[
+Q=\hat XW_Q
+\]
+
+\[
+K=\hat XW_K
+\]
+
+\[
+V=\hat XW_V
+\]
+
+问题在于：
+
+> 即使 \(X\) 已经归一化，经过不同的线性投影以后，Q 和 K 的尺度仍然可能发生变化。
+
+因为：
+
+\[
+W_Q
+\]
+
+和：
+
+\[
+W_K
+\]
+
+本身是训练参数。
+
+例如：
+
+\[
+Q=\hat XW_Q
+\]
+
+如果：
+
+\[
+W_Q
+\]
+
+某些方向上的权重越来越大，那么 Q 的模长仍然可能变大。
+
+同样：
+
+\[
+K=\hat XW_K
+\]
+
+也可能出现自己的尺度变化。
+
+因此：
+
+\[
+RMSNorm(X)
+\]
+
+只能保证：
+
+\[
+X
+\]
+
+比较稳定，
+
+但不能保证：
+
+\[
+XW_Q
+\]
+
+和：
+
+\[
+XW_K
+\]
+
+一定具有稳定的尺度。
+
+所以才会再加：
+
+\[
+\boxed{
+QK\text{-}Norm
+}
+\]
+
+---
+
+<a id="origin-770"></a>
+## 14. 两次 Norm 到底分别管什么？
+
+可以这样理解：
+
+<a id="origin-774"></a>
+### 14.1 第一次 RMSNorm
+
+作用对象：
+
+\[
+X
+\]
+
+也就是 Transformer 的 hidden state。
+
+```text
+Hidden State
+     ↓
+  RMSNorm
+```
+
+它解决的是：
+
+> **进入 Attention 模块之前，hidden state 的数值尺度是否稳定。**
+
+---
+
+<a id="origin-796"></a>
+### 14.2 第二次 QK-Norm
+
+作用对象：
+
+\[
+Q,\quad K
+\]
+
+也就是投影完成后的 Query 和 Key。
+
+```text
+X
+↓
+W_Q / W_K
+↓
+Q / K
+↓
+QK-Norm
+```
+
+它解决的是：
+
+> **真正进入 \(QK^T\) 之前，Q 和 K 的尺度是否稳定。**
+
+所以两者关系是：
+
+\[
+\boxed{
+RMSNorm(X)
+\neq
+RMSNorm(Q),RMSNorm(K)
+}
+\]
+
+它们位于不同的位置，也有不同的直接目标。
+
+---
+
+<a id="origin-834"></a>
+## 15. 为什么只 Norm Q 和 K，不 Norm V？
+
+这是非常关键的一点。
+
+因为 Attention Score 是：
+
+\[
+QK^T
+\]
+
+而不是：
+
+\[
+QV^T
+\]
+
+或者：
+
+\[
+KV^T
+\]
+
+决定 Softmax 权重的是：
+
+\[
+\boxed{Q,K}
+\]
+
+所以真正容易因为模长过大导致 Attention Logits 爆炸的是：
+
+\[
+Q
+\]
+
+和：
+
+\[
+K
+\]
+
+而 V 的作用是在已经得到 Attention Weight 之后：
+
+\[
+O=AV
+\]
+
+也就是：
+
+\[
+o_i
+=
+\sum_j\alpha_{ij}v_j
+\]
+
+V 更像是：
+
+> 真正被读取和传递的“内容”。
+
+**如果强行把 V 也归一化，会限制 Value 表达自身信息幅度的能力。**
+
+因此通常是：
+
+```text
+Q → Norm
+K → Norm
+V → 不 Norm
+```
+
+可以记成：
+
+\[
+\boxed{
+Q,K\text{ 决定“关注谁”}
+}
+\]
+
+所以需要稳定它们的匹配尺度。
+
+而：
+
+\[
+\boxed{
+V\text{ 决定“取什么信息”}
+}
+\]
+
+因此通常保留它本身的表示能力。
+
+---
+
+<a id="origin-924"></a>
+## 16. 为什么 QK-Norm 放在 RoPE 前面？
+
+MiniMind 中的顺序是：
+
+```text
+Q
+↓
+Norm
+↓
+RoPE
+
+K
+↓
+Norm
+↓
+RoPE
+```
+
+也就是：
+
+\[
+Q
+\rightarrow
+QK\text{-}Norm
+\rightarrow
+RoPE
+\]
+
+而不是：
+
+\[
+Q
+\rightarrow
+RoPE
+\rightarrow
+Norm
+\]
+
+一个很自然的理解方式是：
+
+> **先稳定 Q/K 的内容表示尺度，再向其中注入位置信息。**
+
+也就是：
+
+```text
+Hidden State
+     ↓
+生成 Q/K
+     ↓
+把 Q/K 的数值尺度稳定下来
+     ↓
+通过 RoPE 加入位置关系
+     ↓
+进行 QK^T 匹配
+```
+
+因此逻辑上可以分成两个阶段：
+
+<a id="origin-982"></a>
+### 16.1 第一阶段：内容表示
+
+\[
+Q=XW_Q
+\]
+
+\[
+K=XW_K
+\]
+
+然后：
+
+\[
+\hat Q=Norm(Q)
+\]
+
+\[
+\hat K=Norm(K)
+\]
+
+---
+
+<a id="origin-1004"></a>
+#### 16.1.1 第二阶段：加入位置信息
+
+\[
+\tilde Q=RoPE(\hat Q)
+\]
+
+\[
+\tilde K=RoPE(\hat K)
+\]
+
+最终：
+
+\[
+S
+=
+\frac{\tilde Q\tilde K^T}
+{\sqrt{d_{head}}}
+\]
+
+因此整个过程非常清晰：
+
+\[
+\boxed{
+内容投影
+\rightarrow
+尺度稳定
+\rightarrow
+位置编码
+\rightarrow
+Attention
+}
+\]
+
+---
+
+<a id="origin-1039"></a>
+## 17. RoPE 本身会不会把向量长度搞乱？
+
+标准 RoPE 本质上是在二维子空间中做旋转。
+
+例如：
+
+\[
+\begin{bmatrix}
+x_1'\\
+x_2'
+\end{bmatrix}
+=
+\begin{bmatrix}
+\cos\theta&-\sin\theta\\
+\sin\theta&\cos\theta
+\end{bmatrix}
+\begin{bmatrix}
+x_1\\
+x_2
+\end{bmatrix}
+\]
+
+这是一个旋转矩阵。
+
+纯旋转满足：
+
+\[
+\|x'\|_2=\|x\|_2
+\]
+
+所以 RoPE 的核心目的并不是改变 Q/K 的整体模长，而是：
+
+> 改变不同位置 Q/K 的方向关系，从而让点积包含相对位置信息。
+
+因此一个很自然的流程就是：
+
+\[
+\boxed{
+先用 QK-Norm 控制尺度，
+再用 RoPE 改变方向并编码位置
+}
+\]
+
+需要注意的是，实际 RMSNorm 通常还带有可学习的逐维缩放参数，因此严格来说不能简单认为“Norm 和 RoPE 放前放后完全等价”。
+
+MiniMind 选择：
+
+\[
+\boxed{
+QK\text{-}Norm\rightarrow RoPE
+}
+\]
+
+可以清晰地把：
+
+- 数值尺度稳定
+- 位置编码
+
+这两个功能分开。
+
+---
+
+<a id="origin-1101"></a>
+## 18. 用一个简单例子理解 QK-Norm 的作用
+
+假设某个 Query：
+
+\[
+q=[10,20]
+\]
+
+某个 Key：
+
+\[
+k=[20,10]
+\]
+
+那么：
+
+\[
+qk^T
+=
+10\times20
++
+20\times10
+=
+400
+\]
+
+这个 Attention Logit 非常大。
+
+但这个“大”，可能并不是因为它们真的特别匹配，而只是因为：
+
+\[
+\|q\|
+\]
+
+和：
+
+\[
+\|k\|
+\]
+
+本身特别大。
+
+做 Norm 后，假设变成：
+
+\[
+\hat q
+\]
+
+和：
+
+\[
+\hat k
+\]
+
+具有比较稳定的尺度，那么：
+
+\[
+\hat q\hat k^T
+\]
+
+就会更多反映：
+
+> 两个向量的方向是否匹配，
+
+而不是：
+
+> 谁的数值绝对值特别大。
+
+所以可以粗略理解为：
+
+\[
+\boxed{
+QK\text{-}Norm
+=
+减少“靠向量长度刷 Attention Score”的现象
+}
+\]
+
+让 Attention 更关注：
+
+\[
+\boxed{
+Q\text{ 和 }K\text{ 的匹配关系}
+}
+\]
+
+而不是单纯依赖它们的模长。
+
+---
+
+<a id="origin-1191"></a>
+## 19. 把整个 GQA 前半段重新看一遍
+
+现在图中的这一段：
+
+```text
+             Q      K'      V'
+             ↑      ↑       ↑
+             └──── Linear ──┘
+                    ↑
+                 RMSNorm
+```
+
+继续向上：
+
+```text
+Q                K'               V'
+↓                 ↓                │
+N                 N                │
+↓                 ↓                │
+RoPE              RoPE             │
+↓                 ↓                │
+       Repeat / Group Mapping
+                 ↓
+              QK^T
+```
+
+其中两个：
+
+```text
+N
+```
+
+就是：
+
+\[
+\boxed{
+QK\text{-}Norm
+}
+\]
+
+整个逻辑就是：
+
+\[
+X
+\]
+
+先做：
+
+\[
+RMSNorm(X)
+\]
+
+然后：
+
+\[
+Q=XW_Q,\qquad
+K=XW_K,\qquad
+V=XW_V
+\]
+
+再对：
+
+\[
+Q,K
+\]
+
+分别进行：
+
+\[
+QK\text{-}Norm
+\]
+
+得到：
+
+\[
+\hat Q,\hat K
+\]
+
+然后：
+
+\[
+RoPE(\hat Q)
+\]
+
+\[
+RoPE(\hat K)
+\]
+
+最后计算：
+
+\[
+\boxed{
+Attention
+=
+Softmax
+\left(
+\frac{
+RoPE(\hat Q)
+RoPE(\hat K)^T
+}{
+\sqrt{d_{head}}
+}
++M
+\right)V
+}
+\]
+
+<a id="origin-1298"></a>
+## 20. 图中的 R 是什么意思？
+
+图中的：
+
+```text
+R
+```
+
+可以理解成：
+
+\[
+\boxed{Repeat}
+\]
+
+也就是把较少的 KV Head 扩展给多个 Query Head 使用。
+
+例如：
+
+\[
+N_Q=32
+\]
+
+\[
+N_{KV}=8
+\]
+
+那么：
+
+\[
+n_{rep}=\frac{32}{8}=4
+\]
+
+表示：
+
+> 每一个 KV Head 被 4 个 Query Head 共享。
+
+例如：
+
+```text
+K1 → Q1 Q2 Q3 Q4
+K2 → Q5 Q6 Q7 Q8
+K3 → Q9 Q10 Q11 Q12
+...
+```
+
+代码中经常能看到类似：
+
+```python
+repeat_kv(...)
+```
+
+于是 \(K'\) 逻辑上扩展成 \(K\)，而 \(V'\) 逻辑上扩展成 \(V\)。
+
+---
+
+<a id="origin-1353"></a>
+## 21. 接下来进行真正的 Attention Score 计算
+
+经过 RoPE 和 GQA 的 Head 对齐之后，开始计算：
+
+\[
+S=\frac{QK^T}{\sqrt{d_{head}}}
+\]
+
+假设序列是：
+
+```text
+I love AI
+```
+
+那么单个 Head 的 Attention Score 可以写成：
+
+\[
+S=
+\begin{bmatrix}
+q_Ik_I^T&q_Ik_{love}^T&q_Ik_{AI}^T\\
+q_{love}k_I^T&q_{love}k_{love}^T&q_{love}k_{AI}^T\\
+q_{AI}k_I^T&q_{AI}k_{love}^T&q_{AI}k_{AI}^T
+\end{bmatrix}
+\]
+
+---
+
+<a id="origin-1380"></a>
+## 22. 为什么还要加 Causal Mask？
+
+因为这是 Decoder-only Language Model。
+
+模型在预测当前 token 时不能偷看未来 token。
+
+所以必须加入 Causal Mask。
+
+对于：
+
+```text
+I love AI
+```
+
+Mask 后的 Attention Score 为：
+
+\[
+S=
+\begin{bmatrix}
+q_Ik_I^T&-\infty&-\infty\\
+q_{love}k_I^T&q_{love}k_{love}^T&-\infty\\
+q_{AI}k_I^T&q_{AI}k_{love}^T&q_{AI}k_{AI}^T
+\end{bmatrix}
+\]
+
+也就是说：
+
+- `I` 只能看到 `I`
+- `love` 可以看到 `I love`
+- `AI` 可以看到 `I love AI`
+
+图中黑色的：
+
+```text
+mask
+0 / -∞
+```
+
+表达的就是这个过程。
+
+---
+
+<a id="origin-1422"></a>
+## 23. Softmax 得到 Attention Weight
+
+加入 Mask 后，对每一行进行 Softmax：
+
+\[
+A
+=
+softmax\left(\frac{QK^T}{\sqrt{d_{head}}}+M\right)
+\]
+
+得到的 \(A\) 就是 Attention Weight。
+
+例如对于 `AI`，可能得到：
+
+\[
+[\alpha_I,\alpha_{love},\alpha_{AI}]
+\]
+
+表示：
+
+```text
+AI 从 I 获取多少信息
+AI 从 love 获取多少信息
+AI 从自己获取多少信息
+```
+
+并且：
+
+\[
+\alpha_I+\alpha_{love}+\alpha_{AI}=1
+\]
+
+---
+
+<a id="origin-1456"></a>
+## 24. Attention Weight 再与 V 相乘
+
+得到 Attention Weight 后：
+
+\[
+O=AV
+\]
+
+例如：
+
+\[
+o_{AI}
+=
+\alpha_Iv_I
++
+\alpha_{love}v_{love}
++
+\alpha_{AI}v_{AI}
+\]
+
+因此可以把整个 Attention 流程压缩成：
+
+\[
+\boxed{
+QK^T
+\rightarrow
+Softmax
+\rightarrow
+Attention\ Weight
+\rightarrow
+\times V
+}
+\]
+
+其中：
+
+- Q：当前 token 想寻找什么
+- K：每个 token 有什么特征可以被匹配
+- V：真正被读取的信息
+
+---
+
+<a id="origin-1498"></a>
+## 25. Attention 后为什么还有一个 Linear？
+
+多头 Attention 中，每个 Head 都会得到自己的输出：
+
+\[
+O_1,O_2,\dots,O_H
+\]
+
+这些 Head 的结果首先拼接：
+
+\[
+O=Concat(O_1,O_2,\dots,O_H)
+\]
+
+然后再通过一个输出投影：
+
+\[
+Y=OW_O
+\]
+
+图中 Attention 上面的：
+
+```text
+Linear
+```
+
+表示的就是：
+
+\[
+W_O
+\]
+
+所以 Attention 中主要存在四类投影矩阵：
+
+\[
+W_Q,\quad W_K,\quad W_V,\quad W_O
+\]
+
+---
+
+<a id="origin-1538"></a>
+## 26. GQA 最后做 Residual
+
+Attention 输出得到：
+
+\[
+Y
+\]
+
+之后，与原始输入 \(X\) 相加：
+
+\[
+H_1=X+Y
+\]
+
+也就是：
+
+\[
+\boxed{
+H_1
+=
+X+
+GQA(RMSNorm(X))
+}
+\]
+
+图中绿色框右侧的虚线，就是绕过整个 Attention 模块的 Residual Connection。
+
+---
+
+<a id="origin-1567"></a>
+## 27. Attention 结束后进入 FFN
+
+得到 \(H_1\) 之后，进入 FFN。
+
+首先还是：
+
+\[
+H_N=RMSNorm(H_1)
+\]
+
+所以 FFN 也是：
+
+```text
+H1
+↓
+RMSNorm
+↓
+FFN
+```
+
+这仍然是 Pre-Norm。
+
+---
+
+<a id="origin-1591"></a>
+## 28. FFN 为什么分成两条 Linear 支路？
+
+图中的 FFN 并不是最传统的：
+
+```text
+Linear
+↓
+ReLU
+↓
+Linear
+```
+
+而是类似 LLaMA 中的 SwiGLU 风格结构。
+
+假设归一化后的输入为：
+
+\[
+H_N
+\]
+
+第一条支路：
+
+\[
+A=H_NW_1
+\]
+
+然后经过：
+
+\[
+SiLU(A)
+\]
+
+第二条支路：
+
+\[
+B=H_NW_3
+\]
+
+然后做逐元素乘法：
+
+\[
+C=SiLU(A)\odot B
+\]
+
+其中：
+
+\[
+\odot
+\]
+
+表示 element-wise multiplication。
+
+最后再经过：
+
+\[
+W_2
+\]
+
+得到：
+
+\[
+D=CW_2
+\]
+
+因此整个 FFN 可以写成：
+
+\[
+\boxed{
+FFN(H_N)
+=
+W_2\left[SiLU(H_NW_1)\odot(H_NW_3)\right]
+}
+\]
+
+---
+
+<a id="origin-1667"></a>
+## 29. FFN 中的 Dropout
+
+图中最后还有：
+
+```text
+Dropout
+```
+
+因此训练阶段可以写成：
+
+\[
+FFN(H_N)
+=
+Dropout\left(
+W_2[SiLU(H_NW_1)\odot(H_NW_3)]
+\right)
+\]
+
+Dropout 的主要作用是在训练过程中随机屏蔽部分神经元，降低过拟合。
+
+推理阶段通常会关闭 Dropout。
+
+---
+
+<a id="origin-1691"></a>
+## 30. FFN 后再次进行 Residual
+
+FFN 输出以后，不直接覆盖 \(H_1\)，而是做：
+
+\[
+X^{(k+1)}
+=
+H_1
++
+FFN(RMSNorm(H_1))
+\]
+
+这样，一个完整 Transformer Layer 就结束了。
+
+因此一层 Transformer 可以最终写成：
+
+\[
+\boxed{
+H_1=X+GQA(RMSNorm(X))
+}
+\]
+
+然后：
+
+\[
+\boxed{
+X'=H_1+FFN(RMSNorm(H_1))
+}
+\]
+
+其中：
+
+\[
+X'
+\]
+
+就是下一层 Transformer 的输入。
+
+---
+
+<a id="origin-1731"></a>
+## 31. 多个 Transformer Layer 是怎样串起来的？
+
+假设：
+
+\[
+X^{(0)}
+\]
+
+是 Embedding 输出。
+
+那么：
+
+\[
+X^{(1)}=TransformerLayer_1(X^{(0)})
+\]
+
+\[
+X^{(2)}=TransformerLayer_2(X^{(1)})
+\]
+
+一直到：
+
+\[
+X^{(K)}=TransformerLayer_K(X^{(K-1)})
+\]
+
+因此：
+
+```text
+Embedding
+   ↓
+Layer 1
+   ↓
+Layer 2
+   ↓
+Layer 3
+   ↓
+...
+   ↓
+Layer K
+```
+
+每经过一层，token 的 hidden state 都会进一步融合上下文信息。
+
+---
+
+<a id="origin-1777"></a>
+## 32. 所有 Transformer Layer 结束后发生什么？
+
+图左边显示：
+
+```text
+Transformer Layers
+        ↓
+RMSNorm
+        ↓
+Linear
+        ↓
+SoftMax
+```
+
+经过最后一层以后：
+
+\[
+X^{(K)}
+\]
+
+先做：
+
+\[
+H=RMSNorm(X^{(K)})
+\]
+
+然后通过词表投影：
+
+\[
+Z=HW_{vocab}
+\]
+
+假设词表大小：
+
+\[
+|V|=32000
+\]
+
+那么最后一个 token 会得到：
+
+\[
+z=[z_1,z_2,\dots,z_{32000}]
+\]
+
+这些值叫：
+
+\[
+\boxed{logits}
+\]
+
+表示词表中每个 token 作为下一个 token 的原始分数。
+
+---
+
+<a id="origin-1831"></a>
+## 33. Softmax 将 Logits 转成概率
+
+概念上：
+
+\[
+P(x_{t+1}=i)
+=
+\frac{e^{z_i}}{\sum_j e^{z_j}}
+\]
+
+例如：
+
+```text
+world     0.62
+there     0.13
+friend    0.05
+...
+```
+
+于是模型可以根据概率分布选择：
+
+```text
+world
+```
+
+然后 Tokenizer Decoder 将 token id 转回文本：
+
+```text
+token id
+↓
+"world"
+```
+
+于是：
+
+```text
+hello
+```
+
+变成：
+
+```text
+hello world
+```
+
+---
+
+<a id="origin-1878"></a>
+## 34. 为什么图上写 hello + world？
+
+因为语言模型的生成过程不是一次 forward 直接生成整句话。
+
+而是不断重复：
+
+```text
+hello
+↓
+预测 world
+
+hello world
+↓
+预测下一个 token
+
+hello world ...
+↓
+继续预测
+```
+
+数学上模型一直在学习：
+
+\[
+\boxed{
+P(x_{t+1}\mid x_1,x_2,\dots,x_t)
+}
+\]
+
+也就是：
+
+> 根据前面的所有 token，预测下一个 token。
+
+---
+
+<a id="origin-1912"></a>
+## 35. KV Cache 在整张架构中的位置
+
+现在把 KV Cache 放回整张图里。
+
+假设第一轮输入：
+
+```text
+I love
+```
+
+在每一层 Attention 中都会计算：
+
+\[
+k_I,v_I
+\]
+
+和：
+
+\[
+k_{love},v_{love}
+\]
+
+推理时，这些历史 K/V 会被保存下来。
+
+需要特别注意：
+
+> 每一层 Transformer 都有自己独立的 KV Cache。
+
+也就是：
+
+```text
+Layer 1 KV Cache
+Layer 2 KV Cache
+Layer 3 KV Cache
+...
+Layer K KV Cache
+```
+
+因为每一层的：
+
+\[
+W_K,W_V
+\]
+
+都不一样，所以每一层产生的 K/V 也不同。
+
+---
+
+<a id="origin-1960"></a>
+## 36. 为什么第二轮不用重新计算历史 K/V？
+
+第一轮：
+
+```text
+I love
+```
+
+生成：
+
+```text
+AI
+```
+
+第二轮逻辑上的序列变成：
+
+```text
+I love AI
+```
+
+完整 Attention 理论上为：
+
+\[
+\begin{array}{c|ccc}
+ & I & love & AI\\
+\hline
+I&q_Ik_I^T&-\infty&-\infty\\
+love&q_{love}k_I^T&q_{love}k_{love}^T&-\infty\\
+AI&q_{AI}k_I^T&q_{AI}k_{love}^T&q_{AI}k_{AI}^T
+\end{array}
+\]
+
+但是前两行第一轮已经计算过。
+
+由于 Causal Mask，后来的 `AI` 不会反过来影响：
+
+```text
+I
+love
+```
+
+所以历史 token 的 hidden state 不变。
+
+同时推理阶段：
+
+\[
+W_K,W_V
+\]
+
+也已经固定。
+
+因此：
+
+\[
+k_i=x_iW_K
+\]
+
+\[
+v_i=x_iW_V
+\]
+
+得到的历史 K/V 不会变化。
+
+所以完全可以直接缓存。
+
+---
+
+<a id="origin-2027"></a>
+## 37. 第二轮实际上只计算 Attention 的最后一行
+
+第二轮只需要为新的 token：
+
+```text
+AI
+```
+
+计算：
+
+\[
+q_{AI},k_{AI},v_{AI}
+\]
+
+然后利用 KV Cache 中的：
+
+\[
+k_I,k_{love}
+\]
+
+和新的：
+
+\[
+k_{AI}
+\]
+
+计算：
+
+\[
+\boxed{
+[q_{AI}k_I^T,\quad q_{AI}k_{love}^T,\quad q_{AI}k_{AI}^T]
+}
+\]
+
+也就是：
+
+> 只计算 Attention 矩阵新增加的最后一行。
+
+然后 Attention Weight 与：
+
+\[
+v_I,v_{love},v_{AI}
+\]
+
+进行加权求和。
+
+因此：
+
+\[
+\boxed{
+\text{历史 K/V 只计算一次，以后直接复用}
+}
+\]
+
+这就是 KV Cache。
+
+---
+
+<a id="origin-2085"></a>
+## 38. 为什么缓存 K/V，而不是 Q？
+
+生成新 token 时，需要新的：
+
+\[
+q_{new}
+\]
+
+去查询所有历史：
+
+\[
+k_1,k_2,\dots,k_t
+\]
+
+因此历史 K 会继续使用。
+
+然后还需要历史：
+
+\[
+v_1,v_2,\dots,v_t
+\]
+
+完成加权求和。
+
+所以历史 V 也会继续使用。
+
+但是历史 Query：
+
+\[
+q_1,q_2,\dots,q_t
+\]
+
+以后已经不再参与新 token 的 Attention 计算。
+
+因此：
+
+```text
+历史 Q
+→ 用完就可以丢掉
+
+历史 K
+→ 后面还会被新的 Query 查询
+
+历史 V
+→ 后面还要参与加权求和
+```
+
+所以叫：
+
+\[
+\boxed{KV\ Cache}
+\]
+
+而不是：
+
+\[
+QKV\ Cache
+\]
+
+---
+
+<a id="origin-2146"></a>
+## 39. GQA 为什么能够进一步优化 KV Cache？
+
+传统 MHA 中，如果：
+
+\[
+N_Q=32
+\]
+
+那么：
+
+\[
+N_{KV}=32
+\]
+
+因此需要缓存：
+
+```text
+32 个 K Head
+32 个 V Head
+```
+
+而 GQA 可以设置：
+
+\[
+N_Q=32
+\]
+
+但：
+
+\[
+N_{KV}=8
+\]
+
+于是只需要缓存：
+
+```text
+8 个 K Head
+8 个 V Head
+```
+
+因此 KV Cache 大小大约变成原来的：
+
+\[
+\frac{8}{32}=\frac14
+\]
+
+即：
+
+\[
+25\%
+\]
+
+所以：
+
+\[
+\boxed{
+GQA
+\rightarrow
+减少 KV Head
+\rightarrow
+减少 KV Cache
+\rightarrow
+降低推理显存与访存开销
+}
+\]
+
+---
+
+<a id="origin-2214"></a>
+## 40. 整张图的完整故事线
+
+把整张架构图串起来，可以得到：
+
+```text
+文本
+ ↓
+Tokenizer
+ ↓
+Token ID
+ ↓
+Embedding
+ ↓
+Hidden State
+ ↓
+━━━━━━━━━━━━━━━━━━━━━━
+Transformer Layer 1
+    ↓
+  RMSNorm
+    ↓
+  Q / K / V 投影
+    ↓
+  RoPE
+    ↓
+  GQA
+    ↓
+  Causal Mask
+    ↓
+  QK^T / √d
+    ↓
+  Softmax
+    ↓
+  Attention Weight × V
+    ↓
+  Output Linear
+    ↓
+  Residual
+    ↓
+  RMSNorm
+    ↓
+  SwiGLU 风格 FFN
+    ↓
+  Dropout
+    ↓
+  Residual
+━━━━━━━━━━━━━━━━━━━━━━
+ ↓
+Transformer Layer 2
+ ↓
+...
+ ↓
+Transformer Layer K
+ ↓
+Final RMSNorm
+ ↓
+LM Head / Linear
+ ↓
+Vocabulary Logits
+ ↓
+Softmax / Sampling
+ ↓
+预测下一个 Token
+ ↓
+Tokenizer Decode
+ ↓
+追加到原序列
+ ↓
+继续下一轮生成
+```
+
+---
+
+<a id="origin-2286"></a>
+## 41. 再抽象一层：Transformer 到底在干什么？
+
+如果把所有细节都去掉，一层 Transformer 其实主要完成三件事情。
+
+<a id="origin-2290"></a>
+### 41.1 第一件事：Attention —— 从上下文里找信息
+
+\[
+\boxed{
+QK^T
+\rightarrow
+Softmax
+\rightarrow
+V
+}
+\]
+
+也就是：
+
+> 当前 token 应该从上下文中的哪些 token 获取信息？
+
+<a id="origin-2306"></a>
+### 41.2 第二件事：FFN —— 对信息进一步加工
+
+Attention 得到上下文信息后，FFN 继续对每一个 token 的 hidden state 进行非线性特征变换。
+
+可以理解为：
+
+> Attention 负责“找信息”，FFN 负责“加工信息”。
+
+<a id="origin-2314"></a>
+### 41.3 第三件事：Residual —— 在原来的理解上不断增加信息
+
+每层都不是彻底替换原来的表示，而是：
+
+\[
+\boxed{
+\text{原来的 hidden state}
++
+\text{Attention 提供的新信息}
++
+\text{FFN 进一步加工后的信息}
+}
+\]
+
+经过很多层后，最后一个 token 的 hidden state 已经不再只是它自身的 Embedding。
+
+它已经包含了大量上下文信息。
+
+---
+
+<a id="origin-2334"></a>
+## 42. 整个大语言模型最终在回答一个问题
+
+假设现在输入：
+
+```text
+I love
+```
+
+经过：
+
+```text
+Embedding
+↓
+Transformer Layer 1
+↓
+Transformer Layer 2
+↓
+...
+↓
+Transformer Layer K
+```
+
+之后，最后一个位置：
+
+```text
+love
+```
+
+的 hidden state 已经综合了：
+
+```text
+I love
+```
+
+整个历史上下文的信息。
+
+最后 LM Head 做的事情可以理解成：
+
+> 根据我现在对 `I love` 的理解，下一个 token 最可能是什么？
+
+于是输出：
+
+```text
+AI
+```
+
+因此整个 Decoder-only Language Model 的核心目标就是：
+
+\[
+\boxed{
+P(x_{t+1}\mid x_1,x_2,\dots,x_t)
+}
+\]
+
+---
+
+<a id="origin-2390"></a>
+## 43. 最终总结
+
+整张 MiniMind 架构图可以压缩成：
+
+\[
+\boxed{
+Token
+\rightarrow
+Embedding
+\rightarrow
+Transformer
+\rightarrow
+LM\ Head
+\rightarrow
+Next\ Token
+}
+\]
+
+其中 Transformer Layer 内部：
+
+\[
+\boxed{
+Attention+FFN
+}
+\]
+
+Attention 内部：
+
+\[
+\boxed{
+RMSNorm
+\rightarrow
+QKV
+\rightarrow
+RoPE
+\rightarrow
+GQA
+\rightarrow
+Mask
+\rightarrow
+Softmax
+\rightarrow
+V
+\rightarrow
+Linear
+}
+\]
+
+FFN 内部：
+
+\[
+\boxed{
+RMSNorm
+\rightarrow
+Linear
+\rightarrow
+SiLU
+\rightarrow
+Gate
+\rightarrow
+Linear
+}
+\]
+
+推理优化：
+
+\[
+\boxed{
+KV\ Cache+GQA
+}
+\]
+
+最终整个模型不断重复：
+
+\[
+\boxed{
+\text{根据已有上下文预测下一个 token}
+}
+\]
+
+然后：
+
+\[
+\boxed{
+\text{把新 token 加回上下文，再预测下一个}
+}
+\]
+
+这就是整张 MiniMind 架构图真正完整的故事线。

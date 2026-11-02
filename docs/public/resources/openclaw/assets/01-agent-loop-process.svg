@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1170" viewBox="0 0 1400 1170" role="img"><title>Agent Loop：用户发一次请求，模型和工具在内部多轮往返，最后返回回答</title><rect width="100%" height="100%" fill="white"/>
+<text x="40" y="46" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="32" font-weight="700" fill="#243b53" text-anchor="start" dominant-baseline="central">09 Agent Loop：用户说一次，模型和工具可以来回多次</text>
+<text x="40" y="98" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="23" font-weight="400" fill="#5b7184" text-anchor="start" dominant-baseline="central">下面是处理一次请求的普通流程；用户不用每一步都再说一句“继续”。</text>
+<rect x="150" y="145" width="1120" height="100" fill="#f2f5f8" stroke="#a6b4c1" stroke-width="2"/>
+<text x="710" y="172.5" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="27" font-weight="700" fill="#243b53" text-anchor="middle" dominant-baseline="central">用户只发来一个请求</text>
+<text x="710" y="214" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="24" font-weight="400" fill="#243b53" text-anchor="middle" dominant-baseline="central">“读一下待办和课程安排，告诉我今天先做什么。”</text>
+<rect x="60" y="300" width="1280" height="630" fill="#fbfdff" stroke="#9fb7ca" stroke-width="2"/>
+<text x="150" y="329" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="25" font-weight="700" fill="#285b89" text-anchor="start" dominant-baseline="central">一次 Agent Loop 运行：下面这些往返，都在处理上面这一句话</text>
+<path d="M375 245 L375 270 L105 270 L105 442 L150 442 " fill="none" stroke="#2585ba" stroke-width="3"/><polygon points="150,442 137,436 137,448" fill="#2585ba"/>
+<rect x="150" y="390" width="450" height="105" fill="#ecf6ff" stroke="#2585ba" stroke-width="2"/>
+<text x="375" y="420" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="28" font-weight="700" fill="#17698f" text-anchor="middle" dominant-baseline="central">① 调用大模型</text>
+<text x="375" y="463" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="20" font-weight="400" fill="#243b53" text-anchor="middle" dominant-baseline="central">把当前消息交给模型，决定下一步做什么</text>
+<path d="M375 495 L375 580 " fill="none" stroke="#2585ba" stroke-width="3"/><polygon points="375,580 381,567 369,567" fill="#2585ba"/>
+<rect x="150" y="580" width="450" height="105" fill="#ecf6ff" stroke="#2585ba" stroke-width="2"/>
+<text x="375" y="610" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="26" font-weight="700" fill="#17698f" text-anchor="middle" dominant-baseline="central">② 看模型这次输出了什么</text>
+<text x="375" y="653" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="400" fill="#243b53" text-anchor="middle" dominant-baseline="central">要调用工具，还是已经能给出回答？</text>
+<path d="M600 632 L820 632 " fill="none" stroke="#c58b30" stroke-width="3"/><polygon points="820,632 807,626 807,638" fill="#c58b30"/>
+<text x="710" y="598" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="22" font-weight="700" fill="#996215" text-anchor="middle" dominant-baseline="central">有工具调用</text>
+<rect x="820" y="580" width="450" height="105" fill="#fff7e9" stroke="#c79545" stroke-width="2"/>
+<text x="1045" y="610" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="28" font-weight="700" fill="#996215" text-anchor="middle" dominant-baseline="central">③ 程序执行工具</text>
+<text x="1045" y="653" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="20" font-weight="400" fill="#243b53" text-anchor="middle" dominant-baseline="central">例如 read：读取 todo.md 或课程安排</text>
+<path d="M1045 580 L1045 495 " fill="none" stroke="#36835a" stroke-width="3"/><polygon points="1045,495 1039,508 1051,508" fill="#36835a"/>
+<rect x="820" y="390" width="450" height="105" fill="#e8f5ee" stroke="#36835a" stroke-width="2"/>
+<text x="1045" y="420" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="26" font-weight="700" fill="#236642" text-anchor="middle" dominant-baseline="central">④ 把工具结果加入消息</text>
+<text x="1045" y="463" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="20" font-weight="400" fill="#243b53" text-anchor="middle" dominant-baseline="central">下一次调用模型时，把这些结果一起带上</text>
+<path d="M820 442 L600 442 " fill="none" stroke="#36835a" stroke-width="3"/><polygon points="600,442 613,448 613,436" fill="#36835a"/>
+<text x="710" y="409" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="22" font-weight="700" fill="#236642" text-anchor="middle" dominant-baseline="central">再调用模型</text>
+<path d="M375 685 L375 800 " fill="none" stroke="#2585ba" stroke-width="3"/><polygon points="375,800 381,787 369,787" fill="#2585ba"/>
+<text x="575" y="739" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="19" font-weight="400" fill="#5b7184" text-anchor="middle" dominant-baseline="central">给出回答，且没有其他继续条件</text>
+<rect x="150" y="800" width="450" height="85" fill="#e8f5ee" stroke="#36835a" stroke-width="2"/>
+<text x="375" y="840" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="27" font-weight="700" fill="#236642" text-anchor="middle" dominant-baseline="central">⑤ 结束本次运行</text>
+<text x="780" y="737" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="22" font-weight="700" fill="#243b53" text-anchor="start" dominant-baseline="central">同一句请求，可以这样走三次模型：</text>
+<text x="820" y="778" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="400" fill="#5b7184" text-anchor="start" dominant-baseline="central">第 1 次模型 → 调工具读待办</text>
+<text x="820" y="820" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="400" fill="#5b7184" text-anchor="start" dominant-baseline="central">第 2 次模型 → 调工具读课程安排</text>
+<text x="820" y="862" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="400" fill="#5b7184" text-anchor="start" dominant-baseline="central">第 3 次模型 → 根据两份内容给出回答</text>
+<path d="M375 885 L375 995 " fill="none" stroke="#36835a" stroke-width="3"/><polygon points="375,995 381,982 369,982" fill="#36835a"/>
+<rect x="150" y="995" width="1120" height="85" fill="#e8f5ee" stroke="#36835a" stroke-width="2"/>
+<text x="710" y="1037" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="24" font-weight="700" fill="#236642" text-anchor="middle" dominant-baseline="central">用户收到回答：一句请求，用了 3 次模型调用、2 次工具调用（次数只是本例）</text>
+<text x="80" y="1127" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="23" font-weight="400" fill="#5b7184" text-anchor="start" dominant-baseline="central">用户之后再发新的请求，由外层服务再次启动处理；这次 Loop 已经结束。</text>
+</svg>

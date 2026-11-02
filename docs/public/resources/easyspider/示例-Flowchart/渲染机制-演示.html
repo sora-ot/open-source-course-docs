@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第19讲：流程图渲染示例</title>
+  <link rel="stylesheet" href="../../../ElectronJS/src/taskGrid/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../../../ElectronJS/src/taskGrid/FlowChart.css">
+  <style>
+    body { background:#f3f5f8; color:#172b42; font-family:"Microsoft YaHei",sans-serif; }
+    .demo-shell { max-width:900px; margin:20px auto; }
+    .demo-heading { font-size:24px!important; font-weight:700; margin-bottom:8px; }
+    .demo-note { color:#536579; line-height:1.6; margin-bottom:12px; }
+    .demo-toolbar { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+    .demo-toolbar select,.demo-toolbar button { padding:5px 10px; }
+    .demo-canvas { background:white; border:2px solid #263b50; padding:0 8px 10px; }
+    .demo-state { margin-top:14px; background:white; border:1px solid #cbd5df; padding:12px 16px; }
+    .demo-state p { margin:3px 0; overflow-wrap:anywhere; }
+    .demo-state code { color:#184e83; font-family:Consolas,"Microsoft YaHei",monospace; }
+    .demo-status { color:#005947; padding-top:8px; }
+    .demo-end { border-radius:50%;width:40px;height:40px;border:solid black;margin:5px auto;background:lightcyan; }
+    .demo-end p { font-size:22px!important;text-align:center;margin-left:1px; }
+    .demo-html { margin-top:14px; background:white; border:1px solid #cbd5df; padding:12px 16px; }
+    .demo-html pre { margin:10px 0 0; white-space:pre; overflow:auto; font-family:Consolas,"Microsoft YaHei",monospace; }
+    .demo-html pre,.demo-html code { font-size:14px!important; }
+    body[data-capture="1"] .demo-toolbar { display:none; }
+    body[data-capture="1"] .demo-html { display:none; }
+  </style>
+</head>
+<body>
+<main class="demo-shell">
+  <h1 class="demo-heading" id="demo-title"></h1>
+  <p class="demo-note" id="demo-note"></p>
+  <nav class="demo-toolbar" aria-label="切换渲染示例">
+    <select id="demo-scene" aria-label="示例">
+      <option value="empty">只有 root</option>
+      <option value="sequence">三个顺序动作</option>
+      <option value="loop">五节点循环图</option>
+      <option value="nested">两层循环</option>
+      <option value="judge">判断与分支</option>
+    </select>
+    <select id="demo-step" aria-label="显示到第几次追加">
+      <option value="all">显示全部 append</option>
+      <option value="0">尚未追加业务节点</option>
+      <option value="1">只完成第 1 次 append</option>
+      <option value="2">只完成第 2 次 append</option>
+      <option value="3">只完成第 3 次 append</option>
+      <option value="4">只完成第 4 次 append</option>
+      <option value="5">只完成第 5 次 append</option>
+      <option value="6">只完成第 6 次 append</option>
+    </select>
+    <button type="button" id="demo-redraw">重新执行 refresh()</button>
+  </nav>
+  <section class="demo-canvas" aria-label="流程图">
+    <div id="0" class="clk" data="0"></div>
+    <div class="demo-end"><p>■</p></div>
+  </section>
+  <section class="demo-state" aria-label="渲染结果">
+    <p><strong>本次数据与映射</strong></p>
+    <p><code id="demo-sequences"></code></p>
+    <p><code id="demo-mapping"></code></p>
+    <p><code id="demo-appends"></code></p>
+    <p class="demo-status" id="demo-status">可点击方块或箭头，查看界面定位信息。</p>
+  </section>
+  <section class="demo-html" aria-label="当前画布HTML">
+    <strong>这一步完成后，#0 的完整 HTML</strong>
+    <p>从当前 DOM 读取，保留全部属性，仅整理缩进；切换步骤或点击方块后同步更新。</p>
+    <pre><code id="demo-html-output"></code></pre>
+  </section>
+</main>
+<script src="../../../ElectronJS/src/taskGrid/jquery-3.4.1.min.js"></script>
+<script>
+// 教学宿主：不启动 Electron、Vue 配置面板、消息接收或浏览器采集。
+// newNode()/refresh() 从原文件提取，CSS、jQuery、Bootstrap 直接使用仓库文件。
+var nodeList = [], actionSequence = [], queue = [];
+var app = {_data:{nowArrow:null}};
+var title = '', id = 0, type = 0;
+function LANG(chinese, english) { return chinese; }
+
+function escapeHTML(value) {
+  return String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function formatHTML(element, depth) {
+  depth=depth || 0;
+  var indent='  '.repeat(depth);
+  var tag=element.tagName.toLowerCase();
+  var attributes=Array.from(element.attributes).map(function(a){
+    return ' '+a.name+'="'+escapeHTML(a.value)+'"';
+  }).join('');
+  var children=Array.from(element.childNodes).filter(function(n){
+    return n.nodeType===1 || (n.nodeType===3 && n.textContent.trim());
+  });
+  var open=indent+'<'+tag+attributes+'>';
+  if (children.every(function(n){return n.nodeType===3;})) {
+    return open+escapeHTML(children.map(function(n){return n.textContent.trim();}).join(''))+'</'+tag+'>';
+  }
+  return open+'\n'+children.map(function(n){
+    return n.nodeType===1?formatHTML(n,depth+1):'  '.repeat(depth+1)+escapeHTML(n.textContent.trim());
+  }).join('\n')+'\n'+indent+'</'+tag+'>';
+}
+function updateHTML() {
+  document.getElementById('demo-html-output').textContent=formatHTML(document.getElementById('0'));
+}
+
+// 教学事件：展示原程序使用的 data/pId/position 地址，不执行实际编辑或试运行。
+function bindEvents() {
+  document.querySelectorAll('.clk').forEach(function(element) {
+    element.addEventListener('click', function(event) {
+      document.querySelectorAll('.node,.loop,.branch').forEach(function(e) { e.style.borderColor=''; });
+      element.style.borderColor='blue';
+      var uiId = Number(element.getAttribute('data'));
+      var index = actionSequence[uiId];
+      document.getElementById('demo-status').textContent =
+        '点击方块：data=' + uiId + ' → actionSequence[' + uiId + ']=' + index +
+        ' → nodeList[' + index + ']（' + nodeList[index].title + '）';
+      event.stopPropagation();
+      updateHTML();
+    });
+  });
+  document.querySelectorAll('.arrow').forEach(function(element) {
+    element.addEventListener('click', function(event) {
+      var pId = Number(element.getAttribute('pid'));
+      var position = Number(element.getAttribute('position'));
+      document.getElementById('demo-status').textContent =
+        '点击箭头：pId=' + pId + '，position=' + position +
+        ' → 父对象 nodeList[' + actionSequence[pId] + ']，插入下标 position+1=' + (position+1);
+      event.stopPropagation();
+      updateHTML();
+    });
+  });
+}
+</script>
+<script src="渲染机制-源码片段.js"></script>
+<script>
+var params = new URLSearchParams(location.search);
+var scene = params.get('scene') || 'loop';
+var limit = Number(params.get('step') || Infinity);
+var originalNewNode = newNode;
+
+function node(index, title, option, type, sequence) {
+  return {index:index,title:title,option:option,type:type,sequence:sequence || [],
+    id:0,parentId:0,isInLoop:false,parameters:{}};
+}
+function baseline() {
+  return [node(0,'root',0,-1,[1,4,3]),node(1,'打开网页',1,0),node(2,'点击按钮',2,0),
+          node(3,'提取结果',3,0),node(4,'循环',8,1,[2])];
+}
+function render() {
+  var names = {empty:'只有 root：开始标记与首箭头',sequence:'三个顺序动作：同级追加',
+    loop:'五节点循环图：父框先创建，孩子再进入',nested:'两层循环：同一套模板递归嵌套',
+    judge:'判断与分支：分支横排，内部动作竖排'};
+  if (scene==='empty') nodeList=[node(0,'root',0,-1)];
+  else if (scene==='sequence') {
+    nodeList=baseline().slice(0,4); nodeList[0].sequence=[1,2,3];
+  } else if (scene==='nested') {
+    nodeList=baseline(); nodeList[4].title='外层循环'; nodeList[4].sequence=[2,5];
+    nodeList.push(node(5,'内层循环',8,1,[6]),node(6,'点击内层按钮',2,0));
+  } else if (scene==='judge') {
+    nodeList=[node(0,'root',0,-1,[1]),node(1,'是否单间',9,2,[2,3]),
+      node(2,'单间分支',10,3,[4,5]),node(3,'空兜底分支',10,3),
+      node(4,'点击房源',2,0),node(5,'提取信息',3,0)];
+  } else nodeList=baseline();
+  document.querySelectorAll('#demo-step option').forEach(function(option) {
+    option.disabled=option.value!=='all' && Number(option.value)>nodeList.length-1;
+  });
+  var count=0, appends=[];
+  // 截取 append 的中间结果：仍执行完整编号，只让前 limit 个模板返回 HTML。
+  newNode=function(n) {
+    count++;
+    if (count>limit) return '';
+    appends.push(n.title+' → #'+n.parentId);
+    return originalNewNode(n);
+  };
+  refresh();
+  newNode=originalNewNode;
+  document.getElementById('demo-title').textContent=names[scene] || names.loop;
+  document.getElementById('demo-note').textContent=
+    '教学页：复用源码 refresh()、newNode()、FlowChart.css。' +
+    (isFinite(limit)?'编号已完成；这里仅展示前 '+limit+' 次 append 后的画布。':'下方为本次刷新得到的结构与界面映射。');
+  document.getElementById('demo-sequences').textContent=nodeList.filter(function(n){return n.sequence.length;})
+    .map(function(n){return n.index+'.sequence=['+n.sequence+']';}).join('；') || '0.sequence=[]';
+  document.getElementById('demo-mapping').textContent='actionSequence=['+actionSequence+']；queue=['+queue+']';
+  document.getElementById('demo-appends').textContent='append：'+(appends.join('；') || '无操作节点');
+  document.getElementById('demo-status').textContent='可点击方块或箭头，查看界面定位信息。';
+  if (params.has('select')) {
+    var selected=document.getElementById(params.get('select'));
+    if (selected) selected.click();
+  }
+  updateHTML();
+  window.demoReady=true;
+}
+document.body.dataset.capture=params.get('capture') || '0';
+document.getElementById('demo-scene').value=scene;
+document.getElementById('demo-step').value=isFinite(limit)?String(limit):'all';
+document.getElementById('demo-scene').addEventListener('change',function(){
+  scene=this.value;limit=Infinity;document.getElementById('demo-step').value='all';render();
+});
+document.getElementById('demo-step').addEventListener('change',function(){limit=this.value==='all'?Infinity:Number(this.value);render();});
+document.getElementById('demo-redraw').addEventListener('click',render);
+render();
+</script>
+</body>
+</html>

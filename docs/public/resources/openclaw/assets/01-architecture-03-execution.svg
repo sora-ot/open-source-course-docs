@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="350" viewBox="0 0 1200 350" role="img" aria-labelledby="title"><title id="title">Pi 执行：模型调用与工具执行如何形成循环</title><rect width="1200" height="350" fill="white"/>
+<path d="M 600 115 L 600 185" stroke="#24759b" stroke-width="2" fill="none"/><polygon points="600,185 595,173 605,173" fill="#24759b"/>
+<path d="M 425 215 L 335 215" stroke="#24759b" stroke-width="2" fill="none"/><polygon points="335,215 347,210 347,220" fill="#24759b"/>
+<path d="M 335 270 L 425 270" stroke="#24759b" stroke-width="2" fill="none"/><polygon points="425,270 413,275 413,265" fill="#24759b"/>
+<path d="M 775 215 L 865 215" stroke="#24759b" stroke-width="2" fill="none"/><polygon points="865,215 853,220 853,210" fill="#24759b"/>
+<path d="M 865 270 L 775 270" stroke="#24759b" stroke-width="2" fill="none"/><polygon points="775,270 787,265 787,275" fill="#24759b"/>
+<rect x="425" y="20" width="350" height="95" fill="#f4f8fc" stroke="#24759b" stroke-width="2"/>
+<text x="600" y="52" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="700" fill="#263b50">08 Pi AgentSession</text>
+<text x="600" y="83" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">组织本次会话运行、状态与记录</text>
+<rect x="425" y="185" width="350" height="115" fill="#f4f8fc" stroke="#24759b" stroke-width="2"/>
+<text x="600" y="211.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="700" fill="#263b50">09 pi-agent-core Agent Loop</text>
+<text x="600" y="242.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">模型输出 → 工具调用 → 工具结果</text>
+<text x="600" y="273.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">需要时再次请求模型</text>
+<rect x="25" y="185" width="310" height="115" fill="#f4f8fc" stroke="#24759b" stroke-width="2"/>
+<text x="180" y="211.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="700" fill="#263b50">10 pi-ai 模型适配</text>
+<text x="180" y="242.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">统一模型请求和流式输出</text>
+<text x="180" y="273.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">连接配置的 LLM Provider</text>
+<rect x="865" y="185" width="310" height="115" fill="#f4f8fc" stroke="#24759b" stroke-width="2"/>
+<text x="1020" y="211.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="700" fill="#263b50">11 Tool execution</text>
+<text x="1020" y="242.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">执行 read / exec 等工具</text>
+<text x="1020" y="273.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">落实策略、沙箱及运行权限</text>
+</svg>

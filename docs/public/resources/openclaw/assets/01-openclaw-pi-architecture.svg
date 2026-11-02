@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1680" height="1220" viewBox="0 0 1680 1220" role="img" aria-labelledby="title desc">
+<title id="title">OpenClaw 与 Pi 整体架构</title>
+<desc id="desc">消息渠道与客户端进入 OpenClaw 的接入和运行管理。OpenClaw 准备环境，内嵌 Pi 的 AgentSession、Agent Loop 与 pi-ai 组织模型和工具调用。事件与回复返回原入口。工作文件、Memory 和会话记录分别参与读取、检索和持久化。</desc>
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 Z" fill="#526b89"/></marker>
+  <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 Z" fill="#8c789d"/></marker>
+  <style>
+  text {font-family: 'PingFang SC','Heiti SC',Arial,sans-serif; fill:#24354a;}
+  .h {font-size:26px;font-weight:600;}
+  .p {font-size:22px;}
+  .s {font-size:18px;fill:#5a6d82;}
+  .line {fill:none;stroke:#526b89;stroke-width:2.4;stroke-linejoin:round;marker-end:url(#a);}
+  .data {fill:none;stroke:#8c789d;stroke-width:2.1;stroke-dasharray:7 5;stroke-linejoin:round;marker-end:url(#b);}
+  </style>
+</defs>
+<rect width="1680" height="1220" fill="#ffffff"/>
+
+<text x="80" y="50" class="p" text-anchor="start" style="font-size:35px">OpenClaw + Pi</text>
+<text x="390" y="50" class="p" text-anchor="start" style="font-size:29px">个人助手的整体架构</text>
+<rect x="80" y="90" width="600" height="95" rx="14" fill="#f3f7fc" stroke="#d6e0ec" stroke-width="1.7"/>
+<text x="380.0" y="129" class="h" text-anchor="middle">消息渠道</text>
+<text x="380.0" y="168" class="p" text-anchor="middle">Telegram · WhatsApp · Slack · 飞书等</text>
+<rect x="940" y="90" width="600" height="95" rx="14" fill="#f3f7fc" stroke="#d6e0ec" stroke-width="1.7"/>
+<text x="1240.0" y="129" class="h" text-anchor="middle">交互客户端</text>
+<text x="1240.0" y="168" class="p" text-anchor="middle">WebChat · 控制界面</text>
+<rect x="40" y="240" width="1600" height="705" rx="20" fill="#f9fbfe" stroke="#b7c8dc" stroke-width="1.7"/>
+<text x="1605" y="276" class="h" text-anchor="end">OpenClaw Gateway · 常驻服务</text>
+<rect x="80" y="310" width="340" height="165" rx="14" fill="#eaf2ff" stroke="#b7cbea" stroke-width="1.7"/>
+<text x="250.0" y="349" class="h" text-anchor="middle">消息接入与运行管理</text>
+<text x="250.0" y="388" class="p" text-anchor="middle">Channel / 客户端接口</text>
+<text x="250.0" y="426" class="p" text-anchor="middle">Agent 路由 · Session · 队列</text>
+<rect x="80" y="555" width="340" height="246" rx="14" fill="#eaf2ff" stroke="#b7cbea" stroke-width="1.7"/>
+<text x="250.0" y="594" class="h" text-anchor="middle">OpenClaw 运行准备</text>
+<text x="250.0" y="633" class="p" text-anchor="middle">模型与工具配置</text>
+<text x="250.0" y="676" class="p" text-anchor="middle">Workspace / Bootstrap / Skills</text>
+<text x="250.0" y="719" class="p" text-anchor="middle">系统提示词与历史准备</text>
+<text x="250.0" y="762" class="p" text-anchor="middle">组织本次运行的输入</text>
+<rect x="80" y="855" width="340" height="56" rx="10" fill="#f1edf8" stroke="#d4c7e5" stroke-width="1.7"/>
+<text x="250" y="890" class="s" text-anchor="middle" style="font-size:19px">Plugins：扩展渠道、模型和工具</text>
+<rect x="535" y="300" width="590" height="610" rx="18" fill="#f0f7f3" stroke="#a9cbb7" stroke-width="1.7"/>
+<text x="555" y="336" class="h" text-anchor="start">Pi Agent 执行组件</text>
+<rect x="570" y="363" width="520" height="136" rx="14" fill="#fff" stroke="#b7d2c2" stroke-width="1.7"/>
+<text x="830.0" y="402" class="h" text-anchor="middle">pi-coding-agent</text>
+<text x="830.0" y="441" class="p" text-anchor="middle">AgentSession / SessionManager</text>
+<text x="830" y="482" class="s" text-anchor="middle">会话执行 · 历史记录 · 上下文管理 · 扩展</text>
+<rect x="570" y="555" width="520" height="150" rx="14" fill="#fff" stroke="#b7d2c2" stroke-width="1.7"/>
+<text x="830.0" y="594" class="h" text-anchor="middle">pi-agent-core</text>
+<text x="830.0" y="633" class="p" text-anchor="middle">Agent · Agent Loop</text>
+<text x="830.0" y="671" class="p" text-anchor="middle">模型调用 → 工具执行 → 结果加入消息</text>
+<rect x="570" y="785" width="520" height="102" rx="14" fill="#fff" stroke="#b7d2c2" stroke-width="1.7"/>
+<text x="830.0" y="824" class="h" text-anchor="middle">pi-ai</text>
+<text x="830.0" y="863" class="p" text-anchor="middle">模型请求适配 · 流式结果转换</text>
+<rect x="1230" y="320" width="365" height="150" rx="14" fill="#eaf2ff" stroke="#b7cbea" stroke-width="1.7"/>
+<text x="1412.5" y="359" class="h" text-anchor="middle">事件处理与回复交付</text>
+<text x="1412.5" y="398" class="p" text-anchor="middle">文本输出 · 工具状态</text>
+<text x="1412.5" y="435" class="p" text-anchor="middle">渠道回复 · 客户端更新</text>
+<rect x="1230" y="555" width="365" height="150" rx="14" fill="#fff3e6" stroke="#e5c49d" stroke-width="1.7"/>
+<text x="1412.5" y="594" class="h" text-anchor="middle">OpenClaw Tools</text>
+<text x="1412.5" y="633" class="p" text-anchor="middle">工具定义 · 策略 · 执行</text>
+<text x="1412.5" y="670" class="p" text-anchor="middle">文件 · 命令 · Memory 检索等</text>
+<rect x="80" y="1010" width="340" height="133" rx="14" fill="#f6f2fa" stroke="#d4c7e5" stroke-width="1.7"/>
+<text x="250.0" y="1049" class="h" text-anchor="middle">工作文件与长期资料</text>
+<text x="250.0" y="1088" class="p" text-anchor="middle">Workspace / Memory</text>
+<text x="250.0" y="1119" class="p" text-anchor="middle">说明文件 · 笔记 · 相关资料</text>
+<rect x="535" y="1010" width="310" height="133" rx="14" fill="#f6f2fa" stroke="#d4c7e5" stroke-width="1.7"/>
+<text x="690.0" y="1049" class="h" text-anchor="middle">会话记录</text>
+<text x="690.0" y="1088" class="p" text-anchor="middle">Session 历史</text>
+<text x="690.0" y="1119" class="p" text-anchor="middle">JSONL 文件</text>
+<rect x="915" y="1010" width="310" height="133" rx="14" fill="#eef5fc" stroke="#b7cbea" stroke-width="1.7"/>
+<text x="1070.0" y="1049" class="h" text-anchor="middle">模型服务</text>
+<text x="1070.0" y="1088" class="p" text-anchor="middle">云端 API / 本地服务</text>
+<text x="1070.0" y="1119" class="p" text-anchor="middle">执行模型推理</text>
+<rect x="1290" y="1010" width="310" height="133" rx="14" fill="#fff7ef" stroke="#e5c49d" stroke-width="1.7"/>
+<text x="1445.0" y="1049" class="h" text-anchor="middle">执行资源</text>
+<text x="1445.0" y="1088" class="p" text-anchor="middle">文件系统 · 进程</text>
+<text x="1445.0" y="1119" class="p" text-anchor="middle">索引与外部服务</text>
+<path d="M260 185 V310" class="line"/>
+<path d="M1080 185 V212 H450 V385 H420" class="line"/>
+<text x="689" y="207" class="s" text-anchor="middle">客户端请求</text>
+<path d="M250 475 V555" class="line"/>
+<text x="262" y="523" class="s" text-anchor="start">运行请求</text>
+<path d="M420 675 H475 V410 H570" class="line"/>
+<text x="490" y="398" class="s" text-anchor="start" style="font-size:18px">调用</text>
+<path d="M830 499 V555" class="line"/>
+<text x="846" y="537" class="s" text-anchor="start">会话内执行</text>
+<path d="M830 705 V785" class="line" marker-start="url(#a)"/>
+<text x="846" y="753" class="s" text-anchor="start">模型请求 / 返回</text>
+<path d="M1090 630 H1230" class="line" marker-start="url(#a)"/>
+<text x="1160" y="610" class="s" text-anchor="middle" style="font-size:17px">工具调用 / 结果</text>
+<path d="M1090 408 H1230" class="line"/>
+<text x="1160" y="390" class="s" text-anchor="middle" style="font-size:17px">事件与回答</text>
+<path d="M1595 394 H1620 V72 H420 V90" class="line"/>
+<path d="M1400 72 V90" class="line"/>
+<text x="1180" y="64" class="s" text-anchor="middle">返回对应入口</text>
+<path d="M250 1010 V981 H60 V715 H80" class="data"/>
+<text x="72" y="971" class="s" text-anchor="start" style="font-size:17px">按需读取</text>
+<path d="M570 440 H505 V976 H690 V1010" class="data" marker-start="url(#b)"/>
+<text x="610" y="968" class="s" text-anchor="middle">保存 / 恢复</text>
+<path d="M1090 843 H1160 V976 H1070 V1010" class="line" marker-start="url(#a)"/>
+<text x="1172" y="945" class="s" text-anchor="start">模型 API</text>
+<path d="M1412 705 V976 H1445 V1010" class="line" marker-start="url(#a)"/>
+<text x="1424" y="855" class="s" text-anchor="start">实际操作 / 结果</text>
+<text x="80" y="1190" class="s" text-anchor="start">实线：请求、执行与返回     虚线：工作文件和会话记录的读写</text>
+</svg>

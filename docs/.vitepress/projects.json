@@ -1,0 +1,72 @@
+[
+  {
+    "id": "easyspider",
+    "name": "EasySpider",
+    "eyebrow": "可视化采集 · 28 节",
+    "description": "从网页上的一次点击，追到流程图、任务 JSON 与自动化执行。",
+    "topics": [
+      "浏览器扩展",
+      "XPath",
+      "流程图",
+      "Selenium"
+    ],
+    "first": "chapter-00",
+    "intro": "沿“人选择网页元素 → 扩展生成消息 → 桌面端构建流程图 → 执行器读取 JSON”的主线，理解一个真实桌面应用怎样协作。"
+  },
+  {
+    "id": "openclaw",
+    "name": "OpenClaw",
+    "eyebrow": "智能体系统 · 18 节 + 3 篇补充",
+    "description": "跟随一条用户消息，理解 Agent 如何调用工具、管理记忆并完成协作。",
+    "topics": [
+      "AgentLoop",
+      "上下文",
+      "RAG",
+      "多智能体"
+    ],
+    "first": "chapter-01",
+    "intro": "先认识 OpenClaw 与 Pi 的分层，再把模型、工具、会话、记忆和多智能体串成一次完整任务。"
+  },
+  {
+    "id": "llamafactory",
+    "name": "LLaMAFactory",
+    "eyebrow": "训练框架 · 10 分钟主线",
+    "description": "看不同数据、模型与微调配置，如何进入同一条训练流水线。",
+    "topics": [
+      "SFT",
+      "数据适配",
+      "LoRA",
+      "Trainer"
+    ],
+    "first": "ten-minutes",
+    "intro": "从数据适配、Template、标签构造和模型适配出发，理解训练框架如何组织已有模型与训练能力。十分钟主线之后可以继续阅读源码提纲。"
+  },
+  {
+    "id": "langchain",
+    "name": "LangChain",
+    "eyebrow": "组件编排 · 10 分钟主线",
+    "description": "用一条 prompt | model | parser，读懂统一接口与组件组合。",
+    "topics": [
+      "Runnable",
+      "Adapter",
+      "组合",
+      "invoke"
+    ],
+    "first": "ten-minutes",
+    "intro": "从一个问题经过 Prompt、模型和 Parser 的过程，理解 Model Adapter、Runnable 和 RunnableSequence。包含不需要 API Key 的模拟课堂示例。"
+  },
+  {
+    "id": "minimind",
+    "name": "MiniMind",
+    "eyebrow": "大模型训练 · 8 个主题",
+    "description": "从下一个 Token 到 PPO 更新，把模型结构、训练原理与源码逐层串起来。",
+    "topics": [
+      "预训练与 SFT",
+      "Transformer",
+      "PPO / RLHF",
+      "MoE / LoRA"
+    ],
+    "first": "b00-01",
+    "intro": "从梯度与预训练出发，按训练机制、Transformer 架构、模型源码、PPO、MoE 与 LoRA 阅读。相关原理、代码和数值例子放在同一主题下，提供完整讲义下载与源码对照。"
+  }
+]

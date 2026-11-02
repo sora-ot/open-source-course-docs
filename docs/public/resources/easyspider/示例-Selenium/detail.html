@@ -1,0 +1,14 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>房源详情</title>
+<style>body{font:20px sans-serif;margin:40px}img{display:block}</style>
+<h1 id="title"></h1><p>月租：<span id="price"></span>元</p>
+<p id="description">房源描述<span>近地铁</span></p>
+<img id="photo" src="sample.svg" width="180" height="60" alt="房源示意图">
+<a href="index.html">返回列表</a>
+<script>
+const id = new URLSearchParams(location.search).get('id') || 'A';
+const data = {A:['海淀','单间',2500],B:['海淀','整租',6500],C:['海淀','单间',2800],D:['朝阳','整租',7000],E:['朝阳','单间',3000]};
+const h = data[id] || data.A;
+document.querySelector('#title').textContent = `${id}：${h[0]} ${h[1]}`;
+document.querySelector('#price').textContent = h[2];
+document.title = `${id} 房源详情`;
+</script></html>

@@ -1,0 +1,870 @@
+[
+  {
+    "project": "easyspider",
+    "title": "00 · 导读与学习路线",
+    "route": "/easyspider/chapter-00",
+    "group": "认识项目",
+    "source": "EasySpider/Docs/讲义/00.讲义导读与学习路线.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "01 · 总体架构与目录",
+    "route": "/easyspider/chapter-01",
+    "group": "认识项目",
+    "source": "EasySpider/Docs/讲义/01.总体架构与目录剖析.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "02 · 数据流全链路",
+    "route": "/easyspider/chapter-02",
+    "group": "认识项目",
+    "source": "EasySpider/Docs/讲义/02.数据流全链路.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "03 · Chrome 扩展与 MV3",
+    "route": "/easyspider/chapter-03",
+    "group": "元素与任务",
+    "source": "EasySpider/Docs/讲义/03.Chrome扩展开发MV3.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "04 · XPath",
+    "route": "/easyspider/chapter-04",
+    "group": "元素与任务",
+    "source": "EasySpider/Docs/讲义/04.XPath详解.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "05 · 元素待选与选中",
+    "route": "/easyspider/chapter-05",
+    "group": "元素与任务",
+    "source": "EasySpider/Docs/讲义/05.元素待选与选中机制.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "06 · 同类元素自动匹配",
+    "route": "/easyspider/chapter-06",
+    "group": "元素与任务",
+    "source": "EasySpider/Docs/讲义/06.同类元素自动匹配.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "07 · 手动匹配与相对 XPath",
+    "route": "/easyspider/chapter-07",
+    "group": "元素与任务",
+    "source": "EasySpider/Docs/讲义/07.手动匹配与相对XPath.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "08 · 采集参数生成",
+    "route": "/easyspider/chapter-08",
+    "group": "元素与任务",
+    "source": "EasySpider/Docs/讲义/08.参数生成.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "09 · DFS 与 BFS",
+    "route": "/easyspider/chapter-09",
+    "group": "元素与任务",
+    "source": "EasySpider/Docs/讲义/09.DFS与BFS.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "10 · 选中子元素算法",
+    "route": "/easyspider/chapter-10",
+    "group": "元素与任务",
+    "source": "EasySpider/Docs/讲义/10.选中子元素算法.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "11 · Vue 3 基础",
+    "route": "/easyspider/chapter-11",
+    "group": "界面与通信",
+    "source": "EasySpider/Docs/讲义/11.Vue3详解.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "12 · toolkit.vue",
+    "route": "/easyspider/chapter-12",
+    "group": "界面与通信",
+    "source": "EasySpider/Docs/讲义/12.toolkit.vue详解.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "13 · WebSocket",
+    "route": "/easyspider/chapter-13",
+    "group": "界面与通信",
+    "source": "EasySpider/Docs/讲义/13.WebSocket详解.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "14 · 消息交互",
+    "route": "/easyspider/chapter-14",
+    "group": "界面与通信",
+    "source": "EasySpider/Docs/讲义/14.messageInteraction.js详解.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "15 · 流程图基本原理",
+    "route": "/easyspider/chapter-15",
+    "group": "流程图与执行",
+    "source": "EasySpider/Docs/讲义/15.Flowchart基本原理.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "16 · 递归执行",
+    "route": "/easyspider/chapter-16",
+    "group": "流程图与执行",
+    "source": "EasySpider/Docs/讲义/16.Flowchart递归执行原理.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "17 · Selenium",
+    "route": "/easyspider/chapter-17",
+    "group": "流程图与执行",
+    "source": "EasySpider/Docs/讲义/17.Selenium详解.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "18 · 流程图数据结构",
+    "route": "/easyspider/chapter-18",
+    "group": "流程图与执行",
+    "source": "EasySpider/Docs/讲义/18.流程图核心数据结构.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "19 · 流程图渲染",
+    "route": "/easyspider/chapter-19",
+    "group": "流程图与执行",
+    "source": "EasySpider/Docs/讲义/19.流程图渲染机制.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "20 · 流程图增删改查",
+    "route": "/easyspider/chapter-20",
+    "group": "流程图与执行",
+    "source": "EasySpider/Docs/讲义/20.流程图的增删改查.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "21 · 消息到流程图节点",
+    "route": "/easyspider/chapter-21",
+    "group": "流程图与执行",
+    "source": "EasySpider/Docs/讲义/21.消息到流程图节点.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "22 · 循环采集与参数栏",
+    "route": "/easyspider/chapter-22",
+    "group": "流程图与执行",
+    "source": "EasySpider/Docs/讲义/22.循环采集子元素与Vue参数栏.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "23 · 流程图保存与加载",
+    "route": "/easyspider/chapter-23",
+    "group": "流程图与执行",
+    "source": "EasySpider/Docs/讲义/23.流程图的保存与加载.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "24 · Electron",
+    "route": "/easyspider/chapter-24",
+    "group": "工程实践",
+    "source": "EasySpider/Docs/讲义/24.ElectronJS详解.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "25 · 调试功能",
+    "route": "/easyspider/chapter-25",
+    "group": "工程实践",
+    "source": "EasySpider/Docs/讲义/25.调试功能详解.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "26 · Node 与 Express",
+    "route": "/easyspider/chapter-26",
+    "group": "工程实践",
+    "source": "EasySpider/Docs/讲义/26.Node与Express.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "27 · 开发、调试与发布",
+    "route": "/easyspider/chapter-27",
+    "group": "工程实践",
+    "source": "EasySpider/Docs/讲义/27.项目开发、调试、打包与发布.md"
+  },
+  {
+    "project": "easyspider",
+    "title": "完整讲义目录",
+    "route": "/easyspider/directory",
+    "group": "参考与演示",
+    "source": "EasySpider/Docs/讲义/README.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "01 · 整体架构",
+    "route": "/openclaw/chapter-01",
+    "group": "架构与准备",
+    "source": "OpenClaw/OpenClaw-Course/01_OpenClaw介绍与整体架构.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "02 · 源码目录与规模",
+    "route": "/openclaw/chapter-02",
+    "group": "架构与准备",
+    "source": "OpenClaw/OpenClaw-Course/02_OpenClaw源码目录与代码规模分析.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "03 · TypeScript 速成",
+    "route": "/openclaw/chapter-03",
+    "group": "架构与准备",
+    "source": "OpenClaw/OpenClaw-Course/03_TypeScript语法速成.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "04 · Pi-Agent 与 OpenClaw",
+    "route": "/openclaw/chapter-04",
+    "group": "架构与准备",
+    "source": "OpenClaw/OpenClaw-Course/04_Pi-Agent介绍与OpenClaw的关系.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "05 · 模型接口与流式传输",
+    "route": "/openclaw/chapter-05",
+    "group": "一次任务如何运行",
+    "source": "OpenClaw/OpenClaw-Course/05_pi-ai源码解析：从类型到OpenAI流式传输.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "06 · AgentLoop 执行循环",
+    "route": "/openclaw/chapter-06",
+    "group": "一次任务如何运行",
+    "source": "OpenClaw/OpenClaw-Course/06_Pi-AgentLoop源码解析：从prompt到任务结束.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "07 · 工具系统",
+    "route": "/openclaw/chapter-07",
+    "group": "一次任务如何运行",
+    "source": "OpenClaw/OpenClaw-Course/07_Pi工具系统源码解析：定义、接入、执行与自定义工具.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "08 · Compaction 上下文压缩",
+    "route": "/openclaw/chapter-08",
+    "group": "会话与上下文",
+    "source": "OpenClaw/OpenClaw-Course/08_Compaction上下文压缩完整讲义.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "09 · SessionManager",
+    "route": "/openclaw/chapter-09",
+    "group": "会话与上下文",
+    "source": "OpenClaw/OpenClaw-Course/09_SessionManager全流程详解.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "10 · Bootstrap、Skill 与 Extension",
+    "route": "/openclaw/chapter-10",
+    "group": "会话与上下文",
+    "source": "OpenClaw/OpenClaw-Course/10_Bootstrap、Skill与Extension加载原理完整讲义.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "11 · 记忆系统与 RAG",
+    "route": "/openclaw/chapter-11",
+    "group": "记忆与知识检索",
+    "source": "OpenClaw/OpenClaw-Course/11_记忆系统RAG原理完整讲义.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "12 · 互联网 RAG",
+    "route": "/openclaw/chapter-12",
+    "group": "记忆与知识检索",
+    "source": "OpenClaw/OpenClaw-Course/12_互联网RAG原理完整讲义.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "13 · AgentSession 运行准备",
+    "route": "/openclaw/chapter-13",
+    "group": "会话执行与协作",
+    "source": "OpenClaw/OpenClaw-Course/13_AgentSession运行准备完整讲义.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "14 · AgentSession 执行",
+    "route": "/openclaw/chapter-14",
+    "group": "会话执行与协作",
+    "source": "OpenClaw/OpenClaw-Course/14_AgentSession执行原理完整讲义.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "15 · 多智能体系统",
+    "route": "/openclaw/chapter-15",
+    "group": "会话执行与协作",
+    "source": "OpenClaw/OpenClaw-Course/15_多智能体系统原理完整讲义.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "16 · Gateway 与多渠道通信",
+    "route": "/openclaw/chapter-16",
+    "group": "系统集成",
+    "source": "OpenClaw/OpenClaw-Course/16_OpenClaw Gateway架构、多渠道接入与消息事件通信.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "17 · 路由、Session 与并发调度",
+    "route": "/openclaw/chapter-17",
+    "group": "系统集成",
+    "source": "OpenClaw/OpenClaw-Course/17_OpenClaw Multi-Agent路由、Session管理与并发调度.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "18 · Workspace 与长期记忆",
+    "route": "/openclaw/chapter-18",
+    "group": "系统集成",
+    "source": "OpenClaw/OpenClaw-Course/18_OpenClaw Workspace、Bootstrap与长期记忆机制.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "会话树源码补充",
+    "route": "/openclaw/session-tree",
+    "group": "源码补充",
+    "source": "OpenClaw/OpenClaw-Course/x.Pi会话系统源码解析：AgentSession与SessionTree.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "技能与扩展源码补充",
+    "route": "/openclaw/skills-extensions",
+    "group": "源码补充",
+    "source": "OpenClaw/OpenClaw-Course/x.Pi技能与扩展源码解析：Skill加载与Extension运行机制.md"
+  },
+  {
+    "project": "openclaw",
+    "title": "消息与事件源码补充",
+    "route": "/openclaw/messages-events",
+    "group": "源码补充",
+    "source": "OpenClaw/OpenClaw-Course/x.Pi消息系统与事件系统源码解析：数据、通知与异步交接.md"
+  },
+  {
+    "project": "llamafactory",
+    "title": "十分钟理解核心实现",
+    "route": "/llamafactory/ten-minutes",
+    "group": "课堂主线",
+    "source": "LLaMAFactory_10分钟项目讲义.md"
+  },
+  {
+    "project": "llamafactory",
+    "title": "源码提纲与关键代码",
+    "route": "/llamafactory/source-outline",
+    "group": "扩展阅读",
+    "source": "LLaMAFactory源码讲解提纲与关键代码.md"
+  },
+  {
+    "project": "langchain",
+    "title": "十分钟理解 Runnable",
+    "route": "/langchain/ten-minutes",
+    "group": "课堂主线",
+    "source": "LangChain十分钟讲义.md"
+  },
+  {
+    "project": "minimind",
+    "title": "01 · 梯度、反向传播与梯度下降",
+    "route": "/minimind/b00-01",
+    "group": "基础与预训练",
+    "source": "MiniMind整理版/正文/基础与预训练/b00-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "02 · Tokenizer 训练与原理",
+    "route": "/minimind/s0747f098-01",
+    "group": "基础与预训练",
+    "source": "MiniMind整理版/正文/基础与预训练/s0747f098-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "03 · 预训练完整流程",
+    "route": "/minimind/b01-01",
+    "group": "基础与预训练",
+    "source": "MiniMind整理版/正文/基础与预训练/b01-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "04 · Next Token：预测目标与损失计算",
+    "route": "/minimind/b04-01",
+    "group": "基础与预训练",
+    "source": "MiniMind整理版/正文/基础与预训练/b04-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "05 · Next Token：并行训练与前缀共享",
+    "route": "/minimind/b04-02",
+    "group": "基础与预训练",
+    "source": "MiniMind整理版/正文/基础与预训练/b04-02.md"
+  },
+  {
+    "project": "minimind",
+    "title": "06 · Next Token：反向传播与上下文学习",
+    "route": "/minimind/b04-03",
+    "group": "基础与预训练",
+    "source": "MiniMind整理版/正文/基础与预训练/b04-03.md"
+  },
+  {
+    "project": "minimind",
+    "title": "07 · 预训练源码：数据、模型与前向计算",
+    "route": "/minimind/s1545a2c4-01",
+    "group": "基础与预训练",
+    "source": "MiniMind整理版/正文/基础与预训练/s1545a2c4-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "08 · 预训练源码：训练循环、评估与工程细节",
+    "route": "/minimind/s1545a2c4-02",
+    "group": "基础与预训练",
+    "source": "MiniMind整理版/正文/基础与预训练/s1545a2c4-02.md"
+  },
+  {
+    "project": "minimind",
+    "title": "09 · 困惑度与模型评估",
+    "route": "/minimind/s1515c2c3-01",
+    "group": "基础与预训练",
+    "source": "MiniMind整理版/正文/基础与预训练/s1515c2c3-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "10 · 混合精度：FP16、AMP 与梯度裁剪",
+    "route": "/minimind/b02-01",
+    "group": "训练机制与 SFT",
+    "source": "MiniMind整理版/正文/训练机制与 SFT/b02-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "11 · Loss Scaling：梯度传播与数值保护",
+    "route": "/minimind/b02-02",
+    "group": "训练机制与 SFT",
+    "source": "MiniMind整理版/正文/训练机制与 SFT/b02-02.md"
+  },
+  {
+    "project": "minimind",
+    "title": "12 · 梯度累积与 Loss 平均",
+    "route": "/minimind/b03-01",
+    "group": "训练机制与 SFT",
+    "source": "MiniMind整理版/正文/训练机制与 SFT/b03-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "13 · SFT 与三种 Mask",
+    "route": "/minimind/b05-01",
+    "group": "训练机制与 SFT",
+    "source": "MiniMind整理版/正文/训练机制与 SFT/b05-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "14 · Encoder 与 Decoder-only",
+    "route": "/minimind/se862b370-01",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/se862b370-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "15 · Attention：QKV、打分与加权求和",
+    "route": "/minimind/b06-01",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b06-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "16 · Attention：多头结构与 QKV 的分工",
+    "route": "/minimind/b06-02",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b06-02.md"
+  },
+  {
+    "project": "minimind",
+    "title": "17 · Attention：反向传播与共享参数",
+    "route": "/minimind/b06-03",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b06-03.md"
+  },
+  {
+    "project": "minimind",
+    "title": "18 · MHA：多头投影、维度与参数量",
+    "route": "/minimind/b07-01",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b07-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "19 · MHA：值向量汇合与多头梯度",
+    "route": "/minimind/b07-02",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b07-02.md"
+  },
+  {
+    "project": "minimind",
+    "title": "20 · KV Cache：缓存原理与增量计算",
+    "route": "/minimind/b08-01",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b08-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "21 · KV Cache：Prefill、Decode 与训练阶段",
+    "route": "/minimind/b08-02",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b08-02.md"
+  },
+  {
+    "project": "minimind",
+    "title": "22 · GQA：分组结构与缓存开销",
+    "route": "/minimind/b08-03",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b08-03.md"
+  },
+  {
+    "project": "minimind",
+    "title": "23 · GQA：共享梯度与 MHA、MQA 对比",
+    "route": "/minimind/b08-04",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b08-04.md"
+  },
+  {
+    "project": "minimind",
+    "title": "24 · 位置编码：Attention 的顺序信息",
+    "route": "/minimind/b09-01",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b09-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "25 · RoPE：旋转表示与相对位置",
+    "route": "/minimind/b09-02",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b09-02.md"
+  },
+  {
+    "project": "minimind",
+    "title": "26 · YaRN：长上下文外推与频率缩放",
+    "route": "/minimind/b09-03",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b09-03.md"
+  },
+  {
+    "project": "minimind",
+    "title": "27 · RoPE 与 YaRN：频率分工与综合例子",
+    "route": "/minimind/b09-04",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b09-04.md"
+  },
+  {
+    "project": "minimind",
+    "title": "28 · 位置编码：绝对位置与正弦编码",
+    "route": "/minimind/b09-05",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b09-05.md"
+  },
+  {
+    "project": "minimind",
+    "title": "29 · 归一化：LayerNorm、RMSNorm 与 Pre-Norm",
+    "route": "/minimind/b10-01",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b10-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "30 · RMSNorm：数值尺度、梯度裁剪与权重",
+    "route": "/minimind/b10-02",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b10-02.md"
+  },
+  {
+    "project": "minimind",
+    "title": "31 · SiLU 与门控 FFN",
+    "route": "/minimind/b11-01",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b11-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "32 · MiniMind 整体架构",
+    "route": "/minimind/b13-01",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b13-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "33 · Dense Model 重点复习",
+    "route": "/minimind/b12-01",
+    "group": "Transformer 架构",
+    "source": "MiniMind整理版/正文/Transformer 架构/b12-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "34 · 理论之外的 Tensor 操作",
+    "route": "/minimind/b14-01",
+    "group": "模型源码与推理",
+    "source": "MiniMind整理版/正文/模型源码与推理/b14-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "35 · 模型源码：配置、基础组件与 RoPE",
+    "route": "/minimind/b15-01",
+    "group": "模型源码与推理",
+    "source": "MiniMind整理版/正文/模型源码与推理/b15-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "36 · 模型源码：Attention 的构造与前向计算",
+    "route": "/minimind/b15-02",
+    "group": "模型源码与推理",
+    "source": "MiniMind整理版/正文/模型源码与推理/b15-02.md"
+  },
+  {
+    "project": "minimind",
+    "title": "37 · 模型源码：FFN、MoE 与 Decoder Block",
+    "route": "/minimind/b15-03",
+    "group": "模型源码与推理",
+    "source": "MiniMind整理版/正文/模型源码与推理/b15-03.md"
+  },
+  {
+    "project": "minimind",
+    "title": "38 · 模型源码：Transformer 主干、LM Head 与 Loss",
+    "route": "/minimind/b15-04",
+    "group": "模型源码与推理",
+    "source": "MiniMind整理版/正文/模型源码与推理/b15-04.md"
+  },
+  {
+    "project": "minimind",
+    "title": "39 · 模型源码：自回归生成与实现要点",
+    "route": "/minimind/b15-05",
+    "group": "模型源码与推理",
+    "source": "MiniMind整理版/正文/模型源码与推理/b15-05.md"
+  },
+  {
+    "project": "minimind",
+    "title": "40 · 推理：generate 流程与采样策略",
+    "route": "/minimind/b16-01",
+    "group": "模型源码与推理",
+    "source": "MiniMind整理版/正文/模型源码与推理/b16-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "41 · 推理：KV Cache 调用链与流式输出",
+    "route": "/minimind/b16-02",
+    "group": "模型源码与推理",
+    "source": "MiniMind整理版/正文/模型源码与推理/b16-02.md"
+  },
+  {
+    "project": "minimind",
+    "title": "42 · 强化学习基础",
+    "route": "/minimind/s6350dbe1-01",
+    "group": "强化学习与 PPO 原理",
+    "source": "MiniMind整理版/正文/强化学习与 PPO 原理/s6350dbe1-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "43 · 策略梯度与 Actor-Critic",
+    "route": "/minimind/s3503af2f-01",
+    "group": "强化学习与 PPO 原理",
+    "source": "MiniMind整理版/正文/强化学习与 PPO 原理/s3503af2f-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "44 · PPO 算法详解",
+    "route": "/minimind/se8dc6aaa-01",
+    "group": "强化学习与 PPO 原理",
+    "source": "MiniMind整理版/正文/强化学习与 PPO 原理/se8dc6aaa-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "45 · 强化学习：轨迹、价值与策略梯度",
+    "route": "/minimind/b17-01",
+    "group": "强化学习与 PPO 原理",
+    "source": "MiniMind整理版/正文/强化学习与 PPO 原理/b17-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "46 · 策略梯度：Advantage、Critic 与 GAE",
+    "route": "/minimind/b17-02",
+    "group": "强化学习与 PPO 原理",
+    "source": "MiniMind整理版/正文/强化学习与 PPO 原理/b17-02.md"
+  },
+  {
+    "project": "minimind",
+    "title": "47 · PPO：重要性采样、裁剪目标与旧策略",
+    "route": "/minimind/b17-03",
+    "group": "强化学习与 PPO 原理",
+    "source": "MiniMind整理版/正文/强化学习与 PPO 原理/b17-03.md"
+  },
+  {
+    "project": "minimind",
+    "title": "48 · RLHF：模型分工、奖励与参数更新",
+    "route": "/minimind/b17-04",
+    "group": "强化学习与 PPO 原理",
+    "source": "MiniMind整理版/正文/强化学习与 PPO 原理/b17-04.md"
+  },
+  {
+    "project": "minimind",
+    "title": "49 · RLHF 与 PPO 的 18 个关键问题",
+    "route": "/minimind/sed92650a-01",
+    "group": "强化学习与 PPO 原理",
+    "source": "MiniMind整理版/正文/强化学习与 PPO 原理/sed92650a-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "50 · PPO 梯度更新与反向传播",
+    "route": "/minimind/sc84b38de-01",
+    "group": "强化学习与 PPO 原理",
+    "source": "MiniMind整理版/正文/强化学习与 PPO 原理/sc84b38de-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "51 · PPO 裁剪目标与通用实现",
+    "route": "/minimind/s41b0a574-01",
+    "group": "强化学习与 PPO 原理",
+    "source": "MiniMind整理版/正文/强化学习与 PPO 原理/s41b0a574-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "52 · PPO 重点复习",
+    "route": "/minimind/b19-01",
+    "group": "PPO 采样与训练",
+    "source": "MiniMind整理版/正文/PPO 采样与训练/b19-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "53 · Reward Model：数据与 PyTorch 接口",
+    "route": "/minimind/b18-01",
+    "group": "PPO 采样与训练",
+    "source": "MiniMind整理版/正文/PPO 采样与训练/b18-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "54 · Reward Model：偏好损失、梯度与评分尺度",
+    "route": "/minimind/b18-02",
+    "group": "PPO 采样与训练",
+    "source": "MiniMind整理版/正文/PPO 采样与训练/b18-02.md"
+  },
+  {
+    "project": "minimind",
+    "title": "55 · Rollout 从零到完整流程",
+    "route": "/minimind/b20-01",
+    "group": "PPO 采样与训练",
+    "source": "MiniMind整理版/正文/PPO 采样与训练/b20-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "56 · Rollout 的 PyTorch 与 SGLang 实现",
+    "route": "/minimind/sbe84682d-01",
+    "group": "PPO 采样与训练",
+    "source": "MiniMind整理版/正文/PPO 采样与训练/sbe84682d-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "57 · PPO 代码：模型角色与 PyTorch 基础",
+    "route": "/minimind/b21-01",
+    "group": "PPO 采样与训练",
+    "source": "MiniMind整理版/正文/PPO 采样与训练/b21-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "58 · PPO 代码：DDP 同步、KL 监控与近似",
+    "route": "/minimind/b21-02",
+    "group": "PPO 采样与训练",
+    "source": "MiniMind整理版/正文/PPO 采样与训练/b21-02.md"
+  },
+  {
+    "project": "minimind",
+    "title": "59 · PPO 代码：采样、GAE 与 Actor-Critic 更新",
+    "route": "/minimind/b21-03",
+    "group": "PPO 采样与训练",
+    "source": "MiniMind整理版/正文/PPO 采样与训练/b21-03.md"
+  },
+  {
+    "project": "minimind",
+    "title": "60 · PPO 中的两类 KL 散度",
+    "route": "/minimind/s0c014541-01",
+    "group": "PPO 采样与训练",
+    "source": "MiniMind整理版/正文/PPO 采样与训练/s0c014541-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "61 · PPO 代码中的 GAE",
+    "route": "/minimind/scb9fb90e-01",
+    "group": "PPO 采样与训练",
+    "source": "MiniMind整理版/正文/PPO 采样与训练/scb9fb90e-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "62 · PPO 训练完整数值例子",
+    "route": "/minimind/b22-01",
+    "group": "PPO 采样与训练",
+    "source": "MiniMind整理版/正文/PPO 采样与训练/b22-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "63 · MoE：专家路由与 Token 分发",
+    "route": "/minimind/b23-01",
+    "group": "MoE",
+    "source": "MiniMind整理版/正文/MoE/b23-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "64 · MoE：负载均衡与稀疏计算",
+    "route": "/minimind/b23-02",
+    "group": "MoE",
+    "source": "MiniMind整理版/正文/MoE/b23-02.md"
+  },
+  {
+    "project": "minimind",
+    "title": "65 · MoE 源码：前向计算与梯度路径",
+    "route": "/minimind/b23-03",
+    "group": "MoE",
+    "source": "MiniMind整理版/正文/MoE/b23-03.md"
+  },
+  {
+    "project": "minimind",
+    "title": "66 · MoE 源码：辅助损失与训练实现",
+    "route": "/minimind/b23-04",
+    "group": "MoE",
+    "source": "MiniMind整理版/正文/MoE/b23-04.md"
+  },
+  {
+    "project": "minimind",
+    "title": "67 · LoRA：低秩更新与完整工作流程",
+    "route": "/minimind/b24-01",
+    "group": "LoRA",
+    "source": "MiniMind整理版/正文/LoRA/b24-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "68 · LoRA 数学：行列式、特征值与坐标变换",
+    "route": "/minimind/b24-02",
+    "group": "LoRA",
+    "source": "MiniMind整理版/正文/LoRA/b24-02.md"
+  },
+  {
+    "project": "minimind",
+    "title": "69 · LoRA 数学：SVD 与低秩因子构造",
+    "route": "/minimind/b24-03",
+    "group": "LoRA",
+    "source": "MiniMind整理版/正文/LoRA/b24-03.md"
+  },
+  {
+    "project": "minimind",
+    "title": "70 · LoRA 前向、梯度与部署",
+    "route": "/minimind/s4859f99c-01",
+    "group": "LoRA",
+    "source": "MiniMind整理版/正文/LoRA/s4859f99c-01.md"
+  },
+  {
+    "project": "minimind",
+    "title": "71 · LoRA 训练代码",
+    "route": "/minimind/b25-01",
+    "group": "LoRA",
+    "source": "MiniMind整理版/正文/LoRA/b25-01.md"
+  }
+]

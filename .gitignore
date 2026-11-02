@@ -1,0 +1,14 @@
+node_modules/
+docs/.vitepress/cache/
+docs/.vitepress/.temp/
+docs/.vitepress/dist/
+test-results/
+.preview.log
+.preview.err
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db

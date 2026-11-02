@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第22讲：循环采集子元素与 Vue 参数栏</title>
+  <link rel="stylesheet" href="../../../ElectronJS/src/taskGrid/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../../../ElectronJS/src/taskGrid/FlowChart.css">
+  <style>
+    body { background:#f3f5f8; color:#20354b; font-family:"Microsoft YaHei",sans-serif; }
+    main { max-width:1550px; margin:20px auto; padding:0 20px; }
+    h1 { font-size:25px!important; font-weight:700; margin:0 0 10px; }
+    h2 { font-size:19px!important; font-weight:700; margin-bottom:12px; }
+    .note { line-height:1.7; color:#536579; }
+    .toolbar { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0; }
+    .layout { display:grid; grid-template-columns:230px 275px minmax(550px,1fr); gap:16px; align-items:start; }
+    .card { padding:16px; border:1px solid #cbd5df; border-radius:9px; background:white; }
+    .house { border:2px solid #9ac9d7; background:#f0f9fb; border-radius:7px; padding:12px; margin-bottom:14px; }
+    .house h2 { font-size:18px!important; }
+    .rent { color:#bd4e19; font-weight:700; }
+    .canvas { border:1px solid #cbd5df; padding:4px; }
+    .end { border-radius:50%; width:40px; height:40px; border:solid black; margin:5px auto; background:lightcyan; text-align:center; }
+    .parameter-scroll { max-height:850px; overflow:auto; }
+    .Modify { margin:0; }
+    .Modify > label { margin-bottom:6px; }
+    .Modify .elements { margin:10px 0; }
+    .Modify p { line-height:1.65; }
+    .toolkitcontain td:last-child a { display:inline-block; margin-right:7px; }
+    .toolkitcontain td:last-child { white-space:normal; }
+    .toolkitcontain { height:118px; }
+    .toolkitcontain .toolkittb4 { position:static; }
+    .toolkitcontain th,.toolkitcontain td { height:36px; }
+    .state { margin-top:18px; }
+    pre { margin-top:10px; padding:14px; background:#f6f8fa; border:1px solid #dce4ed; max-height:450px; overflow:auto; }
+    pre,code { font-family:Consolas,"Microsoft YaHei",monospace; font-size:14px!important; }
+    #event-output { color:#176354; line-height:1.7; }
+    [v-cloak] { display:none; }
+    @media(max-width:1000px) { .layout { grid-template-columns:1fr; } .parameter-scroll { max-height:none; } }
+  </style>
+</head>
+<body>
+<main>
+  <h1>循环每张卡片，在卡片内采集标题和租金</h1>
+  <p class="note">左边是被采集网页，中间是流程图，右边复用 FlowChart_CN.html 的真实 Vue 参数模板。切换循环与提取节点，再点字段的“修改”，对照下方变量。</p>
+  <div class="toolbar">
+    <button type="button" class="btn btn-outline-primary" id="select-loop">选中循环</button>
+    <button type="button" class="btn btn-outline-primary" id="select-fields">选中提取</button>
+    <button type="button" class="btn btn-outline-secondary" id="reset-demo">重置案例</button>
+  </div>
+  <div class="layout">
+    <section class="card">
+      <h2>网页：两张卡片</h2>
+      <div id="source-page">
+        <div class="house">
+          <h2>海淀单间</h2>
+          <div class="meta"><span class="rent">2500元</span><span> / 月</span></div>
+        </div>
+        <div class="house">
+          <h2>朝阳单间</h2>
+          <div class="meta"><span class="rent">2800元</span><span> / 月</span></div>
+        </div>
+      </div>
+      <p class="note">循环路径：</p>
+      <code>//div[@class='house']</code>
+      <p class="note mt-3">标题路径：<code>/h2[1]</code><br>租金路径：<code>/div[1]/span[1]</code></p>
+      <p class="note">本例保留这两个字段；“ / 月”这一列已在扩展预览中删除。</p>
+    </section>
+    <section class="card">
+      <h2>图：循环 → 提取</h2>
+      <div class="canvas" id="flowchart_graph">
+        <div id="0" class="clk" data="0"></div>
+        <div class="end">■</div>
+      </div>
+      <p class="note mt-3">循环 2 的 sequence=[3]。标题、租金是提取 3 内部的两个字段。</p>
+    </section>
+    <section class="card">
+      <h2>Vue：当前节点的参数栏</h2>
+      <div class="parameter-scroll">
+        <div class="Modify" id="app" v-cloak>
+          <label>选项名称：</label>
+          <input class="form-control" v-model='list.nl[index.nowNodeIndex]["title"]'>
+          <!-- PARAMETER_PANELS -->
+          <div class="modal fade" id="myModal_XPath" tabindex="-1" role="dialog">
+            <div class="modal-dialog"><div class="modal-content">
+              <div class="modal-header"><h2>其他候选 XPath</h2><button class="close" data-dismiss="modal">×</button></div>
+              <div class="modal-body"><pre>{{XPaths}}</pre></div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <section class="card state">
+    <h2>变量流动：当前绑定到了谁</h2>
+    <p id="event-output" role="status"></p>
+    <p><code id="state-summary"></code></p>
+    <pre id="state-output"></pre>
+    <p class="note">右侧模板、Vue 配置与核心函数从仓库提取；本页在创建 Vue 前预置完整四节点参数，并用本地记录替代试运行消息发送。它展示已有参数的编辑，不复现现场新增时“先 push、后添加 parameters”的响应性限制。编辑会改变本页内存中的参数，重置可恢复。</p>
+    <details><summary>案例校验结果</summary><pre id="verification"></pre></details>
+  </section>
+</main>
+<script src="../../../ElectronJS/src/taskGrid/jquery-3.4.1.min.js"></script>
+<script src="../../../ElectronJS/src/taskGrid/vue.js"></script>
+<script src="../../../ElectronJS/src/taskGrid/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="循环子元素-源码片段.js"></script>
+</body>
+</html>

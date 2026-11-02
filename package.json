@@ -1,0 +1,21 @@
+{
+  "name": "open-source-course-docs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync": "python scripts/sync_content.py",
+    "dev": "vitepress dev docs --host 127.0.0.1",
+    "build": "node --max-old-space-size=6144 node_modules/vitepress/bin/vitepress.js build docs",
+    "build:sync": "npm run sync && npm run build",
+    "preview": "vitepress preview docs --host 127.0.0.1",
+    "check": "node scripts/check-site.mjs"
+  },
+  "devDependencies": {
+    "vitepress": "1.6.4",
+    "vue": "3.5.22",
+    "markdown-it-mathjax3": "4.3.2",
+    "mermaid": "11.12.1",
+    "@playwright/test": "1.56.1"
+  }
+}

@@ -1,0 +1,396 @@
+{
+  "loop": {
+    "actionSequence": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "nowNodeIndex": 2,
+    "nodeType": 8,
+    "nowNode": "nodeList[2]",
+    "parentNode": "nodeList[0]",
+    "loopType": 1,
+    "paraIndex": 0,
+    "params.parameters === nodeList[3].parameters.params": true,
+    "currentField": null,
+    "nodeList[3].parameters": {
+      "history": 1,
+      "tabIndex": -1,
+      "useLoop": false,
+      "xpath": "",
+      "iframe": false,
+      "wait": 0,
+      "waitType": 0,
+      "beforeJS": "",
+      "beforeJSWaitTime": 0,
+      "afterJS": "",
+      "afterJSWaitTime": 0,
+      "waitElement": "",
+      "waitElementTime": 10,
+      "waitElementIframeIndex": 0,
+      "clear": 0,
+      "newLine": 1,
+      "params": [
+        {
+          "nodeType": 0,
+          "contentType": 1,
+          "relative": true,
+          "name": "标题",
+          "desc": "",
+          "relativeXPath": "/h2[1]",
+          "allXPaths": [
+            "/h2[1]"
+          ],
+          "exampleValues": [
+            {
+              "num": 0,
+              "value": "海淀单间"
+            }
+          ],
+          "iframe": false,
+          "default": "",
+          "paraType": "text",
+          "recordASField": 1,
+          "beforeJS": "",
+          "beforeJSWaitTime": 0,
+          "JS": "",
+          "JSWaitTime": 0,
+          "afterJS": "",
+          "afterJSWaitTime": 0,
+          "downloadPic": 0,
+          "splitLine": 0
+        },
+        {
+          "nodeType": 0,
+          "contentType": 1,
+          "relative": true,
+          "name": "租金",
+          "desc": "",
+          "relativeXPath": "/div[1]/span[1]",
+          "allXPaths": [
+            "/div[1]/span[1]"
+          ],
+          "exampleValues": [
+            {
+              "num": 0,
+              "value": "2500元"
+            }
+          ],
+          "iframe": false,
+          "default": "",
+          "paraType": "text",
+          "recordASField": 1,
+          "beforeJS": "",
+          "beforeJSWaitTime": 0,
+          "JS": "",
+          "JSWaitTime": 0,
+          "afterJS": "",
+          "afterJSWaitTime": 0,
+          "downloadPic": 0,
+          "splitLine": 0
+        }
+      ]
+    }
+  },
+  "title": {
+    "actionSequence": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "nowNodeIndex": 3,
+    "nodeType": 3,
+    "nowNode": "nodeList[3]",
+    "parentNode": "nodeList[2]",
+    "loopType": 1,
+    "paraIndex": 0,
+    "params.parameters === nodeList[3].parameters.params": true,
+    "currentField": {
+      "name": "标题",
+      "relative": true,
+      "relativeXPath": "/h2[1]",
+      "contentType": 1,
+      "paraType": "text"
+    },
+    "nodeList[3].parameters": {
+      "history": 1,
+      "tabIndex": -1,
+      "useLoop": false,
+      "xpath": "",
+      "iframe": false,
+      "wait": 0,
+      "waitType": 0,
+      "beforeJS": "",
+      "beforeJSWaitTime": 0,
+      "afterJS": "",
+      "afterJSWaitTime": 0,
+      "waitElement": "",
+      "waitElementTime": 10,
+      "waitElementIframeIndex": 0,
+      "clear": 0,
+      "newLine": 1,
+      "params": [
+        {
+          "nodeType": 0,
+          "contentType": 1,
+          "relative": true,
+          "name": "标题",
+          "desc": "",
+          "relativeXPath": "/h2[1]",
+          "allXPaths": [
+            "/h2[1]"
+          ],
+          "exampleValues": [
+            {
+              "num": 0,
+              "value": "海淀单间"
+            }
+          ],
+          "iframe": false,
+          "default": "",
+          "paraType": "text",
+          "recordASField": 1,
+          "beforeJS": "",
+          "beforeJSWaitTime": 0,
+          "JS": "",
+          "JSWaitTime": 0,
+          "afterJS": "",
+          "afterJSWaitTime": 0,
+          "downloadPic": 0,
+          "splitLine": 0
+        },
+        {
+          "nodeType": 0,
+          "contentType": 1,
+          "relative": true,
+          "name": "租金",
+          "desc": "",
+          "relativeXPath": "/div[1]/span[1]",
+          "allXPaths": [
+            "/div[1]/span[1]"
+          ],
+          "exampleValues": [
+            {
+              "num": 0,
+              "value": "2500元"
+            }
+          ],
+          "iframe": false,
+          "default": "",
+          "paraType": "text",
+          "recordASField": 1,
+          "beforeJS": "",
+          "beforeJSWaitTime": 0,
+          "JS": "",
+          "JSWaitTime": 0,
+          "afterJS": "",
+          "afterJSWaitTime": 0,
+          "downloadPic": 0,
+          "splitLine": 0
+        }
+      ]
+    }
+  },
+  "rent": {
+    "actionSequence": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "nowNodeIndex": 3,
+    "nodeType": 3,
+    "nowNode": "nodeList[3]",
+    "parentNode": "nodeList[2]",
+    "loopType": 1,
+    "paraIndex": 1,
+    "params.parameters === nodeList[3].parameters.params": true,
+    "currentField": {
+      "name": "租金",
+      "relative": true,
+      "relativeXPath": "/div[1]/span[1]",
+      "contentType": 1,
+      "paraType": "text"
+    },
+    "nodeList[3].parameters": {
+      "history": 1,
+      "tabIndex": -1,
+      "useLoop": false,
+      "xpath": "",
+      "iframe": false,
+      "wait": 0,
+      "waitType": 0,
+      "beforeJS": "",
+      "beforeJSWaitTime": 0,
+      "afterJS": "",
+      "afterJSWaitTime": 0,
+      "waitElement": "",
+      "waitElementTime": 10,
+      "waitElementIframeIndex": 0,
+      "clear": 0,
+      "newLine": 1,
+      "params": [
+        {
+          "nodeType": 0,
+          "contentType": 1,
+          "relative": true,
+          "name": "标题",
+          "desc": "",
+          "relativeXPath": "/h2[1]",
+          "allXPaths": [
+            "/h2[1]"
+          ],
+          "exampleValues": [
+            {
+              "num": 0,
+              "value": "海淀单间"
+            }
+          ],
+          "iframe": false,
+          "default": "",
+          "paraType": "text",
+          "recordASField": 1,
+          "beforeJS": "",
+          "beforeJSWaitTime": 0,
+          "JS": "",
+          "JSWaitTime": 0,
+          "afterJS": "",
+          "afterJSWaitTime": 0,
+          "downloadPic": 0,
+          "splitLine": 0
+        },
+        {
+          "nodeType": 0,
+          "contentType": 1,
+          "relative": true,
+          "name": "租金",
+          "desc": "",
+          "relativeXPath": "/div[1]/span[1]",
+          "allXPaths": [
+            "/div[1]/span[1]"
+          ],
+          "exampleValues": [
+            {
+              "num": 0,
+              "value": "2500元"
+            }
+          ],
+          "iframe": false,
+          "default": "",
+          "paraType": "text",
+          "recordASField": 1,
+          "beforeJS": "",
+          "beforeJSWaitTime": 0,
+          "JS": "",
+          "JSWaitTime": 0,
+          "afterJS": "",
+          "afterJSWaitTime": 0,
+          "downloadPic": 0,
+          "splitLine": 0
+        }
+      ]
+    }
+  },
+  "edited": {
+    "actionSequence": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "nowNodeIndex": 3,
+    "nodeType": 3,
+    "nowNode": "nodeList[3]",
+    "parentNode": "nodeList[2]",
+    "loopType": 1,
+    "paraIndex": 1,
+    "params.parameters === nodeList[3].parameters.params": true,
+    "currentField": {
+      "name": "月租",
+      "relative": true,
+      "relativeXPath": "/div[1]/span[@class=\"rent\"]",
+      "contentType": 1,
+      "paraType": "text"
+    },
+    "nodeList[3].parameters": {
+      "history": 1,
+      "tabIndex": -1,
+      "useLoop": false,
+      "xpath": "",
+      "iframe": false,
+      "wait": 0,
+      "waitType": 0,
+      "beforeJS": "",
+      "beforeJSWaitTime": 0,
+      "afterJS": "",
+      "afterJSWaitTime": 0,
+      "waitElement": "",
+      "waitElementTime": 10,
+      "waitElementIframeIndex": 0,
+      "clear": 0,
+      "newLine": 1,
+      "params": [
+        {
+          "nodeType": 0,
+          "contentType": 1,
+          "relative": true,
+          "name": "标题",
+          "desc": "",
+          "relativeXPath": "/h2[1]",
+          "allXPaths": [
+            "/h2[1]"
+          ],
+          "exampleValues": [
+            {
+              "num": 0,
+              "value": "海淀单间"
+            }
+          ],
+          "iframe": false,
+          "default": "",
+          "paraType": "text",
+          "recordASField": 1,
+          "beforeJS": "",
+          "beforeJSWaitTime": 0,
+          "JS": "",
+          "JSWaitTime": 0,
+          "afterJS": "",
+          "afterJSWaitTime": 0,
+          "downloadPic": 0,
+          "splitLine": 0
+        },
+        {
+          "nodeType": 0,
+          "contentType": 1,
+          "relative": true,
+          "name": "月租",
+          "desc": "",
+          "relativeXPath": "/div[1]/span[@class=\"rent\"]",
+          "allXPaths": [
+            "/div[1]/span[1]"
+          ],
+          "exampleValues": [
+            {
+              "num": 0,
+              "value": "2500元"
+            }
+          ],
+          "iframe": false,
+          "default": "",
+          "paraType": "text",
+          "recordASField": 1,
+          "beforeJS": "",
+          "beforeJSWaitTime": 0,
+          "JS": "",
+          "JSWaitTime": 0,
+          "afterJS": "",
+          "afterJSWaitTime": 0,
+          "downloadPic": 0,
+          "splitLine": 0
+        }
+      ]
+    }
+  }
+}

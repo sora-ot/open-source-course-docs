@@ -1,0 +1,1053 @@
+# 梯度累积与 Loss 平均
+
+
+<a id="origin-3"></a>
+## 1. 先从 batch_size=32 说起：已经除以 32，为什么还要除以 8？
+
+先看单卡。假设默认 `batch_size=32`，一次送进模型 32 个样本，每个样本都有自己的损失。
+
+为了方便理解，这里先按“每个样本一个损失、对样本取平均”来讲。那么这一个 Batch 的 Loss 就是：
+
+\[
+L=\frac{\ell_1+\ell_2+\cdots+\ell_{32}}{32}
+\]
+
+其中 \(\ell_j\) 是第 \(j\) 个样本的损失。也就是说，**32 个样本的损失相加，再除以 32，得到这个 Batch 的平均 Loss。**
+
+通常 Loss 函数的 `reduction="mean"` 已经完成这一步，所以拿到 `loss` 后，不需要自己再写一次 `loss / 32`。
+
+> 在语言模型中，交叉熵通常对有效 token 取平均，实际分母是有效 token 数，不一定是 32。下面用按样本平均的例子解释两层平均；各小 Batch 的平均分母相同时，推导同样成立。
+
+<a id="origin-19"></a>
+### 1.1 为什么还想模拟更大的 Batch？
+
+**我们希望一次参数更新参考更多样本，比如 256 个，而不只是 32 个。这样得到的平均梯度通常受少数样本的影响更小、随机波动更小，更新方向更稳定。** 不过 Batch 并不是越大越好，这里只是说明想增大它的动机。
+
+如果显存一次只能放 32 个样本，就把 256 个样本分成 8 个小 Batch：
+
+```text
+256 个样本 = 每批 32 个 × 8 批
+```
+
+每批做一次 forward 和 backward，先把梯度积攒起来，等 8 批都处理完，再更新一次参数。这就是梯度累积。
+
+<a id="origin-31"></a>
+#### 1.1.1 除以 32 和除以 8，分别在平均什么？
+
+设第 \(i\) 批中第 \(j\) 个样本的损失为 \(\ell_{i,j}\)。每批已经取过平均：
+
+\[
+L_i=\frac{1}{32}\sum_{j=1}^{32}\ell_{i,j}
+\]
+
+想得到全部 256 个样本的平均，还需要把这 8 批的平均 Loss 再取一次平均：
+
+\[
+\boxed{
+L_{\text{big}}
+=\frac{L_1+\cdots+L_8}{8}
+=\frac{1}{8}\sum_{i=1}^{8}\left(\frac{1}{32}\sum_{j=1}^{32}\ell_{i,j}\right)
+=\frac{1}{256}\sum_{i=1}^{8}\sum_{j=1}^{32}\ell_{i,j}
+}
+\]
+
+因此，**除以 32 是一批内部的平均，Loss 函数已经做了；除以 8 是 8 批之间的平均，需要在梯度累积时补上。**
+
+代码里不必保留 8 批的计算图、最后再统一求导。可以每批先除以 8，再 backward，让梯度直接累加：
+
+```python
+batch_size = 32
+accumulation_steps = 8
+
+# 每批的 loss 已经是该批的平均损失
+loss = loss / accumulation_steps  # 再除以 8，分摊到 8 批的平均中
+loss.backward()                  # 累加梯度，满 8 批后再更新参数
+```
+
+```text
+第 1 批 32 个样本 → 平均 Loss L1 → L1 / 8 → backward
+第 2 批 32 个样本 → 平均 Loss L2 → L2 / 8 → backward
+...
+第 8 批 32 个样本 → 平均 Loss L8 → L8 / 8 → backward
+                                               ↓
+                                      optimizer.step()
+                                               ↓
+                                         zero_grad()
+```
+
+为什么要提前除以 8？因为下面会看到：**backward 只负责把梯度相加，不会自动对累积的 8 批取平均。**
+
+---
+
+<a id="origin-78"></a>
+## 2. PyTorch 的 backward 默认会累加梯度
+
+假设模型参数是：
+
+\[
+w
+\]
+
+第一个 Batch 的 Loss 是：
+
+\[
+L_1
+\]
+
+执行：
+
+```python
+L1.backward()
+```
+
+得到：
+
+\[
+g_1=\frac{\partial L_1}{\partial w}
+\]
+
+此时：
+
+```text
+w.grad = g1
+```
+
+如果不调用：
+
+```python
+optimizer.zero_grad()
+```
+
+接着第二个 Batch：
+
+```python
+L2.backward()
+```
+
+PyTorch 不会覆盖原来的 `.grad`，而是继续累加：
+
+\[
+w.grad=g_1+g_2
+\]
+
+连续 \(N\) 次以后：
+
+\[
+\boxed{
+g_{\text{acc}}
+=
+g_1+g_2+\cdots+g_N
+}
+\]
+
+---
+
+<a id="origin-140"></a>
+## 3. 我们真正想要的是梯度之和，还是平均梯度？
+
+把开头的例子推广一下：每批有 \(B\) 个样本，共累积 \(N\) 批。假设各批大小相同，且每批 Loss 已经按样本取平均：
+
+\[
+L_i=\frac{1}{B}\sum_{j=1}^{B}\ell_{i,j}
+\]
+
+把这些小 Batch 合成一个大 Batch，就有 \(BN\) 个样本。它的平均 Loss 是：
+
+\[
+L_{\text{big}}
+=
+\frac{L_1+L_2+\cdots+L_N}{N}
+=\frac{1}{BN}\sum_{i=1}^{N}\sum_{j=1}^{B}\ell_{i,j}
+\]
+
+求梯度：
+
+\[
+\nabla L_{\text{big}}
+=
+\nabla
+\left(
+\frac{L_1+L_2+\cdots+L_N}{N}
+\right)
+\]
+
+利用求导线性性：
+
+\[
+\boxed{
+\nabla L_{\text{big}}
+=
+\frac{
+\nabla L_1+\nabla L_2+\cdots+\nabla L_N
+}{N}
+}
+\]
+
+也就是：
+
+\[
+\boxed{
+g_{\text{big}}
+=
+\frac{
+g_1+g_2+\cdots+g_N
+}{N}
+=\frac{1}{BN}\sum_{i=1}^{N}\sum_{j=1}^{B}\nabla\ell_{i,j}
+}
+\]
+
+所以真正的大 Batch 对应的是：
+
+> **全部样本的平均梯度。每个 \(g_i\) 已经包含批内的 \(1/B\)，累积时还要补上批间的 \(1/N\)。在开头的例子里，就是先除以 32，再除以 8，最终对应 256 个样本的平均。**
+
+---
+
+<a id="origin-199"></a>
+## 4. 如果不除以 accumulation_steps，会发生什么？
+
+假设：
+
+```python
+accumulation_steps = 4
+```
+
+四个小 Batch 对某个参数产生的梯度分别为：
+
+\[
+g_1=2,\quad
+g_2=4,\quad
+g_3=6,\quad
+g_4=8
+\]
+
+如果连续四次直接：
+
+```python
+loss.backward()
+```
+
+那么最后：
+
+\[
+g_{\text{acc}}
+=
+2+4+6+8
+=
+20
+\]
+
+optimizer 更新：
+
+\[
+w\leftarrow w-\eta\times20
+\]
+
+但真正的大 Batch 平均梯度应该是：
+
+\[
+g_{\text{big}}
+=
+\frac{2+4+6+8}{4}
+=
+5
+\]
+
+所以正确更新应该是：
+
+\[
+w\leftarrow w-\eta\times5
+\]
+
+两者差了 4 倍。
+
+---
+
+<a id="origin-258"></a>
+## 5. 所以每个 Loss 要先除以 accumulation_steps
+
+代码：
+
+```python
+loss = loss / accumulation_steps
+```
+
+然后：
+
+```python
+loss.backward()
+```
+
+假设：
+
+```python
+accumulation_steps = 4
+```
+
+那么四次梯度分别变成：
+
+\[
+2/4=0.5
+\]
+
+\[
+4/4=1
+\]
+
+\[
+6/4=1.5
+\]
+
+\[
+8/4=2
+\]
+
+最后 PyTorch 累加：
+
+\[
+0.5+1+1.5+2=5
+\]
+
+刚好得到：
+
+\[
+\boxed{
+\frac{2+4+6+8}{4}=5
+}
+\]
+
+---
+
+<a id="origin-312"></a>
+## 6. 数学上为什么成立？
+
+因为：
+
+\[
+\nabla\left(\frac{L_i}{N}\right)
+=
+\frac1N\nabla L_i
+\]
+
+所以第 \(i\) 个 Batch：
+
+\[
+L_i
+\rightarrow
+\frac{L_i}{N}
+\]
+
+对应梯度：
+
+\[
+g_i
+\rightarrow
+\frac{g_i}{N}
+\]
+
+连续累积以后：
+
+\[
+\frac{g_1}{N}
++
+\frac{g_2}{N}
++\cdots+
+\frac{g_N}{N}
+\]
+
+等于：
+
+\[
+\boxed{
+\frac{
+g_1+g_2+\cdots+g_N
+}{N}
+}
+\]
+
+这就是平均梯度。
+
+---
+
+<a id="origin-362"></a>
+## 7. 如果不除，会相当于什么？
+
+如果：
+
+```python
+accumulation_steps = 8
+```
+
+但不做：
+
+```python
+loss /= 8
+```
+
+最终得到：
+
+\[
+g_1+g_2+\cdots+g_8
+\]
+
+而不是：
+
+\[
+\frac{
+g_1+g_2+\cdots+g_8
+}{8}
+\]
+
+因此梯度大约会放大 8 倍。
+
+从效果上粗略看，类似于把学习率放大：
+
+\[
+\eta_{\text{effective}}
+\approx
+8\eta
+\]
+
+可能导致：
+
+- 参数更新过猛；
+- Loss 抖动；
+- Gradient Norm 过大；
+- 训练不稳定；
+- 甚至出现 NaN。
+
+---
+
+<a id="origin-410"></a>
+## 8. Gradient Accumulation 本质上是在模拟更大的 Batch
+
+如果：
+
+```python
+batch_size = 32
+accumulation_steps = 8
+```
+
+那么完整累积窗口下：
+
+\[
+effective\ batch\ size
+=
+32\times8
+=
+256
+\]
+
+如果使用 DDP，GPU 数量为 \(W\)，则通常：
+
+\[
+\boxed{
+EffectiveBatchSize
+=
+BatchSize
+\times
+AccumulationSteps
+\times
+WorldSize
+}
+\]
+
+例如：
+
+```text
+batch_size = 32
+accumulation_steps = 8
+GPU 数量 = 4
+```
+
+则：
+
+\[
+32\times8\times4=1024
+\]
+
+<a id="origin-457"></a>
+## 9. 它和 Loss Scaling 里的 Scale 完全不是一回事
+
+这两个操作很容易混淆。
+
+<a id="origin-461"></a>
+### 9.1 Gradient Accumulation
+
+```python
+loss = loss / accumulation_steps
+```
+
+目的是：
+
+\[
+\boxed{\text{得到平均梯度}}
+\]
+
+这是算法意义上的归一化。
+
+这个比例会保留下来，不会在后面重新乘回去。
+
+---
+
+<a id="origin-479"></a>
+#### 9.1.1 GradScaler
+
+```python
+scaler.scale(loss)
+```
+
+目的是：
+
+\[
+\boxed{\text{防止 FP16 小梯度下溢}}
+\]
+
+例如：
+
+\[
+L\rightarrow SL
+\]
+
+于是：
+
+\[
+g\rightarrow Sg
+\]
+
+但在真正更新参数之前：
+
+```python
+scaler.unscale_(optimizer)
+```
+
+会恢复：
+
+\[
+Sg\rightarrow g
+\]
+
+所以 GradScaler 的缩放只是临时的数值保护。
+
+---
+
+<a id="origin-519"></a>
+## 10. 两种 Scale 的区别
+
+```text
+loss / accumulation_steps
+            ↓
+算法意义上的平均
+            ↓
+为了得到平均梯度
+            ↓
+不会乘回来
+```
+
+而：
+
+```text
+scaler.scale(loss)
+            ↓
+数值意义上的临时放大
+            ↓
+为了防止 FP16 underflow
+            ↓
+之后会 unscale
+```
+
+因此：
+
+\[
+\boxed{
+\text{Gradient Accumulation 的缩放是算法逻辑}
+}
+\]
+
+而：
+
+\[
+\boxed{
+\text{GradScaler 的缩放是数值稳定性逻辑}
+}
+\]
+
+---
+
+<a id="origin-561"></a>
+## 11. 两者同时存在时会发生什么？
+
+假设原始 Loss：
+
+\[
+L
+\]
+
+梯度累积步数：
+
+\[
+N=8
+\]
+
+首先：
+
+\[
+L_1=\frac{L}{8}
+\]
+
+然后 GradScaler 假设：
+
+\[
+S=65536
+\]
+
+再得到：
+
+\[
+L_2
+=
+S\frac{L}{8}
+\]
+
+Backward 的梯度：
+
+\[
+g'
+=
+S\frac{g}{8}
+\]
+
+然后：
+
+```python
+scaler.unscale_(optimizer)
+```
+
+除掉 \(S\)：
+
+\[
+g_{\text{true}}
+=
+\frac{g}{8}
+\]
+
+连续 8 个 Batch 累加：
+
+\[
+\frac{g_1}{8}
++
+\frac{g_2}{8}
++\cdots+
+\frac{g_8}{8}
+\]
+
+最终：
+
+\[
+\boxed{
+\frac{
+g_1+g_2+\cdots+g_8
+}{8}
+}
+\]
+
+正好得到平均梯度。
+
+---
+
+<a id="origin-641"></a>
+## 12. 在 MiniMind 中这一段代码怎么理解？
+
+代码：
+
+```python
+loss = res.loss + res.aux_loss
+
+loss = loss / args.accumulation_steps
+
+scaler.scale(loss).backward()
+```
+
+数学上：
+
+\[
+L
+=
+L_{\text{CE}}
++
+L_{\text{aux}}
+\]
+
+先做 Gradient Accumulation 归一化：
+
+\[
+L'
+=
+\frac{
+L_{\text{CE}}
++
+L_{\text{aux}}
+}{N}
+\]
+
+再做 Loss Scaling：
+
+\[
+L''
+=
+S
+\frac{
+L_{\text{CE}}
++
+L_{\text{aux}}
+}{N}
+\]
+
+Backward：
+
+\[
+g''
+=
+S
+\frac{
+g_{\text{CE}}
++
+g_{\text{aux}}
+}{N}
+\]
+
+`unscale_` 后：
+
+\[
+g'
+=
+\frac{
+g_{\text{CE}}
++
+g_{\text{aux}}
+}{N}
+\]
+
+累积 \(N\) 个 Batch：
+
+\[
+\boxed{
+g_{\text{total}}
+=
+\frac1N
+\sum_{i=1}^{N}
+\left(
+g_{\text{CE},i}
++
+g_{\text{aux},i}
+\right)
+}
+\]
+
+这就是 optimizer 最终使用的梯度。
+
+---
+
+<a id="origin-733"></a>
+## 13. 为什么不是 optimizer.step() 以后再除？
+
+因为 optimizer 真正读取的是：
+
+```python
+parameter.grad
+```
+
+例如 AdamW 会根据当前梯度：
+
+\[
+g_t
+\]
+
+更新一阶矩和二阶矩。
+
+所以在：
+
+```python
+optimizer.step()
+```
+
+之前，`.grad` 就必须已经处于正确尺度。
+
+最自然的方法就是在 backward 之前：
+
+```python
+loss /= accumulation_steps
+```
+
+利用自动求导直接得到：
+
+\[
+\nabla\frac{L}{N}
+=
+\frac1N\nabla L
+\]
+
+---
+
+<a id="origin-773"></a>
+## 14. 为什么日志里常常又把 Loss 乘回来？
+
+训练时：
+
+```python
+loss = loss / accumulation_steps
+```
+
+是为了得到正确梯度。
+
+但日志通常希望显示原始 Loss。
+
+例如原始：
+
+\[
+L=2.4
+\]
+
+如果：
+
+\[
+accumulation\_steps=8
+\]
+
+那么用于 backward 的 Loss：
+
+\[
+2.4/8=0.3
+\]
+
+如果日志直接打印：
+
+```text
+loss = 0.3
+```
+
+会让人误以为模型的原始 Loss 真的是 0.3。
+
+所以常见做法：
+
+```python
+current_loss = loss.item() * accumulation_steps
+```
+
+恢复：
+
+\[
+0.3\times8=2.4
+\]
+
+注意：
+
+> 这里只是为了日志显示，并没有把梯度重新乘回来。
+
+---
+
+<a id="origin-829"></a>
+## 15. 一个容易忽略的边界情况：最后不足完整累积窗口
+
+假设：
+
+```python
+accumulation_steps = 8
+```
+
+但 epoch 最后只剩：
+
+```text
+3 个 Batch
+```
+
+如果这 3 个 Batch 每个都除以 8，那么最终梯度：
+
+\[
+\frac{g_1}{8}
++
+\frac{g_2}{8}
++
+\frac{g_3}{8}
+\]
+
+得到：
+
+\[
+\frac{g_1+g_2+g_3}{8}
+\]
+
+但真正的 3 个 Batch 平均应该是：
+
+\[
+\boxed{
+\frac{
+g_1+g_2+g_3
+}{3}
+}
+\]
+
+所以最后这个不完整窗口的更新会偏小。
+
+它相对于正确平均梯度的比例是：
+
+\[
+\frac{3}{8}
+\]
+
+也就是说：
+
+> 如果最后只有 3 个 Batch，却仍然统一除以 8，那么这一次更新只有理想值的 \(3/8\)。
+
+很多代码仍然这样写，是因为：
+
+- 每个 epoch 通常只影响最后一次更新；
+- 对大型数据集整体影响较小；
+- 实现更简单。
+
+但如果追求严格等价，最后一个不完整累积窗口应该按：
+
+```text
+实际累积 Batch 数
+```
+
+重新归一化。
+
+---
+
+<a id="origin-897"></a>
+## 16. 整条故事线
+
+```text
+显存不够
+   ↓
+无法直接使用真正的大 Batch
+   ↓
+使用多个小 Batch
+   ↓
+多个 Batch 连续 backward
+   ↓
+PyTorch 的梯度默认会累加
+   ↓
+得到 Gradient Sum
+   ↓
+但真正的大 Batch通常使用 Mean Loss
+   ↓
+需要 Mean Gradient
+   ↓
+每个 loss 先除以 accumulation_steps
+   ↓
+每次 backward 得到 g_i / N
+   ↓
+N 次累加
+   ↓
+(g1 + g2 + ... + gN) / N
+   ↓
+得到平均梯度
+   ↓
+optimizer.step()
+```
+
+---
+
+<a id="origin-931"></a>
+## 17. 再把 AMP 串进来
+
+```text
+原始 Loss
+   ↓
+÷ accumulation_steps
+   ↓
+为了得到平均梯度
+   ↓
+scaler.scale(loss)
+   ↓
+临时放大，防止 FP16 underflow
+   ↓
+backward
+   ↓
+Scaled Accumulated Gradients
+   ↓
+unscale_
+   ↓
+恢复真实平均梯度
+   ↓
+clip_grad_norm_
+   ↓
+防止真实梯度过大
+   ↓
+scaler.step(optimizer)
+   ↓
+真正更新参数
+```
+
+---
+
+<a id="origin-963"></a>
+## 18. 最值得记住的公式
+
+假设有 \(N\) 个小 Batch：
+
+\[
+L_1,L_2,\dots,L_N
+\]
+
+对应梯度：
+
+\[
+g_1,g_2,\dots,g_N
+\]
+
+如果直接累积：
+
+\[
+\boxed{
+g_{\text{sum}}
+=
+g_1+g_2+\cdots+g_N
+}
+\]
+
+如果每个 Loss 先除以 \(N\)：
+
+\[
+\boxed{
+g_{\text{avg}}
+=
+\frac{
+g_1+g_2+\cdots+g_N
+}{N}
+}
+\]
+
+而真正的大 Batch mean loss 对应的也是：
+
+\[
+\boxed{
+g_{\text{big}}
+=
+\frac{
+g_1+g_2+\cdots+g_N
+}{N}
+}
+\]
+
+因此在常见条件下：
+
+\[
+\boxed{
+\text{Gradient Accumulation}
+\approx
+\text{Large Batch Training}
+}
+\]
+
+---
+
+<a id="origin-1023"></a>
+## 19. 一句话总结
+
+> **`loss = loss / accumulation_steps` 是因为多次 `backward()` 会把梯度直接相加；提前把每个小 Batch 的 Loss 除以累积步数，就能让最终累计得到的是多个小 Batch 的平均梯度，从而近似模拟一个真正的大 Batch。**
+
+再简单一点：
+
+> **不除：得到梯度之和；除一下：得到平均梯度。**

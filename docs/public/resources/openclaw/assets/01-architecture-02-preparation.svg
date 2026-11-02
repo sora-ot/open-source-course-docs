@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="220" viewBox="0 0 1200 220" role="img" aria-labelledby="title"><title id="title">路由、排队与准备：交给谁，在什么环境里运行</title><rect width="1200" height="220" fill="white"/>
+<path d="M 365 108 L 425 108" stroke="#24759b" stroke-width="2" fill="none"/><polygon points="425,108 413,113 413,103" fill="#24759b"/>
+<path d="M 765 108 L 825 108" stroke="#24759b" stroke-width="2" fill="none"/><polygon points="825,108 813,113 813,103" fill="#24759b"/>
+<rect x="25" y="45" width="340" height="125" fill="#f4f8fc" stroke="#24759b" stroke-width="2"/>
+<text x="195" y="76.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="700" fill="#263b50">05 Routing</text>
+<text x="195" y="107.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">选择 agentId 与 sessionKey</text>
+<text x="195" y="138.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">保留 delivery context</text>
+<rect x="425" y="45" width="340" height="125" fill="#f4f8fc" stroke="#24759b" stroke-width="2"/>
+<text x="595" y="76.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="700" fill="#263b50">06 Queue / Session lane</text>
+<text x="595" y="107.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">协调同一会话的运行顺序</text>
+<text x="595" y="138.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">同时约束整体并发</text>
+<rect x="825" y="45" width="350" height="125" fill="#f4f8fc" stroke="#24759b" stroke-width="2"/>
+<text x="1000" y="76.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="21" font-weight="700" fill="#263b50">07 Agent run preparation</text>
+<text x="1000" y="107.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">准备模型、历史、工作区与规则</text>
+<text x="1000" y="138.5" text-anchor="middle" dominant-baseline="central" font-family="Microsoft YaHei UI, Noto Sans SC, sans-serif" font-size="17" font-weight="400" fill="#263b50">筛选技能、资料和可用工具</text>
+</svg>

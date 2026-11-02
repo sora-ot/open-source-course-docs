@@ -1,0 +1,257 @@
+{
+  "lectures": 124,
+  "sourceFiles": 284,
+  "copiedFiles": 561,
+  "warnings": [
+    {
+      "file": "OpenClaw\\OpenClaw-Course\\01_OpenClaw介绍与整体架构.md",
+      "target": "../OpenClaw-2026.4.22/extensions/WeChat/src/monitor.ts",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "OpenClaw\\OpenClaw-Course\\01_OpenClaw介绍与整体架构.md",
+      "target": "../OpenClaw-2026.4.22/extensions/WeChat/src/bot-message-context.ts",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "OpenClaw\\OpenClaw-Course\\01_OpenClaw介绍与整体架构.md",
+      "target": "../OpenClaw-2026.4.22/extensions/WeChat/src/send.ts",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/train/tuner.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": ".\\images\\image.png",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/train/pt/workflow.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/data/processor/pretrain.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/train/pt/trainer.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "./images/image-4.png",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/data/data_utils.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": ".\\images\\image-1.png",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/data/parser.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "data/dataset_info.json",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/data/converter.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/data/template.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/data/processor/supervised.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/model/patcher.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/model/model_utils/embedding.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/model/adapter.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/train/sft/trainer.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/train/sft/workflow.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/data/collator.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/data/processor/pairwise.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/model/loader.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": ".\\images\\image-2.png",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/train/rm/trainer.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/train/rm/metric.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/train/rm/workflow.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/model/model_utils/valuehead.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/train/trainer_utils.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/train/dpo/trainer.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/train/dpo/workflow.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/data/processor/feedback.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/train/kto/workflow.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/train/kto/trainer.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "./images/image-3.png",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/train/ppo/trainer.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/train/ppo/ppo_utils.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/model/model_utils/quantization.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/data/mm_plugin.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/webui/interface.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/webui/components/train.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/webui/runner.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/data/loader.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/hparams",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/hparams/model_args.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/hparams/data_args.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/hparams/training_args.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/hparams/finetuning_args.py",
+      "reason": "当前资料未提供此链接目标"
+    },
+    {
+      "file": "LLaMAFactory源码讲解提纲与关键代码.md",
+      "target": "src/llamafactory/hparams/generating_args.py",
+      "reason": "当前资料未提供此链接目标"
+    }
+  ]
+}
