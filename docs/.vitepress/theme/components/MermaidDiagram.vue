@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import { useData } from 'vitepress'
+import { useData, withBase } from 'vitepress'
 const props = defineProps<{ encoded: string }>()
 const { isDark } = useData()
 const svg = ref('')
@@ -10,7 +10,8 @@ async function render() {
   try {
     const text = new TextDecoder().decode(Uint8Array.from(atob(props.encoded), c => c.charCodeAt(0)))
     source.value = text
-    const { default: mermaid } = await import('mermaid')
+    const moduleUrl = withBase('/assets/vendor/mermaid/mermaid.esm.min.mjs')
+    const { default: mermaid } = await import(/* @vite-ignore */ moduleUrl)
     mermaid.initialize({ startOnLoad: false, securityLevel: 'strict', theme: isDark.value ? 'dark' : 'neutral', fontFamily: 'system-ui, sans-serif' })
     const result = await mermaid.render('diagram-' + Math.random().toString(36).slice(2), text)
     svg.value = result.svg

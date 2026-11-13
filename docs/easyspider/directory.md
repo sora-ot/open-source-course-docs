@@ -67,14 +67,6 @@ downloadLabel: "下载原始 Markdown"
 | [16](/easyspider/chapter-16) | 递归执行、控制流与正式执行器 | 循环怎样先找到当前元素，再调用 executeNode？为什么只采 A、C、E？数据怎样保存、续采与收尾？ |
 | [17](/easyspider/chapter-17) | Selenium：基本操作、真实参数与历史恢复 | JSON 怎样驱动输入、点击与提取？循环点单个元素和逐个链接有何区别？handleHistory 怎样恢复列表？ |
 
-配套材料：
-
-- [本地练习页与 Python 样例](/source/?file=b2ee2869ff9f486627.md)：17 组独立操作和完整房源采集程序。
-- [房源三栏原图](/resources/easyspider/%E5%9B%BE%E7%89%87/Flowchart/%E6%88%BF%E6%BA%90%E9%87%87%E9%9B%86-%E6%B5%81%E7%A8%8B%E4%B8%8E%E6%89%A7%E8%A1%8C%E6%A0%91-%E5%8E%9F%E7%89%88.png)：保留原始文字、布局与蓝色 1–16 执行阶段编号；节点下标另见正文。
-- [房源教学模型与手算说明](/source/?file=91ecaf27be672c6f80.md)：关键参数、完整编号表、正常路径记录和预期次数。
-- [房源教学模型 JSON](/source/?file=ce174a47484f884969.json)：第15篇的结构与参数对照。
-- [房源教学页面](/resources/easyspider/%E7%A4%BA%E4%BE%8B-Flowchart/%E6%88%BF%E6%BA%90%E9%87%87%E9%9B%86-%E6%95%99%E5%AD%A6%E9%A1%B5.html)：第16篇开头截图对应的页面，可切换地区与翻页。
-
 ## 六、Flowchart 界面：数据结构 → 渲染 → 增删改查 → 消息 → 保存加载
 
 | 序号 | 标题 | 读完应该能回答 |
@@ -104,11 +96,6 @@ downloadLabel: "下载原始 Markdown"
 | --- | --- | --- |
 | [27](/easyspider/chapter-27) | 项目开发、调试、打包与发布 | 开发环境、源码启动、分进程断点、端到端验证、版本同步、平台构建、组装、压缩、Release 与更新检查 |
 
-## 九、其他配套材料
-
-- [附录 A：XPath 匹配与 DFS 栈变化](/resources/easyspider/%E9%99%84%E5%BD%95A.%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%9B%BE%E8%A7%A3-XPath%E5%8C%B9%E9%85%8D%E4%B8%8EDFS.html)：配合第 6 ～ 10 篇。
-- [示例扩展：字数统计器](/source/?file=0f9d6abe67b82d0c7f.md)：第 3 篇的可运行扩展。
-- [示例：同类元素匹配](/resources/easyspider/%E7%A4%BA%E4%BE%8B-%E5%90%8C%E7%B1%BB%E5%85%83%E7%B4%A0%E5%8C%B9%E9%85%8D/index.html)：第 6 篇的演示页。
 
 ## 建议阅读节奏
 
@@ -131,4 +118,4 @@ downloadLabel: "下载原始 Markdown"
 
 开始阅读：[00.讲义导读与学习路线](/easyspider/chapter-00)。
 
-目录位置：`Docs/讲义/` ｜ 配套源码：EasySpider（AGPL-3.0） ｜ 作者：王乃博
+ 配套源码：EasySpider（AGPL-3.0） ｜ 作者：王乃博

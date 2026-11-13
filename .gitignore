@@ -2,6 +2,8 @@ node_modules/
 docs/.vitepress/cache/
 docs/.vitepress/.temp/
 docs/.vitepress/dist/
+docs/.vitepress/dist-pages/
+release/
 test-results/
 .preview.log
 .preview.err

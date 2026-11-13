@@ -1,0 +1,59 @@
+name: Deploy course documentation to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - name: Check out website source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Read GitHub Pages configuration
+        id: pages
+        uses: actions/configure-pages@v5
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Build the published reading copies
+        run: npm run pages:build
+        env:
+          DOCS_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+      - name: Check pages, downloads, source files and base paths
+        run: npm run pages:check
+      - name: Upload static website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist-pages
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

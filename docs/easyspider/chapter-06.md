@@ -21,9 +21,6 @@ downloadLabel: "下载原始 Markdown"
 第二部分：再看 EasySpider 是怎么做的，逐行拆真实代码
 ```
 
-配套可运行示例：**[示例-同类元素匹配/index.html](/resources/easyspider/%E7%A4%BA%E4%BE%8B-%E5%90%8C%E7%B1%BB%E5%85%83%E7%B4%A0%E5%8C%B9%E9%85%8D/index.html)**
-（直接用浏览器打开，点商品标题就能看到算法一步步试的过程）
-
 ---
 
 ---

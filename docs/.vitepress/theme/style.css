@@ -200,6 +200,8 @@ body { -webkit-font-smoothing: antialiased; }
 /* MathJax SVG layout shared by all lecture equations. */
 mjx-container[jax="SVG"] { direction: ltr; line-height: 0; text-indent: 0; text-transform: none; margin: 0; }
 mjx-container[jax="SVG"] > svg { overflow: visible; min-height: 1px; min-width: 1px; }
+mjx-container[jax="SVG"] > img.math-svg { display: inline-block; max-width: none; margin: 0; border: 0; border-radius: 0; background: transparent; }
+.dark mjx-container[jax="SVG"] > img.math-svg { filter: invert(1); }
 mjx-container[jax="SVG"][display="true"] { display: block; text-align: center; margin: 1.2em 0; overflow-x: auto; overflow-y: hidden; padding: .35em 0; max-width: 100%; }
 mjx-container[jax="SVG"] path { stroke-width: 3; }
 mjx-assistive-mml { position: absolute !important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0 !important; border: 0 !important; display: block !important; width: auto !important; overflow: hidden !important; user-select: none; }

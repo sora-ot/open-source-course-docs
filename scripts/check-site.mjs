@@ -1,9 +1,19 @@
 import { readFile, readdir, access, mkdir, writeFile } from 'node:fs/promises'
-import { resolve, join, relative, dirname } from 'node:path'
+import { resolve, join, relative, isAbsolute, sep } from 'node:path'
 import { createHash } from 'node:crypto'
+import { parseArgs } from 'node:util'
+import { normalizeBase } from './site-paths.mjs'
 
 const root = resolve(import.meta.dirname, '..')
-const dist = join(root, 'docs/.vitepress/dist')
+const { values } = parseArgs({ options: { dist: { type: 'string' } } })
+const dist = resolve(root, values.dist || 'docs/.vitepress/dist')
+let base = '/'
+try {
+  base = normalizeBase(JSON.parse(await readFile(join(dist, 'site-build.json'), 'utf8')).base)
+} catch (error) {
+  if (error.code !== 'ENOENT') throw error
+}
+const reportName = dist === join(root, 'docs/.vitepress/dist') ? 'links.json' : 'links-pages.json'
 const results = join(root, 'test-results')
 await mkdir(results, { recursive: true })
 const catalog = JSON.parse(await readFile(join(dist, 'catalog.json'), 'utf8'))
@@ -25,7 +35,10 @@ await walk(dist)
 const htmlCache = new Map()
 async function locate(url) {
   const decoded = decodeURIComponent(url.pathname)
-  const path = join(dist, decoded)
+  if (!decoded.startsWith(base)) return null
+  const path = resolve(dist, decoded.slice(base.length))
+  const location = relative(dist, path)
+  if (location === '..' || location.startsWith('..' + sep) || isAbsolute(location)) return null
   for (const candidate of [path, path + '.html', join(path, 'index.html')]) {
     if (await exists(candidate)) {
       const extension = candidate.split('.').pop()
@@ -39,16 +52,19 @@ async function locate(url) {
 }
 for (const file of pages) {
   const html = await readFile(file, 'utf8')
-  const route = '/' + relative(dist, file).replaceAll('\\', '/')
+  const route = base + relative(dist, file).replaceAll('\\', '/')
   htmlCache.set(file, html)
-  for (const match of html.matchAll(/\b(href|src)="([^"<>]+)"/g)) {
+  // Inspect attributes on actual elements. Code examples may contain literal
+  // href="..." text, which is not a navigation link or a resource request.
+  const tags = [...html.matchAll(/<[a-zA-Z][^<>]*>/g)].map(match => match[0])
+  for (const match of tags.flatMap(tag => [...tag.matchAll(/\s(href|src)="([^"<>]+)"/g)])) {
     const raw = match[2].replaceAll('&amp;', '&')
-    if (!raw || /^(https?:|mailto:|tel:|data:|javascript:|blob:)/.test(raw)) continue
+    if (!raw || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(raw)) continue
     let url
     try { url = new URL(raw, 'http://course.local' + route) } catch { continue }
     const target = await locate(url)
     if (!target) { missing.push({ page: route, target: raw }); continue }
-    if (url.hash && target.endsWith('.html') && !url.search && !url.pathname.startsWith('/resources/')) {
+    if (url.hash && target.endsWith('.html') && !url.search && !url.pathname.startsWith(base + 'resources/')) {
       const targetHTML = htmlCache.get(target) || await readFile(target, 'utf8')
       const anchor = decodeURIComponent(url.hash.slice(1))
       if (!targetHTML.includes(`id="${anchor}"`)) anchors.push({ page: route, target: raw })
@@ -91,7 +107,7 @@ for (const item of mini.codeFiles) {
 for (const project of ['easyspider', 'openclaw', 'llamafactory', 'langchain', 'minimind']) {
   if (!catalog.some(p => p.project === project)) throw new Error(`Missing project ${project}`)
 }
-const report = { pages: pages.length, lectures: catalog.length, sourceFiles: Object.keys(sourceFiles).length, miniMind: { originalMarkdown: mini.documents.length, parts: miniParts.length, verifiedAttachments: mini.attachments.length, verifiedSourceVariants: mini.codeFiles.length }, missing, anchors }
-await writeFile(join(results, 'links.json'), JSON.stringify(report, null, 2))
-console.log(JSON.stringify({ pages: pages.length, lectures: catalog.length, sourceFiles: Object.keys(sourceFiles).length, missing: missing.length, unmatchedAnchors: anchors.length }))
+const report = { base, pages: pages.length, lectures: catalog.length, sourceFiles: Object.keys(sourceFiles).length, miniMind: { originalMarkdown: mini.documents.length, parts: miniParts.length, verifiedAttachments: mini.attachments.length, verifiedSourceVariants: mini.codeFiles.length }, missing, anchors }
+await writeFile(join(results, reportName), JSON.stringify(report, null, 2))
+console.log(JSON.stringify({ base, pages: pages.length, lectures: catalog.length, sourceFiles: Object.keys(sourceFiles).length, missing: missing.length, unmatchedAnchors: anchors.length }))
 if (missing.length || anchors.length) process.exitCode = 1

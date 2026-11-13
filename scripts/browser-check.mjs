@@ -1,13 +1,16 @@
 import { chromium } from '@playwright/test'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { resolve, join } from 'node:path'
+import { existsSync } from 'node:fs'
 import assert from 'node:assert/strict'
 
 const root = resolve(import.meta.dirname, '..')
-const out = join(root, 'test-results')
+const base = (process.env.DOCS_TEST_URL || 'http://127.0.0.1:4173').replace(/\/+$/, '')
+const out = join(root, 'test-results', new URL(base).pathname === '/' ? '' : 'browser-pages')
 await mkdir(out, { recursive: true })
-const base = 'http://127.0.0.1:4173'
-const browser = await chromium.launch({ executablePath: 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe', headless: true })
+const edge = 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'
+const executablePath = process.env.DOCS_BROWSER_EXECUTABLE || (existsSync(edge) ? edge : undefined)
+const browser = await chromium.launch({ executablePath, headless: true })
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 })
 const errors = []
 page.on('pageerror', error => errors.push(error.message))
@@ -63,7 +66,8 @@ try {
   assert.match(await page.locator('.vp-doc h1').innerText(), /01 · 梯度、反向传播与梯度下降/)
   const equationHeading = page.locator('.vp-doc h2').filter({ has: page.locator('.heading-equation') }).first()
   await equationHeading.scrollIntoViewIfNeeded()
-  assert.ok(await equationHeading.locator('mjx-container svg').count())
+  assert.ok(await equationHeading.locator('mjx-container img.math-svg').count())
+  assert.equal(await equationHeading.locator('img.math-svg').first().evaluate(img => img.complete && img.naturalWidth > 0), true)
   assert.doesNotMatch(await equationHeading.innerText(), /\\omega|\\partial|\$/)
   assert.match(await page.locator('.VPDocAsideOutline').innerText(), /ω/)
   await page.screenshot({ path: join(out, 'minimind-heading-math.png') })
@@ -73,7 +77,7 @@ try {
   assert.match(await page.locator('.vp-doc').innerText(), /预训练本质上只有一件事/)
   assert.doesNotMatch(await page.locator('.vp-doc').innerText(), /可以。给学生讲|下面这一版可以直接拿去上课/)
   const download = await page.locator('.original-note a').getAttribute('href')
-  const downloadResponse = await page.request.get(base + download)
+  const downloadResponse = await page.request.get(new URL(download, base + '/').href)
   assert.equal(downloadResponse.ok(), true)
   const markdown = await downloadResponse.text()
   assert.match(markdown, /预训练本质上只有一件事/)

@@ -36,8 +36,7 @@ Windows 启动脚本使用 ASCII 编码和 CRLF 换行，避免 CMD 将中文或
 环境：Node.js 20.19+ 或 22+、Python 3.10+。
 
 ```powershell
-npm install
-npm run sync
+npm ci
 npm run dev
 ```
 
@@ -122,7 +121,7 @@ MiniMind 按知识主题组织，清理 AI 对话回应、面向教师的讲授�
 
 25 份篇幅适中的讲义保持单页，15 份长文按知识边界组织为 46 个章节；每个页面的小节从 1 开始编号，侧栏按知识主题平铺章节，与其他项目保持一致。数学标题在正文中显示公式，在页内目录中显示可读的数学符号。
 
-生产构建采用 6 GB 的 Node 堆内存上限；MathJax 复用文档实例，避免大量公式重复注册渲染器。公式原稿中的 math 代码块也会排版显示。
+生产构建采用 2.5 GB 的 Node 堆内存上限，并限制索引与页面渲染并发。公式图形按内容去重，保存为站内 SVG 文件，正文保留无障碍 MathML；代码与公式排版作为完整 HTML 片段交给 Vue，减少编译内存。搜索索引使用文本形式的公式与代码。Mermaid 使用依赖自带的浏览器模块，随网站本地发布，无需外部 CDN。网页面向当前主流浏览器，讲义原文与下载文件保持原样。
 
 本地链接、章节锚点、讲义下载和源码快照由 `npm run check` 检查；浏览器检查覆盖五个项目入口、主题目录、清理后的 Markdown 下载、搜索、公式、源码行号、移动侧栏和深色模式。检查结果见 `test-results/links.json`、`browser.json` 及截图；具体页面数量见 `内容同步报告.json`。
 
@@ -130,16 +129,16 @@ MiniMind 按知识主题组织，清理 AI 对话回应、面向教师的讲授�
 
 ## 部署
 
-将 `docs/.vitepress/dist/` 的内容放到任意静态网站服务即可。若部署在域名子路径（例如 `/course/`），构建前设置：
+已提供 GitHub Actions 自动部署、仓库子路径预览、源码包与静态包。完整步骤见 [部署与本地调试.md](部署与本地调试.md)。
 
 ```powershell
-$env:DOCS_BASE_PATH = '/course/'
-npm run build
+npm run pages:package
+npm run pages:preview -- --open
 ```
 
-默认根路径为 `/`。清晰链接需要静态服务支持目录索引及省略 `.html`（例如 Nginx 的 `try_files $uri $uri.html $uri/ =404;`）；提供的本地 Python 启动器已处理这种路径。
+`release/course-docs-source.zip` 可用于继续开发和 Actions 部署；`release/github-pages-static.zip` 可用于手动静态发布。默认项目网址为 `https://sora-ot.github.io/open-source-course-docs/`，本地以相同子路径在 4174 端口预览。Pages 构建写入 `docs/.vitepress/dist-pages/`，原来的本地构建与启动方式继续使用 `dist/`。
 
-本次只在本机生成和预览，没有发布到外部服务器。
+仓库已包含 `.github/workflows/deploy-pages.yml`，在 GitHub Settings → Pages 选择 GitHub Actions 后，提交到 `main` 即可自动构建、检查和发布。当前仓库已公开，可使用 GitHub Free 的 Pages；手动部署方式及以后改回私有仓库时的条件见部署说明。
 
 ## MiniMind 内容维护
 

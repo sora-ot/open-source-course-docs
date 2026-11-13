@@ -1,21 +1,45 @@
 import { defineConfig } from 'vitepress'
+import { writeFile } from 'node:fs/promises'
+import { join } from 'node:path'
 import sidebar from './sidebar.json'
-import { installMathRenderer, renderMath } from '../../scripts/math-renderer.mjs'
+import { installMathRenderer, renderMath, htmlFragment, mathAssetsPlugin } from '../../scripts/math-renderer.mjs'
+import { normalizeBase } from '../../scripts/site-paths.mjs'
+import { mermaidAssetsPlugin } from '../../scripts/mermaid-assets.mjs'
 // PPTX is a downloadable course attachment, not a VitePress page route.
 process.env.VITE_EXTRA_EXTENSIONS = [process.env.VITE_EXTRA_EXTENSIONS, 'pptx'].filter(Boolean).join(',')
+const base = normalizeBase(process.env.DOCS_BASE_PATH)
 
 export default defineConfig({
   lang: 'zh-CN',
   title: '开源软件分析与实践',
   titleTemplate: ':title · 开源软件分析与实践',
   description: '从源码出发，理解软件如何运转。EasySpider、OpenClaw、MiniMind、LLaMAFactory 与 LangChain 课程讲义。',
-  base: process.env.DOCS_BASE_PATH || '/',
+  base,
+  outDir: process.env.DOCS_OUT_DIR,
   cleanUrls: true,
-  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: `${process.env.DOCS_BASE_PATH || '/'}favicon.svg` }]],
+  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: `${base}favicon.svg` }]],
+  async buildEnd(config) {
+    await writeFile(join(config.outDir, '.nojekyll'), '')
+    await writeFile(join(config.outDir, 'site-build.json'), JSON.stringify({ base }, null, 2) + '\n')
+  },
   appearance: true,
+  // Large formula-heavy lectures should not all be indexed/rendered at once.
+  buildConcurrency: 2,
   srcExclude: ['README.md', 'public/**'],
   // One rendering pass for diagrams; the large library is loaded only on pages that need it.
-  vite: { ssr: { noExternal: ['mermaid'] }, build: { chunkSizeWarningLimit: 2200 } },
+  vite: {
+    plugins: [mathAssetsPlugin(base), mermaidAssetsPlugin(base)],
+    // Downloadable HTML source snapshots are course material, not app entries.
+    optimizeDeps: { entries: ['.vitepress/theme/index.ts'] },
+    build: {
+      // Modern browsers can use the generated modules directly; avoid a second
+      // complete parse of all formula/code payloads by the transpiler.
+      target: 'esnext',
+      chunkSizeWarningLimit: 2200,
+      minify: false,
+      rollupOptions: { maxParallelFileOps: 32 },
+    },
+  },
   markdown: {
     math: true,
     lineNumbers: true,
@@ -41,15 +65,17 @@ export default defineConfig({
       md.renderer.rules.code_inline = (...args) => renderInline(...args).replace(/\{\{/g, '&#123;&#123;')
       const fence = md.renderer.rules.fence!
       md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+        // The search index needs text rather than highlighted code or SVG paths.
+        if (env.courseSearch) return `<pre>${md.utils.escapeHtml(tokens[idx].content)}</pre>`
         if (/^math(?:\s|$)/.test(tokens[idx].info.trim())) {
           const id = tokens[idx].info.match(/\bid="([\w-]+)"/)?.[1]
-          return (id ? `<span id="${id}"></span>` : '') + renderMath(tokens[idx].content, true)
+          return (id ? `<span id="${id}"></span>` : '') + htmlFragment(renderMath(tokens[idx].content, true), 'div')
         }
         if (tokens[idx].info.trim() === 'mermaid') {
           const encoded = Buffer.from(tokens[idx].content).toString('base64')
           return `<MermaidDiagram encoded="${encoded}" />`
         }
-        return fence(tokens, idx, options, env, self)
+        return htmlFragment(fence(tokens, idx, options, env, self), 'div')
       }
     },
   },
@@ -77,6 +103,11 @@ export default defineConfig({
     search: {
       provider: 'local',
       options: {
+        _render(src, env, md) {
+          const searchEnv = { ...env, courseSearch: true }
+          const html = md.render(src, searchEnv)
+          return searchEnv.frontmatter?.search === false ? '' : html
+        },
         miniSearch: {
           options: {
             tokenize: (text) => {
