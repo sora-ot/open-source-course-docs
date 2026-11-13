@@ -8,8 +8,8 @@ const { values, positionals } = parseArgs({
   options: { base: { type: 'string' }, port: { type: 'string' }, open: { type: 'boolean' } },
 })
 const action = positionals[0] || 'build'
-if (positionals.length > 1 || !['build', 'check', 'preview', 'package'].includes(action)) {
-  throw new Error('Use build, check, preview or package [--base /repository/] [--port 4174] [--open].')
+if (positionals.length > 1 || !['build', 'check', 'preview'].includes(action)) {
+  throw new Error('Use build, check or preview [--base /repository/] [--port 4174] [--open].')
 }
 
 function repositoryBase() {
@@ -29,7 +29,7 @@ function run(command, args, env = process.env) {
   if (result.status !== 0) process.exit(result.status || 1)
 }
 
-if (action === 'build' || action === 'package') {
+if (action === 'build') {
   const base = normalizeBase(values.base ?? process.env.DOCS_BASE_PATH ?? repositoryBase())
   console.log(`Building GitHub Pages: base=${base}, output=docs/.vitepress/dist-pages`)
   run(process.execPath, ['--max-old-space-size=2560', resolve(root, 'node_modules/vitepress/bin/vitepress.js'), 'build', 'docs'], {
@@ -38,7 +38,7 @@ if (action === 'build' || action === 'package') {
     GOMEMLIMIT: process.env.GOMEMLIMIT || '512MiB',
   })
 }
-if (action === 'check' || action === 'package') {
+if (action === 'check') {
   run(process.execPath, [resolve(root, 'scripts/check-site.mjs'), '--dist', pagesDir])
 }
 if (action === 'preview') {
@@ -47,4 +47,3 @@ if (action === 'preview') {
   if (values.open) args.push('--open')
   run('python', args)
 }
-if (action === 'package') run('python', [resolve(root, 'scripts/package_release.py')])

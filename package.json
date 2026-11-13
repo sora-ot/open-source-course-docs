@@ -12,8 +12,7 @@
     "check": "node scripts/check-site.mjs",
     "pages:build": "node scripts/pages.mjs build",
     "pages:check": "node scripts/pages.mjs check",
-    "pages:preview": "node scripts/pages.mjs preview",
-    "pages:package": "node scripts/pages.mjs package"
+    "pages:preview": "node scripts/pages.mjs preview"
   },
   "devDependencies": {
     "vitepress": "1.6.4",

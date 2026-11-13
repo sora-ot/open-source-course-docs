@@ -6,7 +6,7 @@
 
 ## 从 GitHub 克隆后使用
 
-仓库包含网站源码、整理后的讲义、图片和下载附件，可独立构建。环境需要 Node.js 20.19+ 或 22+、Python 3.10+。
+仓库包含网站源码、整理后的讲义、图片和下载附件，可独立构建。环境需要 Node.js 20.19+ 或 22+。仅使用 Python 静态预览时需要 Python 3.10+。
 
 ```powershell
 git clone https://github.com/sora-ot/open-source-course-docs.git
@@ -35,7 +35,7 @@ Windows 启动脚本使用 ASCII 编码和 CRLF 换行，避免 CMD 将中文或
 
 ## 更新讲义与开发
 
-环境：Node.js 20.19+ 或 22+、Python 3.10+。
+环境：Node.js 20.19+ 或 22+。使用 Python 静态预览时还需 Python 3.10+。
 
 ```powershell
 npm ci
@@ -131,16 +131,15 @@ MiniMind 按知识主题组织，清理 AI 对话回应、面向教师的讲授�
 
 ## 部署
 
-已提供 GitHub Actions 自动部署、仓库子路径预览、源码包与静态包。完整步骤见 [部署与本地调试.md](部署与本地调试.md)。
+网站已发布在 <https://sora-ot.github.io/open-source-course-docs/>。仓库的 `.github/workflows/deploy-pages.yml` 在每次向 `main` 推送时自动构建、检查并发布；也可以在 GitHub Actions 页面手动运行工作流。日常只需编辑 `docs/` 中的讲义，在本地运行 `npm run dev` 预览，再提交并推送：
 
 ```powershell
-npm run pages:package
-npm run pages:preview -- --open
+git add docs
+git commit -m "更新课程讲义"
+git push origin main
 ```
 
-`release/course-docs-source.zip` 可用于继续开发和 Actions 部署；`release/github-pages-static.zip` 可用于手动静态发布。默认项目网址为 `https://sora-ot.github.io/open-source-course-docs/`，本地以相同子路径在 4174 端口预览。Pages 构建写入 `docs/.vitepress/dist-pages/`，原来的本地构建与启动方式继续使用 `dist/`。
-
-仓库已包含 `.github/workflows/deploy-pages.yml`，在 GitHub Settings → Pages 选择 GitHub Actions 后，提交到 `main` 即可自动构建、检查和发布。当前仓库已公开，可使用 GitHub Free 的 Pages；手动部署方式及以后改回私有仓库时的条件见部署说明。
+如需在发布前核对 GitHub Pages 子路径效果，可运行 `npm run pages:build`、`npm run pages:check` 和 `npm run pages:preview -- --open`，也可双击 `预览GitHubPages.cmd`。正常部署由 Actions 自动完成。
 
 ## MiniMind 内容维护
 
