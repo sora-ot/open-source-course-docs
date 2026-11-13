@@ -4460,5 +4460,3 @@ navigateTree 保留原 Session 对象，switchSession 成功后 Runtime 指新 S
 ### 源码版本与示例说明
 
 Pi 仓库 HEAD 为 `85a9ce30241adf7ef62e7f4ad8bbfe2580a387e0`；coding-agent、agent、ai 包版本均为 `0.69.0`，根包版本为 `0.0.3`。源码行号按包含已有修改的工作树标注。
-
-JSONL、树和数组均为教学示例。源码、接口与数据经过静态核对，示例程序未运行或编译，也未发起模型请求。

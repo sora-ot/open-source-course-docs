@@ -1870,8 +1870,6 @@ BFS 保留每个容器内部的孩子顺序，只把不同深度的节点按层�
 
 练习：回到五节点基准图，把循环 4 的孩子 2 移回 root，成为 root 的最后一个孩子。结果为 0.sequence=[1,4,3,2]、4.sequence=[]；刷新后 actionSequence 仍为 [0,1,4,3,2]，但点击的 parentId 从 2 变为 0，position 从 0 变为 3，isInLoop 从 true 变为 false，HTML 改为 append 到 #0。同一张编号表也可能对应不同层次，关系仍必须读取 sequence。
 
-配套 [附录 B](/resources/easyspider/%E9%99%84%E5%BD%95B.%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%9B%BE%E8%A7%A3-%E6%B5%81%E7%A8%8B%E5%9B%BE%E4%B8%89%E6%95%B0%E7%BB%84%E4%B8%8Erefresh.html) 使用完整房源模型，可以观察队列与编号变化。
-
 ---
 
 返回目录：[README.md](/easyspider/directory) ｜ 上一篇：[18.流程图核心数据结构：稳定下标与界面编号](/easyspider/chapter-18) ｜ 下一篇：[20.流程图的增删改查：从读取节点到修改孩子列表](/easyspider/chapter-20)
