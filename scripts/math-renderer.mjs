@@ -45,9 +45,13 @@ export function mathAssetsPlugin(base) {
 export function renderMath(content, display = false) {
   const key = (display ? 'block:' : 'inline:') + content
   if (!cache.has(key)) {
-    const html = adaptor.outerHTML(document.convert(content, { display }))
-    const svg = html.match(/<svg\b[\s\S]*?<\/svg>/)?.[0]
-    if (!svg) throw new Error('MathJax did not produce an SVG formula.')
+    const rendered = document.convert(content, { display })
+    const html = adaptor.outerHTML(rendered)
+    // Tall matrix brackets contain nested SVGs; serialize the complete root
+    // node so an inner </svg> cannot truncate the equation asset.
+    const svgNode = adaptor.tags(rendered, 'svg')[0]
+    if (!svgNode) throw new Error('MathJax did not produce an SVG formula.')
+    const svg = adaptor.outerHTML(svgNode)
     const name = createHash('sha256').update(svg).digest('hex').slice(0, 24) + '.svg'
     svgAssets.set(name, svg)
     const width = svg.match(/\bwidth="([^"]+)"/)?.[1] || 'auto'

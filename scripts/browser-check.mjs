@@ -15,6 +15,18 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, de
 const errors = []
 page.on('pageerror', error => errors.push(error.message))
 const report = {}
+async function checkMatrixImage(label, expectedCells) {
+  const image = page.getByText(label, { exact: true }).locator('xpath=following-sibling::div[1]//img[contains(@class,"math-svg")]')
+  assert.equal(await image.count(), 1)
+  const response = await page.request.get(new URL(await image.getAttribute('src'), page.url()).href)
+  assert.ok(response.ok())
+  const structure = await page.evaluate(svg => {
+    const document = new DOMParser().parseFromString(svg, 'image/svg+xml')
+    return { invalid: !!document.querySelector('parsererror'), cells: document.querySelectorAll('g[data-mml-node="mtd"]').length }
+  }, await response.text())
+  assert.deepEqual(structure, { invalid: false, cells: expectedCells }, 'Matrix SVG must be complete and retain every cell')
+  assert.equal(await image.evaluate(img => img.complete && img.naturalWidth > 0), true)
+}
 try {
   await page.goto(base, { waitUntil: 'networkidle' })
   await page.getByRole('heading', { name: /从源码出发/ }).waitFor()
@@ -70,11 +82,13 @@ try {
   assert.equal(await equationHeading.locator('img.math-svg').first().evaluate(img => img.complete && img.naturalWidth > 0), true)
   assert.doesNotMatch(await equationHeading.innerText(), /\\omega|\\partial|\$/)
   assert.match(await page.locator('.VPDocAsideOutline').innerText(), /ω/)
+  await checkMatrixImage('组合起来：', 4)
   await page.screenshot({ path: join(out, 'minimind-heading-math.png') })
   await page.goto(base + '/minimind/', { waitUntil: 'networkidle' })
   await page.screenshot({ path: join(out, 'minimind-topics.png'), fullPage: true })
   await page.goto(base + '/minimind/b01-01', { waitUntil: 'networkidle' })
   assert.match(await page.locator('.vp-doc').innerText(), /预训练本质上只有一件事/)
+  await checkMatrixImage('矩阵形式：', 16)
   assert.doesNotMatch(await page.locator('.vp-doc').innerText(), /可以。给学生讲|下面这一版可以直接拿去上课/)
   const download = await page.locator('.original-note a').getAttribute('href')
   const downloadResponse = await page.request.get(new URL(download, base + '/').href)
