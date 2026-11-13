@@ -2,7 +2,6 @@
 import { computed, ref } from 'vue'
 import { withBase } from 'vitepress'
 import projects from '../../projects.json'
-import stats from '../../stats.json'
 const current = ref(0)
 const active = computed(() => projects[current.value])
 const stages = [
@@ -31,7 +30,6 @@ const code = [
         <div class="hero-actions">
           <a class="button-primary" href="#projects">浏览项目讲义 <span aria-hidden="true">↘</span></a>
         </div>
-        <div class="hero-footnote"><span class="mini-rule"></span> 以问题为起点 · 以完整流程为主线</div>
       </div>
       <div class="flow-workbench" aria-label="项目调用流程预览">
         <div class="workbench-top"><div class="window-dots"><i></i><i></i><i></i></div><span>从一个输入，到一次完整执行</span><span class="live-dot"></span></div>
@@ -46,12 +44,6 @@ const code = [
         <div class="workbench-code"><div v-for="(line, i) in code[current]" :key="line"><span class="code-number">{{ i + 1 }}</span><code>{{ line }}</code></div></div>
         <div class="workbench-footer"><span><i></i> {{ active.name }} / 核心流程示意</span><a :href="withBase('/' + active.id + '/')">读懂这条链 <span aria-hidden="true">↗</span></a></div>
       </div>
-    </section>
-
-    <section class="course-metrics" aria-label="课程内容概览">
-      <div><strong>{{ String(stats.projects).padStart(2, '0') }}<span> / 项目入口</span></strong><p>从采集工具到大模型训练与应用</p></div>
-      <div><strong>{{ stats.sourceDocuments }}<span> / 讲义与参考原稿</span></strong><p>原理、源码与扩展阅读</p></div>
-      <div><strong>10 min<span> / 框架速读</span></strong><p>快速建立 LLaMAFactory 与 LangChain 的地图</p></div>
     </section>
 
     <section id="projects" class="projects-section">
@@ -72,6 +64,5 @@ const code = [
       </div>
     </section>
 
-    <footer class="course-home-footer"><span>开源软件分析与实践</span><span>真实项目 · 原理与实现 · 持续探索</span></footer>
   </main>
 </template>

@@ -84,8 +84,6 @@ body { -webkit-font-smoothing: antialiased; }
 .button-secondary { border: 1px solid var(--vp-c-divider); }
 .button-primary span, .button-secondary span { margin-left: 13px; }
 .button-primary:hover, .button-secondary:hover { transform: translateY(-2px); }
-.hero-footnote { font-size: 10px; color: var(--vp-c-text-3); display: flex; gap: 12px; align-items: center; margin-top: 33px; letter-spacing: .6px; }
-.mini-rule { width: 24px; height: 1px; background: var(--vp-c-divider); }
 .flow-workbench { background: #232d29; border: 1px solid #3b4740; border-radius: 15px; color: #e4e7dd; overflow: hidden; box-shadow: 0 20px 55px -18px #20382a38; transform: rotate(-1deg); }
 .workbench-top { display: flex; align-items: center; gap: 16px; border-bottom: 1px solid #3b4740; padding: 15px 19px; color: #b3bdb0; font-size: 10px; }
 .window-dots { display: flex; gap: 4px; }
@@ -107,12 +105,6 @@ body { -webkit-font-smoothing: antialiased; }
 .workbench-footer > span { display: flex; align-items: center; gap: 7px; }
 .workbench-footer i { width: 4px; height: 4px; background: #bad09f; border-radius: 50%; }
 .workbench-footer a { color: #efd0a7; }
-.course-metrics { border-top: 1px solid var(--vp-c-divider); border-bottom: 1px solid var(--vp-c-divider); display: grid; grid-template-columns: 1fr 1fr 1.25fr; padding: 24px 0; }
-.course-metrics > div { padding-left: 31px; border-left: 1px solid var(--vp-c-divider); }
-.course-metrics > div:first-child { padding-left: 0; border-left: 0; }
-.course-metrics strong { font-weight: 650; font-size: 24px; font-family: var(--vp-font-family-mono); letter-spacing: -1px; }
-.course-metrics strong span { font-family: var(--vp-font-family-base); font-size: 10px; font-weight: 400; letter-spacing: 0; color: var(--vp-c-text-2); padding-left: 8px; }
-.course-metrics p { font-size: 10px; color: var(--vp-c-text-3); margin: 7px 0 0; }
 .projects-section { padding-top: 56px; scroll-margin-top: 82px; }
 .section-heading { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 24px; gap: 20px; }
 .section-heading h2 { font-size: 25px; font-weight: 650; letter-spacing: -.7px; margin-top: 10px; line-height: 1.5; }
@@ -137,8 +129,7 @@ body { -webkit-font-smoothing: antialiased; }
 .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 19px 0 24px; }
 .project-tags span { font-size: 9px; color: var(--vp-c-text-2); background: var(--vp-c-bg-soft); padding: 3px 8px; border-radius: 4px; }
 .project-card-footer { border-top: 1px solid var(--vp-c-divider); display: flex; align-items: center; justify-content: space-between; padding: 14px 0; font-size: 10px; color: var(--card-color); }
-.course-home-footer { display: flex; justify-content: space-between; padding: 0 0 28px; color: var(--vp-c-text-3); font-size: 10px; }
-/* The landing page has its own editorial footer. */
+/* Keep the shared documentation footer off the project landing page. */
 .VPContent:has(.course-home) + .VPFooter { display: none; }
 
 /* Source viewer */
@@ -175,14 +166,9 @@ body { -webkit-font-smoothing: antialiased; }
   .course-hero { grid-template-columns: 1fr; gap: 36px; padding-top: 45px; padding-bottom: 40px; }
   .hero-copy h1 { font-size: 39px; letter-spacing: -1.5px; }
   .hero-description { font-size: 14px; }
-  .hero-footnote { margin-top: 23px; }
   .flow-workbench { transform: none; }
   .workbench-tabs { padding: 18px 18px 4px; justify-content: space-between; }
   .workbench-tabs button { font-size: 10px; }
-  .course-metrics { padding: 20px 0; grid-template-columns: 1fr 1fr; gap: 20px 0; }
-  .course-metrics > div { padding-left: 18px; }
-  .course-metrics > div:last-child { grid-column: span 2; border-left: 0; padding-left: 0; padding-top: 16px; border-top: 1px solid var(--vp-c-divider); }
-  .course-metrics strong { font-size: 23px; }
   .section-heading { align-items: flex-start; flex-direction: column; gap: 8px; }
   .section-heading h2 { font-size: 23px; }
   .projects-section { padding-top: 38px; }
@@ -190,7 +176,6 @@ body { -webkit-font-smoothing: antialiased; }
   .project-card { padding: 23px 25px 0; }
   .project-card-top { margin-bottom: 18px; }
   .project-card > p { min-height: 0; }
-  .course-home-footer { flex-direction: column; gap: 8px; }
   .original-note { align-items: flex-start; flex-direction: column; }
   .source-page h1 { font-size: 28px; }
   .source-actions { flex-wrap: wrap; }
