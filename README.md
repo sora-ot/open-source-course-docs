@@ -1,5 +1,7 @@
 # 开源软件分析与实践 · 课程文档站
 
+在线阅读：[课程文档网站](https://sora-ot.github.io/open-source-course-docs/)。
+
 本网站整理教师现有讲义，统一提供五个项目入口：EasySpider、OpenClaw、LLaMAFactory、LangChain、MiniMind。MiniMind 阅读稿位于上一级的 `MiniMind整理版/`；按知识主题组织讲义，提供连续分篇、清理后的完整 Markdown、源码对照和配套资料。教师原稿单独保留。
 
 ## 从 GitHub 克隆后使用
