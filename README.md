@@ -2,6 +2,10 @@
 
 该项目整理了“开源软件分析与实践”这门课程的相关讲义，包括EasySpider、OpenClaw、LLaMAFactory、LangChain、MiniMind等5个部分，读者可以在[课程文档网站](https://sora-ot.github.io/open-source-course-docs/)这里进行阅读，也可以将项目下载到本地进行构建及阅读。
 
+## 课程项目源码
+
+[course-code/](course-code/README.md) 文件夹中收集了 MiniMind、Pi Agent、OpenClaw 和 EasySpider 的源码及课堂注释，这些内容暂未收录到课程文档网站，有需要可以在线或下载查看。具体内容见文件夹内说明。
+
 ## 从 GitHub 克隆后使用
 
 仓库包含网站源码、整理后的讲义、图片和下载附件，可独立构建。环境需要 Node.js 20.19+ 或 22+。仅使用 Python 静态预览时需要 Python 3.10+。
