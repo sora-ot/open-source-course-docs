@@ -1,0 +1,50 @@
+{
+  "type": "multiCollectWithPattern",
+  "history": 1,
+  "tabIndex": -1,
+  "iframe": false,
+  "loopType": 1,
+  "xpath": "//div[@class='house']",
+  "allXPaths": [
+    "//div[@class='house']"
+  ],
+  "isDescendents": true,
+  "parameters": [
+    {
+      "nodeType": 0,
+      "contentType": 1,
+      "relative": true,
+      "name": "标题",
+      "desc": "",
+      "relativeXPath": "/h2[1]",
+      "allXPaths": [
+        "/h2[1]"
+      ],
+      "exampleValues": [
+        {
+          "num": 0,
+          "value": "海淀单间"
+        }
+      ],
+      "iframe": false
+    },
+    {
+      "nodeType": 0,
+      "contentType": 1,
+      "relative": true,
+      "name": "租金",
+      "desc": "",
+      "relativeXPath": "/div[1]/span[1]",
+      "allXPaths": [
+        "/div[1]/span[1]"
+      ],
+      "exampleValues": [
+        {
+          "num": 0,
+          "value": "2500元"
+        }
+      ],
+      "iframe": false
+    }
+  ]
+}

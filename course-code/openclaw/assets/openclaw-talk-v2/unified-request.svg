@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="600" viewBox="0 0 1400 600">
+  <title>Unified OpenClaw request lifecycle</title>
+  <defs>
+    <marker id="arrow-unified" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,3 L0,6 z" fill="#334155"/>
+    </marker>
+    <style>
+      .box { stroke: #334155; stroke-width: 2; rx: 12; }
+      .label { font: 600 20px -apple-system, BlinkMacSystemFont, sans-serif; fill: #0f172a; text-anchor: middle; }
+      .small { font: 15px -apple-system, BlinkMacSystemFont, sans-serif; fill: #334155; text-anchor: middle; }
+      .line { stroke: #334155; stroke-width: 3; fill: none; marker-end: url(#arrow-unified); }
+    </style>
+  </defs>
+  <rect width="1400" height="600" fill="#f8fafc"/>
+  <text x="700" y="44" class="label" font-size="27">Unified request lifecycle: ingress → runtime → delivery</text>
+  <rect x="35" y="140" width="170" height="110" class="box" fill="#dbeafe"/><text x="120" y="185" class="label">Ingress</text><text x="120" y="215" class="small">channel / WS / cron</text>
+  <rect x="245" y="140" width="170" height="110" class="box" fill="#fef3c7"/><text x="330" y="185" class="label">Admission</text><text x="330" y="215" class="small">auth / role / scope</text>
+  <rect x="455" y="140" width="170" height="110" class="box" fill="#dcfce7"/><text x="540" y="185" class="label">Routing</text><text x="540" y="215" class="small">session / agent</text>
+  <rect x="665" y="140" width="170" height="110" class="box" fill="#ede9fe"/><text x="750" y="185" class="label">Prompt</text><text x="750" y="215" class="small">bootstrap / tools / memory</text>
+  <rect x="875" y="140" width="170" height="110" class="box" fill="#fee2e2"/><text x="960" y="185" class="label">Pi Loop</text><text x="960" y="215" class="small">model ↔ tools</text>
+  <rect x="1085" y="140" width="170" height="110" class="box" fill="#e0f2fe"/><text x="1170" y="185" class="label">Events</text><text x="1170" y="215" class="small">assistant / tool / lifecycle</text>
+  <rect x="1295" y="140" width="80" height="110" class="box" fill="#fce7f3"/><text x="1335" y="185" class="label" font-size="17">Reply</text><text x="1335" y="215" class="small">client</text>
+  <path d="M205 195 L245 195" class="line"/><path d="M415 195 L455 195" class="line"/><path d="M625 195 L665 195" class="line"/><path d="M835 195 L875 195" class="line"/><path d="M1045 195 L1085 195" class="line"/><path d="M1255 195 L1295 195" class="line"/>
+  <rect x="310" y="370" width="780" height="110" class="box" fill="#fff"/>
+  <text x="700" y="410" class="label">Example</text><text x="700" y="440" class="small">read(todo.md) → ToolResultMessage → summary AssistantMessage(stopReason=stop)</text>
+  <path d="M960 250 C960 315 700 315 700 370" class="line"/>
+  <path d="M700 480 C700 535 1170 535 1170 250" class="line"/>
+  <text x="700" y="565" class="small">The result message returns to the model; the event bridge returns status to people and clients.</text>
+</svg>

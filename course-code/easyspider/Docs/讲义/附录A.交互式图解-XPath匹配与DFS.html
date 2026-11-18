@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>交互讲义 · XPath 同类匹配与 DFS 遍历可视化</title>
+<style>
+  :root{
+    --bg:#ffffff; --bg2:#f7f8fa; --bd:#e3e6ea; --tx:#1f2328;
+    --tx2:#5b6472; --green:#2f9e44; --green-l:#e9f7ec;
+    --blue:#2b6cb0; --blue-l:#e8f1fb;
+    --amber:#b7791f; --amber-l:#fdf6e3;
+    --purple:#6b46c1; --purple-l:#f0eafc;
+    --red:#c53030; --red-l:#fdeaea;
+    --mono:"Consolas","Monaco","Courier New",monospace;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg2);color:var(--tx);
+    font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
+    font-size:14px;line-height:1.7;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 80px}
+  h1{font-size:24px;font-weight:600;margin:0 0 6px;color:#111}
+  .sub{color:var(--tx2);font-size:14px;margin:0 0 28px}
+  .card{
+    background:var(--bg);border:1px solid var(--bd);border-radius:10px;
+    padding:20px 22px;margin-bottom:22px;
+  }
+  .card h2{
+    font-size:17px;font-weight:600;margin:0 0 4px;color:#111;
+    display:flex;align-items:center;gap:8px;
+  }
+  .card h2 .no{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:24px;height:24px;border-radius:6px;background:var(--green);
+    color:#fff;font-size:13px;font-weight:600;flex:0 0 auto;
+  }
+  .card .desc{color:var(--tx2);font-size:13.5px;margin:0 0 16px}
+  code,pre{font-family:var(--mono)}
+  pre{
+    background:#1e232b;color:#d6e2ee;padding:14px 16px;border-radius:8px;
+    overflow-x:auto;font-size:13px;line-height:1.6;margin:12px 0;
+  }
+  code.inl{
+    background:var(--bg2);border:1px solid var(--bd);border-radius:4px;
+    padding:1px 5px;font-size:12.5px;color:#b1306f;
+  }
+  .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+  button{
+    font-family:inherit;font-size:13.5px;padding:7px 14px;border-radius:7px;
+    border:1px solid var(--bd);background:#fff;color:var(--tx);cursor:pointer;
+    transition:.15s;
+  }
+  button:hover{border-color:var(--green);color:var(--green)}
+  button.primary{background:var(--green);border-color:var(--green);color:#fff}
+  button.primary:hover{background:#268a38;color:#fff}
+  .stage{
+    background:var(--bg2);border:1px dashed var(--bd);border-radius:8px;
+    padding:16px;min-height:70px;
+  }
+  .tree{
+    background:var(--bg);border:1px solid var(--bd);border-radius:8px;
+    padding:14px 10px;font-family:var(--mono);font-size:13px;line-height:2;
+  }
+  .tree div{padding-left:0}
+  .tree .lv1{padding-left:22px}
+  .tree .lv2{padding-left:44px}
+  .tree .lv3{padding-left:66px}
+  .tag{
+    display:inline-block;padding:1px 7px;border-radius:4px;
+    border:1px solid transparent;transition:.2s;
+  }
+  .tag.hi{background:var(--green-l);border-color:var(--green);color:var(--green);font-weight:600}
+  .tag.ready{background:var(--amber-l);border-color:var(--amber);color:var(--amber)}
+  .tag.dim{opacity:.35}
+  .tag.cur{background:var(--blue-l);border-color:var(--blue);color:var(--blue);font-weight:600}
+  .tag.vis{background:var(--purple-l);border-color:var(--purple);color:var(--purple)}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.cols{grid-template-columns:1fr}}
+  .panel{background:var(--bg2);border-radius:8px;padding:14px 16px}
+  .panel h3{font-size:14px;margin:0 0 8px;color:#111;font-weight:600}
+  .kv{font-family:var(--mono);font-size:12.5px;color:var(--tx2);line-height:1.9}
+  .kv b{color:var(--tx)}
+  .log{
+    margin-top:12px;background:#fff;border:1px solid var(--bd);border-radius:8px;
+    padding:10px 14px;height:170px;overflow-y:auto;font-family:var(--mono);
+    font-size:12.5px;line-height:1.8;
+  }
+  .log .ok{color:var(--green)}
+  .log .no{color:var(--red)}
+  .log .info{color:var(--blue)}
+  .step-list{counter-reset:s;list-style:none;padding:0;margin:0}
+  .step-list li{
+    position:relative;padding:8px 0 8px 34px;border-bottom:1px dashed var(--bd);
+    font-size:13.5px;
+  }
+  .step-list li:last-child{border-bottom:0}
+  .step-list li::before{
+    counter-increment:s;content:counter(s);
+    position:absolute;left:0;top:8px;width:22px;height:22px;
+    border-radius:50%;background:var(--green-l);color:var(--green);
+    font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;
+  }
+  .path-list{font-family:var(--mono);font-size:12.5px;line-height:2}
+  .path-list div{padding:3px 8px;border-radius:5px;transition:.2s}
+  .path-list div.on{background:var(--green-l);color:var(--green);font-weight:600}
+  .path-list div.try{background:var(--amber-l);color:var(--amber)}
+  .path-list div.fail{background:var(--red-l);color:var(--red)}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}
+  th,td{border:1px solid var(--bd);padding:7px 10px;text-align:left}
+  th{background:var(--bg2);font-weight:600}
+  .note{
+    border-left:3px solid var(--green);background:var(--green-l);
+    padding:10px 14px;border-radius:0 6px 6px 0;margin:12px 0;font-size:13.5px;
+  }
+  .note.warn{border-color:var(--amber);background:var(--amber-l)}
+  .foot{text-align:center;color:var(--tx2);font-size:12.5px;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>交互讲义 · XPath 同类匹配与 DFS 遍历可视化</h1>
+  <p class="sub">配合《13. 同类元素自动匹配算法》与《16. 深度优先与广度优先》食用。点按钮看算法一步步怎么走。</p>
+
+  <!-- ===== 模块 1：同类匹配 ===== -->
+  <div class="card">
+    <h2><span class="no">1</span>自动匹配同类元素（findRelated）</h2>
+    <p class="desc">
+      你点了一个商品标题，它的绝对 XPath 是
+      <code class="inl">/html/body/div/div[2]/ul/li[3]/a[1]</code>。
+      算法从右往左，逐层把索引去掉试试，看匹配数会不会变多。
+    </p>
+
+    <div class="bar">
+      <button class="primary" id="btn-run">▶ 开始逐层试探</button>
+      <button id="btn-reset">重置</button>
+      <span style="color:var(--tx2);font-size:13px">当前试探层：<b id="cur-layer">—</b></span>
+    </div>
+
+    <div class="cols">
+      <div class="panel">
+        <h3>页面结构</h3>
+        <div class="tree" id="dom-tree">
+          <div><span class="tag" data-n="html">html</span></div>
+          <div class="lv1"><span class="tag" data-n="body">body</span></div>
+          <div class="lv2"><span class="tag" data-n="div1">div</span></div>
+          <div class="lv3"><span class="tag" data-n="div2">div[2]</span></div>
+          <div class="lv3" style="padding-left:88px"><span class="tag" data-n="ul">ul</span></div>
+          <div style="padding-left:110px"><span class="tag" data-n="li1">li[1]</span> <span class="tag" data-n="a1">a[1]</span></div>
+          <div style="padding-left:110px"><span class="tag" data-n="li2">li[2]</span> <span class="tag" data-n="a2">a[1]</span></div>
+          <div style="padding-left:110px"><span class="tag" data-n="li3">li[3]</span> <span class="tag" data-n="a3">a[1]</span> <span style="color:var(--green);font-size:12px">← 你点的</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>试探的 XPath</h3>
+        <div class="path-list" id="path-list"></div>
+      </div>
+    </div>
+
+    <div class="log" id="log1"><span class="info">点击「开始逐层试探」查看算法过程…</span></div>
+
+    <div class="note">
+      <b>关键点</b>：判断是否找到同类的办法很省事——
+      对一个 XPath 调两次 <code class="inl">iterateNext()</code>，
+      能取到第 2 个就说明存在多个匹配。
+    </div>
+  </div>
+
+  <!-- ===== 模块 2：DFS ===== -->
+  <div class="card">
+    <h2><span class="no">2</span>深度优先遍历（DFS，选中子元素用）</h2>
+    <p class="desc">
+      「选中子元素」用 DFS 遍历每个卡片的全部后代。
+      用栈实现时，子节点必须<b>逆序入栈</b>，才能保证从左到右的访问顺序。
+    </p>
+
+    <div class="bar">
+      <button class="primary" id="btn-dfs">▶ 单步执行</button>
+      <button id="btn-dfs-all">⏩ 一次跑完</button>
+      <button id="btn-dfs-reset">重置</button>
+    </div>
+
+    <div class="cols">
+      <div class="panel">
+        <h3>DOM 树（绿色=已访问）</h3>
+        <div class="tree" id="dfs-tree">
+          <div><span class="tag" data-d="body">body</span></div>
+          <div class="lv1"><span class="tag" data-d="div">div.product</span></div>
+          <div class="lv2"><span class="tag" data-d="a">a</span></div>
+          <div class="lv3"><span class="tag" data-d="img">img</span></div>
+          <div class="lv2"><span class="tag" data-d="title">div.title</span> <span style="color:var(--tx2);font-size:12px">"Java编程思想"</span></div>
+          <div class="lv2"><span class="tag" data-d="price">div.price</span> <span style="color:var(--tx2);font-size:12px">"￥99"</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>栈状态（栈顶在右）</h3>
+        <div id="stack-view" style="font-family:var(--mono);font-size:12.5px;min-height:60px;color:var(--tx2)">[ ]</div>
+        <h3 style="margin-top:14px">访问顺序</h3>
+        <div id="visit-order" style="font-family:var(--mono);font-size:12.5px;color:var(--tx2)">—</div>
+      </div>
+    </div>
+
+    <div class="log" id="log2"><span class="info">点击「单步执行」跟踪栈的变化…</span></div>
+
+    <div class="note warn">
+      <b>易错点</b>：写 DFS 时如果正序入栈
+      （<code class="inl">for(i=0;i&lt;n;i++) stack.push(child)</code>），
+      出栈顺序会变成<b>从右到左</b>，因为栈是后进先出。
+    </div>
+  </div>
+
+  <!-- ===== 模块 3：两种匹配对比 ===== -->
+  <div class="card">
+    <h2><span class="no">3</span>自动匹配 vs 手动匹配</h2>
+    <p class="desc">两条互补的路径：自动负责快，手动负责准。</p>
+    <table>
+      <tr><th>维度</th><th>自动（findRelated）</th><th>手动（relatedTest）</th></tr>
+      <tr><td>输入</td><td>1 个元素</td><td>≥2 个元素</td></tr>
+      <tr><td>方法</td><td>逐层去索引试探</td><td>找各层"全一致"的索引</td></tr>
+      <tr><td>返回码</td><td>直接进 readyList</td><td>50（同类）/ 100（不同类）</td></tr>
+      <tr><td>产出</td><td>待选集合</td><td>最简 XPath（相对）</td></tr>
+      <tr><td>用途</td><td>快速猜测同类</td><td>校正遗漏、处理复杂结构</td></tr>
+    </table>
+
+    <h3 style="font-size:14px;margin:18px 0 8px">手动匹配：逐层索引比较</h3>
+    <div style="font-family:var(--mono);font-size:12.5px;line-height:2">
+      <div>A: /html/body/div/<span style="color:var(--amber)">div[2]</span>/ul/li[<span style="color:var(--red)">1</span>]/a[1]</div>
+      <div>B: /html/body/div/<span style="color:var(--amber)">div[2]</span>/ul/li[<span style="color:var(--red)">2</span>]/a[1]</div>
+      <div>C: /html/body/div/<span style="color:var(--amber)">div[2]</span>/ul/li[<span style="color:var(--red)">3</span>]/a[1]</div>
+      <div style="margin-top:8px">→ div[2] 三层全同，<b style="color:var(--green)">保留 2</b></div>
+      <div>→ li 三层不同，<b style="color:var(--red)">置 -1（去掉）</b></div>
+      <div>→ 最终：/html/body/div/div[2]/ul/li/a[1]</div>
+    </div>
+  </div>
+
+  <!-- ===== 模块 4：速查 ===== -->
+  <div class="card">
+    <h2><span class="no">4</span>算法要点速查</h2>
+    <ol class="step-list">
+      <li>拆 XPath 成「标签序列 + 索引序列」，如 <code class="inl">["html","body","div"]</code> 与 <code class="inl">[-1,-1,2]</code>。</li>
+      <li>自动匹配：从右往左，每次把一层的索引置 <code class="inl">-1</code>，重新 evaluate。</li>
+      <li>用两次 <code class="inl">iterateNext()</code> 判断匹配是否 ≥2。</li>
+      <li>手动匹配：标签序列不一致 → 返回 100；否则逐层比索引，全同保留、有异置 -1。</li>
+      <li>DFS 用栈：<code class="inl">pop()</code> 出栈，子节点<b>逆序</b>压栈。</li>
+      <li>BFS 用队列：<code class="inl">shift()</code> 出队，子节点正序入队。</li>
+      <li>求共有子元素用 <code class="inl">Set</code> 求交，复杂度 O(m×n)。</li>
+    </ol>
+  </div>
+
+  <p class="foot">EasySpider 源码讲义 · 交互附录 · 对照 <code class="inl">Extension/manifest_v3/src/content-scripts/global.js</code> 阅读</p>
+
+  <div class="foot" style="border-top:1px dashed var(--bd);padding-top:14px">
+    ⬅️ 相关讲义：<a style="color:var(--green)" href="06.同类元素自动匹配.md">06. 同类元素自动匹配</a>
+    　｜　<a style="color:var(--green)" href="09.DFS与BFS.md">09. 深度优先与广度优先</a>
+    　｜　🏠 <a style="color:var(--green)" href="README.md">返回目录</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  function $(id){return document.getElementById(id);}
+
+  /* ---------- 模块 1：findRelated ---------- */
+  var layers = [
+    {name:"html",  idx:null},
+    {name:"body",  idx:null},
+    {name:"div",   idx:null},
+    {name:"div",   idx:2},
+    {name:"ul",    idx:null},
+    {name:"li",    idx:3},
+    {name:"a",     idx:1}
+  ];
+  var tries = [
+    {layer:"a[1] 的索引 1", path:"/html/body/div/div[2]/ul/li[3]/a",
+     hit:3, ok:true,  why:"去掉 a 的索引后匹配到 3 个 a"},
+    {layer:"li[3] 的索引 3", path:"/html/body/div/div[2]/ul/li/a[1]",
+     hit:0, ok:false, why:"XPath 语义变化，未匹配到（需配合前缀才成立）"},
+    {layer:"div[2] 的索引 2", path:"/html/body/div/div/ul/li[3]/a[1]",
+     hit:0, ok:false, why:"当前结构下未匹配"}
+  ];
+
+  function buildFull(idx){
+    var s="/";
+    for(var i=0;i<layers.length;i++){
+      s += layers[i].name;
+      if(i===idx && layers[i].idx!==null){ s += ""; }         // 去掉该层索引
+      else if(layers[i].idx!==null){ s += "["+layers[i].idx+"]"; }
+      s += (i<layers.length-1?"/":"");
+    }
+    return s;
+  }
+
+  function log(el, msg, cls){
+    var d=document.createElement("div");
+    d.className = cls||"";
+    d.innerHTML = msg;
+    el.appendChild(d);
+    el.scrollTop = el.scrollHeight;
+  }
+
+  function highlight(which){
+    var tags = document.querySelectorAll("#dom-tree .tag");
+    tags.forEach(function(t){
+      t.classList.remove("hi","ready");
+      var n=t.getAttribute("data-n");
+      if(which==="a1"||which==="a2"||which==="a3"){ t.classList.add("ready"); }
+    });
+    if(which==="all"){
+      ["a1","a2","a3"].forEach(function(n){
+        var el=document.querySelector('#dom-tree .tag[data-n="'+n+'"]');
+        if(el) el.classList.add("hi");
+      });
+      var li=[1,2,3].forEach(function(i){
+        var el=document.querySelector('#dom-tree .tag[data-n="li'+i+'"]');
+        if(el){ el.classList.remove("ready"); el.classList.add("hi"); }
+      });
+    }
+  }
+
+  function initPaths(){
+    var pl=$("path-list"); pl.innerHTML="";
+    layers.forEach(function(l,i){
+      var d=document.createElement("div");
+      d.setAttribute("data-i", i);
+      var idxTxt = l.idx===null ? "（无索引）" : "["+l.idx+"]";
+      d.innerHTML = "第"+(i+1)+"层 &nbsp;"+l.name+idxTxt;
+      pl.appendChild(d);
+    });
+  }
+
+  var stepI=0;
+  function runOne(){
+    var pl=$("path-list");
+    if(stepI>0){ pl.children[stepI-1].classList.remove("try"); }
+    if(stepI>=tries.length){
+      log($("log1"), "✅ 已在第 1 次试探就命中，算法提前 break。", "ok");
+      return;
+    }
+    var t=tries[stepI];
+    $("cur-layer").textContent = t.layer;
+    var row=pl.children[stepI];
+    if(row) row.classList.add("try");
+
+    log($("log1"), "尝试去掉 "+t.layer+" → <code>"+t.path+"</code>");
+    if(t.ok){
+      log($("log1"), "&nbsp;&nbsp;→ 匹配到 "+t.hit+" 个元素 <b class='ok'>✅ 存在同类，停止试探</b>", "ok");
+      highlight("all");
+      $("cur-layer").textContent = t.layer + "（命中，结束）";
+    }else{
+      log($("log1"), "&nbsp;&nbsp;→ 匹配 0 个，继续往左试", "no");
+      if(row) row.classList.replace("try","fail");
+    }
+    stepI++;
+  }
+
+  $("btn-run").onclick=function(){
+    if(stepI===0){ initPaths(); }
+    runOne();
+  };
+  $("btn-reset").onclick=function(){
+    stepI=0; $("cur-layer").textContent="—";
+    $("log1").innerHTML='<span class="info">点击「开始逐层试探」查看算法过程…</span>';
+    highlight("");
+    initPaths();
+  };
+
+  /* ---------- 模块 2：DFS ---------- */
+  var dfsNodes = {
+    body:{kids:["div"]},
+    div:{kids:["a","title","price"]},
+    a:{kids:["img"]},
+    img:{kids:[]},
+    title:{kids:[]},
+    price:{kids:[]}
+  };
+  var stack=["body"], visited=[], dfsDone=false, dfsStarted=false;
+
+  function label(k){
+    var m={body:"body",div:"div.product",a:"a",img:"img",title:"div.title",price:"div.price"};
+    return m[k]||k;
+  }
+
+  function renderStack(){
+    var v = stack.map(function(k){return "<span style='display:inline-block;padding:2px 8px;margin:2px;border:1px solid var(--bd);border-radius:5px;background:#fff'>"+label(k)+"</span>";});
+    $("stack-view").innerHTML = v.length? ("(栈底) "+v.join("")+" (栈顶)") : "[ 空 ]";
+  }
+  function renderVisit(){
+    $("visit-order").innerHTML = visited.length?
+      visited.map(function(k){return "<span style='display:inline-block;padding:2px 8px;margin:2px;border:1px solid var(--purple);border-radius:5px;background:var(--purple-l);color:var(--purple)'>"+label(k)+"</span>";}).join("")
+      : "—";
+  }
+
+  function dfsStep(){
+    if(dfsDone){ return; }
+    if(stack.length===0){ dfsDone=true; log($("log2"),"✅ 栈空，遍历结束。", "ok"); return; }
+    var nd = stack.pop();
+    visited.push(nd);
+    var cur=document.querySelector('#dfs-tree .tag[data-d="'+nd+'"]');
+    var tags=document.querySelectorAll("#dfs-tree .tag");
+    tags.forEach(function(t){t.classList.remove("cur");});
+    if(cur){ cur.classList.add("vis"); cur.classList.add("cur"); }
+
+    var kids = dfsNodes[nd].kids;
+    log($("log2"), "pop <b>"+label(nd)+"</b> → 访问；压入子节点（<b>逆序</b>）："+
+        (kids.length? kids.slice().reverse().map(label).join(", ") : "无"));
+
+    for(var i=kids.length-1;i>=0;i--){ stack.push(kids[i]); }
+    renderStack(); renderVisit();
+    if(stack.length===0){ dfsDone=true; log($("log2"),"✅ 栈空，遍历结束。", "ok"); }
+  }
+
+  $("btn-dfs").onclick=function(){
+    if(!dfsStarted){ dfsStarted=true; renderStack(); log($("log2"),"初始：<b>stack=[body]</b>", "info"); }
+    dfsStep();
+  };
+  $("btn-dfs-all").onclick=function(){
+    if(!dfsStarted){ dfsStarted=true; renderStack(); }
+    var guard=0;
+    while(!dfsDone && guard++<50){ dfsStep(); }
+  };
+  $("btn-dfs-reset").onclick=function(){
+    stack=["body"]; visited=[]; dfsDone=false; dfsStarted=false;
+    document.querySelectorAll("#dfs-tree .tag").forEach(function(t){t.classList.remove("vis","cur");});
+    $("stack-view").textContent="[ ]"; $("visit-order").textContent="—";
+    $("log2").innerHTML='<span class="info">点击「单步执行」跟踪栈的变化…</span>';
+  };
+
+  initPaths();
+})();
+</script>
+</body>
+</html>

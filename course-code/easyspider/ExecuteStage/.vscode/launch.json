@@ -1,0 +1,21 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "configurations": [
+        {
+            "name": "Python: EasySpider",
+            "type": "python",
+            "request": "launch",
+            "program": "easyspider_executestage.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            //  "args": ["--ids", "[7]", "--read_type", "remote", "--headless", "0"]
+            // "args": ["--ids", "[9]", "--read_type", "remote", "--headless", "0", "--saved_file_name", "YOUTUBE"]
+            "args": ["--ids", "[1]", "--headless", "0", "--user_data", "0", "--keyboard", "0",
+        "--read_type", "remote", 
+    ]
+            // "args": "--ids '[97]' --user_data 1 --server_address http://localhost:8074 --config_folder '/Users/naibo/Documents/EasySpider/ElectronJS/' --headless 0 --read_type remote --config_file_name config.json --saved_file_name"
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <title>Pi three layers and Agent Loop</title>
+  <defs>
+    <marker id="arrow-pi" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,3 L0,6 z" fill="#334155"/>
+    </marker>
+    <style>
+      .box { stroke: #334155; stroke-width: 2; rx: 12; }
+      .label { font: 600 22px -apple-system, BlinkMacSystemFont, sans-serif; fill: #0f172a; text-anchor: middle; }
+      .small { font: 16px -apple-system, BlinkMacSystemFont, sans-serif; fill: #334155; text-anchor: middle; }
+      .line { stroke: #334155; stroke-width: 3; fill: none; marker-end: url(#arrow-pi); }
+    </style>
+  </defs>
+  <rect width="1200" height="720" fill="#f8fafc"/>
+  <text x="600" y="48" class="label" font-size="28">Pi layers and the Agent Loop</text>
+  <rect x="70" y="105" width="360" height="120" class="box" fill="#dbeafe"/>
+  <text x="250" y="150" class="label">pi-ai</text><text x="250" y="180" class="small">Model · Message · Context · API registry</text><text x="250" y="202" class="small">streamSimple → standardized events</text>
+  <rect x="70" y="285" width="360" height="120" class="box" fill="#dcfce7"/>
+  <text x="250" y="330" class="label">pi-agent-core</text><text x="250" y="360" class="small">Agent state · Loop · AgentTool</text><text x="250" y="382" class="small">lifecycle events · result messages</text>
+  <rect x="70" y="465" width="360" height="120" class="box" fill="#fef3c7"/>
+  <text x="250" y="510" class="label">pi-coding-agent</text><text x="250" y="540" class="small">AgentSession · SessionManager</text><text x="250" y="562" class="small">workspace resources · coding tools</text>
+  <path d="M250 225 L250 285" class="line"/><path d="M250 405 L250 465" class="line"/>
+  <rect x="590" y="105" width="470" height="120" class="box" fill="#ede9fe"/>
+  <text x="825" y="150" class="label">1. stream assistant</text><text x="825" y="180" class="small">transformContext → convertToLlm</text><text x="825" y="202" class="small">streamFn / streamSimple</text>
+  <rect x="590" y="285" width="470" height="120" class="box" fill="#fee2e2"/>
+  <text x="825" y="330" class="label">2. execute tools</text><text x="825" y="360" class="small">prepare → validate → before → execute</text><text x="825" y="382" class="small">after → ToolResultMessage</text>
+  <rect x="590" y="465" width="470" height="120" class="box" fill="#e0f2fe"/>
+  <text x="825" y="510" class="label">3. continue or stop</text><text x="825" y="540" class="small">stopReason · terminate · steering</text><text x="825" y="562" class="small">follow-up → next turn / agent_end</text>
+  <path d="M825 225 L825 285" class="line"/><path d="M825 405 L825 465" class="line"/><path d="M590 525 C500 525 500 165 590 165" class="line"/>
+  <text x="825" y="660" class="small">pi-tui is a parallel display library; it consumes events but does not own the loop.</text>
+</svg>

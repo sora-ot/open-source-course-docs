@@ -1,0 +1,1657 @@
+{
+  "snapshot_date": "2026-11-18",
+  "scope": "完整项目源码快照；保留课堂工作区的额外注释，排除已安装依赖、缓存和应用构建输出",
+  "excluded_directory_names": [
+    ".artifacts",
+    ".build",
+    ".build-local",
+    ".cache",
+    ".cxx",
+    ".git",
+    ".gradle",
+    ".history",
+    ".idea",
+    ".ipynb_checkpoints",
+    ".kotlin",
+    ".next",
+    ".npm",
+    ".nuxt",
+    ".nyc_output",
+    ".pnpm",
+    ".pnpm-store",
+    ".swiftpm",
+    ".temp_to_pub",
+    ".tmp",
+    ".turbo",
+    ".venv",
+    ".workbuddy",
+    ".yarn",
+    "ModuleCache",
+    "__pycache__",
+    "build",
+    "coverage",
+    "dist",
+    "dist-chrome",
+    "dist-firefox",
+    "dist-runtime",
+    "node_modules",
+    "out",
+    "playwright-report",
+    "test-results",
+    "venv"
+  ],
+  "excluded_suffixes": [
+    ".crx",
+    ".dll",
+    ".dylib",
+    ".exe",
+    ".map",
+    ".mp4",
+    ".pyc",
+    ".pyo",
+    ".so",
+    ".tsbuildinfo",
+    ".wasm"
+  ],
+  "preserved_resources": [
+    "构建脚本与锁文件",
+    "源代码中的 generated.ts 等源文件",
+    "测试夹具与其小型归档",
+    "必要图片、字体及随项目版本管理的静态库",
+    "Android Gradle wrapper 引导文件",
+    "项目许可证"
+  ],
+  "ignore_policy": "原项目 .gitignore 原文归档为同目录 .gitignore.upstream，避免旧规则把本次收录的源文件和测试夹具隐藏；依赖与产物统一由 course-code/.gitignore 排除",
+  "projects": [
+    {
+      "directory": "minimind",
+      "source_directory_relative_to_course_materials": "MiniMind整理版/源码对照/minimind",
+      "upstream_url": "https://github.com/jingyaogong/minimind",
+      "source_file_count": 29,
+      "total_bytes": 754066,
+      "sha256_of_sorted_paths_and_file_hashes": "c97349f678713def22a883e4b2362ba6fe5e8fc29b5f77b8729a93be6c1a6c00",
+      "renamed_ignore_files": [],
+      "excluded_files": [],
+      "supplemental_metadata": [
+        "MiniMind/minimind/LICENSE",
+        "MiniMind/minimind/requirements.txt"
+      ]
+    },
+    {
+      "directory": "pi-agent",
+      "source_directory_relative_to_course_materials": "OpenClaw/pi-master",
+      "upstream_url": "https://github.com/badlogic/pi-mono",
+      "source_file_count": 804,
+      "total_bytes": 13841662,
+      "sha256_of_sorted_paths_and_file_hashes": "c3b264b3ce71d9c07f1d1c5d20a031dfd27ca9a307f668284986acaa4675d4ec",
+      "renamed_ignore_files": [
+        {
+          "original": ".gitignore",
+          "archived_as": ".gitignore.upstream"
+        },
+        {
+          "original": ".pi/git/.gitignore",
+          "archived_as": ".pi/git/.gitignore.upstream"
+        },
+        {
+          "original": ".pi/npm/.gitignore",
+          "archived_as": ".pi/npm/.gitignore.upstream"
+        },
+        {
+          "original": "packages/coding-agent/.gitignore",
+          "archived_as": "packages/coding-agent/.gitignore.upstream"
+        },
+        {
+          "original": "packages/coding-agent/examples/extensions/custom-provider-anthropic/.gitignore",
+          "archived_as": "packages/coding-agent/examples/extensions/custom-provider-anthropic/.gitignore.upstream"
+        },
+        {
+          "original": "packages/coding-agent/examples/extensions/custom-provider-gitlab-duo/.gitignore",
+          "archived_as": "packages/coding-agent/examples/extensions/custom-provider-gitlab-duo/.gitignore.upstream"
+        },
+        {
+          "original": "packages/coding-agent/examples/extensions/custom-provider-qwen-cli/.gitignore",
+          "archived_as": "packages/coding-agent/examples/extensions/custom-provider-qwen-cli/.gitignore.upstream"
+        },
+        {
+          "original": "packages/coding-agent/examples/extensions/doom-overlay/.gitignore",
+          "archived_as": "packages/coding-agent/examples/extensions/doom-overlay/.gitignore.upstream"
+        },
+        {
+          "original": "packages/coding-agent/examples/extensions/sandbox/.gitignore",
+          "archived_as": "packages/coding-agent/examples/extensions/sandbox/.gitignore.upstream"
+        },
+        {
+          "original": "packages/coding-agent/examples/extensions/with-deps/.gitignore",
+          "archived_as": "packages/coding-agent/examples/extensions/with-deps/.gitignore.upstream"
+        },
+        {
+          "original": "packages/mom/.gitignore",
+          "archived_as": "packages/mom/.gitignore.upstream"
+        },
+        {
+          "original": "packages/web-ui/example/.gitignore",
+          "archived_as": "packages/web-ui/example/.gitignore.upstream"
+        }
+      ],
+      "excluded_files": [
+        {
+          "path": "packages/coding-agent/examples/extensions/doom-overlay/doom/build/doom.js",
+          "reason": "依赖、缓存或构建目录：build"
+        },
+        {
+          "path": "packages/coding-agent/examples/extensions/doom-overlay/doom/build/doom.wasm",
+          "reason": "依赖、缓存或构建目录：build"
+        }
+      ],
+      "upstream_base_commit": "85a9ce30241adf7ef62e7f4ad8bbfe2580a387e0",
+      "snapshot_kind": "从课堂工作区读取文件，包含尚未提交的教学注释；不是仅导出 HEAD"
+    },
+    {
+      "directory": "openclaw",
+      "source_directory_relative_to_course_materials": "OpenClaw/OpenClaw-2026.4.22",
+      "upstream_url": "https://github.com/openclaw/openclaw",
+      "source_file_count": 15015,
+      "total_bytes": 119464600,
+      "sha256_of_sorted_paths_and_file_hashes": "1acc5fd02b392c57d3fcae43cefe230b2a774c4b55433434821dd6da07be5f24",
+      "renamed_ignore_files": [
+        {
+          "original": ".gitignore",
+          "archived_as": ".gitignore.upstream"
+        },
+        {
+          "original": ".pi/git/.gitignore",
+          "archived_as": ".pi/git/.gitignore.upstream"
+        },
+        {
+          "original": "Swabble/.gitignore",
+          "archived_as": "Swabble/.gitignore.upstream"
+        },
+        {
+          "original": "apps/android/.gitignore",
+          "archived_as": "apps/android/.gitignore.upstream"
+        },
+        {
+          "original": "qa/convex-credential-broker/.gitignore",
+          "archived_as": "qa/convex-credential-broker/.gitignore.upstream"
+        },
+        {
+          "original": "vendor/a2ui/.gitignore",
+          "archived_as": "vendor/a2ui/.gitignore.upstream"
+        },
+        {
+          "original": "vendor/a2ui/renderers/lit/src/0.8/schemas/.gitignore",
+          "archived_as": "vendor/a2ui/renderers/lit/src/0.8/schemas/.gitignore.upstream"
+        },
+        {
+          "original": "vendor/a2ui/specification/0.8/eval/.gitignore",
+          "archived_as": "vendor/a2ui/specification/0.8/eval/.gitignore.upstream"
+        },
+        {
+          "original": "vendor/a2ui/specification/0.9/eval/.gitignore",
+          "archived_as": "vendor/a2ui/specification/0.9/eval/.gitignore.upstream"
+        }
+      ],
+      "excluded_files": [
+        {
+          "path": "extensions/diffs/assets/viewer-runtime.js",
+          "reason": "预打包的查看器运行时；保留 src/viewer-client.ts 与 build:viewer 脚本"
+        }
+      ],
+      "upstream_base_commit": "00bd2cf7a376f1fba26291c6c4766f1f15cbdfa5",
+      "snapshot_kind": "从课堂工作区读取文件，包含尚未提交的教学注释；不是仅导出 HEAD"
+    },
+    {
+      "directory": "easyspider",
+      "source_directory_relative_to_course_materials": "EasySpider",
+      "upstream_url": "https://github.com/NaiboWang/EasySpider",
+      "source_file_count": 346,
+      "total_bytes": 64883921,
+      "sha256_of_sorted_paths_and_file_hashes": "9ffefac370e2af6d6906bfbff2ad64dfc3f8b1768ebf286f079797c1a5cddf02",
+      "renamed_ignore_files": [
+        {
+          "original": ".gitignore",
+          "archived_as": ".gitignore.upstream"
+        },
+        {
+          "original": "ElectronJS/.gitignore",
+          "archived_as": "ElectronJS/.gitignore.upstream"
+        },
+        {
+          "original": "ExecuteStage/.gitignore",
+          "archived_as": "ExecuteStage/.gitignore.upstream"
+        },
+        {
+          "original": "Extension/manifest_v3/.gitignore",
+          "archived_as": "Extension/manifest_v3/.gitignore.upstream"
+        }
+      ],
+      "excluded_files": [
+        {
+          "path": "ElectronJS/EasySpider_en.crx",
+          "reason": "构建、缓存或非源码产物：.crx"
+        },
+        {
+          "path": "ElectronJS/EasySpider_en/assets/icon-128.png",
+          "reason": "已构建的英文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_en/assets/icon-16.png",
+          "reason": "已构建的英文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_en/assets/icon-19.png",
+          "reason": "已构建的英文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_en/assets/icon-38.png",
+          "reason": "已构建的英文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_en/background.js",
+          "reason": "已构建的英文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_en/content-scripts/global.js",
+          "reason": "已构建的英文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_en/content-scripts/import-main.js",
+          "reason": "已构建的英文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_en/content-scripts/main.js",
+          "reason": "已构建的英文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_en/content-scripts/messageInteraction.js",
+          "reason": "已构建的英文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_en/content-scripts/trial.js",
+          "reason": "已构建的英文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_en/manifest.json",
+          "reason": "已构建的英文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_en/popup.html",
+          "reason": "已构建的英文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_en/popup.js",
+          "reason": "已构建的英文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_en/style/bootstrap.min.css",
+          "reason": "已构建的英文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_en/style/toolkit.css",
+          "reason": "已构建的英文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_zh.crx",
+          "reason": "构建、缓存或非源码产物：.crx"
+        },
+        {
+          "path": "ElectronJS/EasySpider_zh/assets/icon-128.png",
+          "reason": "已构建的中文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_zh/assets/icon-16.png",
+          "reason": "已构建的中文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_zh/assets/icon-19.png",
+          "reason": "已构建的中文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_zh/assets/icon-38.png",
+          "reason": "已构建的中文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_zh/background.js",
+          "reason": "已构建的中文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_zh/content-scripts/global.js",
+          "reason": "已构建的中文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_zh/content-scripts/import-main.js",
+          "reason": "已构建的中文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_zh/content-scripts/main.js",
+          "reason": "已构建的中文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_zh/content-scripts/messageInteraction.js",
+          "reason": "已构建的中文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_zh/content-scripts/trial.js",
+          "reason": "已构建的中文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_zh/manifest.json",
+          "reason": "已构建的中文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_zh/popup.html",
+          "reason": "已构建的中文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_zh/popup.js",
+          "reason": "已构建的中文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_zh/style/bootstrap.min.css",
+          "reason": "已构建的中文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/EasySpider_zh/style/toolkit.css",
+          "reason": "已构建的中文浏览器插件；原始源码在 Extension/manifest_v3"
+        },
+        {
+          "path": "ElectronJS/src/bootstrap/css/bootstrap-grid.css.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/bootstrap/css/bootstrap-grid.min.css.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/bootstrap/css/bootstrap-reboot.css.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/bootstrap/css/bootstrap-reboot.min.css.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/bootstrap/css/bootstrap.css.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/bootstrap/css/bootstrap.min.css.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/bootstrap/js/bootstrap.bundle.js.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/bootstrap/js/bootstrap.bundle.min.js.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/bootstrap/js/bootstrap.js.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/bootstrap/js/bootstrap.min.js.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/taskGrid/bootstrap/css/bootstrap-grid.css.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/taskGrid/bootstrap/css/bootstrap-grid.min.css.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/taskGrid/bootstrap/css/bootstrap-reboot.css.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/taskGrid/bootstrap/css/bootstrap-reboot.min.css.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/taskGrid/bootstrap/css/bootstrap.css.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/taskGrid/bootstrap/css/bootstrap.min.css.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/taskGrid/bootstrap/js/bootstrap.bundle.js.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/taskGrid/bootstrap/js/bootstrap.bundle.min.js.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/taskGrid/bootstrap/js/bootstrap.js.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/src/taskGrid/bootstrap/js/bootstrap.min.js.map",
+          "reason": "构建、缓存或非源码产物：.map"
+        },
+        {
+          "path": "ElectronJS/tasks/0.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/1.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/10.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/100.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/101.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/102.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/103.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/104.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/105.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/106.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/107.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/108.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/109.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/11.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/110.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/111.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/112.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/113.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/114.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/115.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/116.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/117.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/118.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/119.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/12.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/120.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/121.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/122.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/123.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/124.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/125.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/126.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/127.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/128.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/129.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/13.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/130.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/131.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/132.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/133.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/134.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/135.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/136.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/137.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/138.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/139.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/140.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/141.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/142.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/143.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/144.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/145.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/146.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/147.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/148.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/149.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/15.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/150.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/151.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/152.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/153.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/154.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/155.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/156.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/157.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/158.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/16.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/161.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/162.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/163.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/164.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/165.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/166.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/167.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/168.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/169.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/17.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/170.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/171.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/172.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/173.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/174.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/175.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/176.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/177.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/178.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/179.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/180.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/181.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/182.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/183.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/184.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/185.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/186.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/187.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/188.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/189.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/19.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/190.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/191.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/192.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/193.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/194.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/195.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/196.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/197.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/198.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/199.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/2.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/20.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/200.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/201.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/202.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/203.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/204.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/205.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/206.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/207.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/208.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/209.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/210.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/211.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/212.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/213.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/214.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/215.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/216.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/217.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/218.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/219.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/220.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/221.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/222.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/223.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/224.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/225.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/226.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/227.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/228.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/229.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/23.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/230.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/231.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/232.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/233.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/234.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/235.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/236.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/237.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/238.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/239.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/240.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/241.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/242.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/243.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/244.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/245.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/246.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/247.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/248.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/249.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/25.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/250.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/251.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/252.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/253.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/255.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/256.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/257.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/258.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/259.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/260.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/261.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/262.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/263.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/264.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/265.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/266.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/267.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/268.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/269.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/27.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/270.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/271.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/272.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/273.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/274.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/275.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/276.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/277.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/278.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/28.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/29.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/292.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/293.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/294.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/295.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/296.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/297.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/298.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/299.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/3.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/30.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/300.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/301.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/302.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/303.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/304.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/305.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/306.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/307.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/308.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/309.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/31.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/310.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/311.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/313.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/314.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/315.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/316.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/317.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/318.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/319.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/32.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/320.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/321.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/322.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/323.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/324.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/325.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/326.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/33.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/34.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/35.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/36.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/37.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/38.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/39.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/4.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/40.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/41.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/42.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/43.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/44.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/45.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/46.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/47.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/48.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/49.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/5.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/50.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/51.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/52.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/53.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/54.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/55.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/56.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/57.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/58.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/59.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/6.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/60.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/61.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/62.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/63.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/64.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/65.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/66.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/67.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/68.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/69.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/7.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/70.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/71.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/72.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/73.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/74.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/75.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/76.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/77.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/78.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/79.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/8.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/80.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/81.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/82.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/83.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/84.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/85.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/86.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/87.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/88.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/89.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/9.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/90.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/91.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/92.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/93.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/94.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/95.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/96.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/97.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/98.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        },
+        {
+          "path": "ElectronJS/tasks/99.json",
+          "reason": "本地任务存储；保留 Examples 中的项目示例"
+        }
+      ]
+    }
+  ]
+}

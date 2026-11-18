@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <title>OpenClaw overview: gateway, routing, prompt assembly and agent runtime</title>
+  <defs>
+    <marker id="arrow-overview" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,3 L0,6 z" fill="#334155"/>
+    </marker>
+    <style>
+      .box { stroke: #334155; stroke-width: 2; rx: 12; }
+      .label { font: 600 22px -apple-system, BlinkMacSystemFont, sans-serif; fill: #0f172a; text-anchor: middle; }
+      .small { font: 16px -apple-system, BlinkMacSystemFont, sans-serif; fill: #334155; text-anchor: middle; }
+      .line { stroke: #334155; stroke-width: 3; fill: none; marker-end: url(#arrow-overview); }
+    </style>
+  </defs>
+  <rect width="1200" height="720" fill="#f8fafc"/>
+  <text x="600" y="48" class="label" font-size="28">OpenClaw architecture overview</text>
+  <rect x="45" y="100" width="220" height="95" class="box" fill="#dbeafe"/>
+  <text x="155" y="140" class="label">Channels / clients</text><text x="155" y="170" class="small">Telegram · Discord · Web · CLI</text>
+  <rect x="330" y="100" width="220" height="95" class="box" fill="#fef3c7"/>
+  <text x="440" y="140" class="label">Gateway / ingress</text><text x="440" y="170" class="small">WS admission or internal dispatch</text>
+  <rect x="615" y="100" width="220" height="95" class="box" fill="#dcfce7"/>
+  <text x="725" y="140" class="label">Routing / session</text><text x="725" y="170" class="small">agentId · sessionKey · delivery</text>
+  <rect x="900" y="100" width="220" height="95" class="box" fill="#fce7f3"/>
+  <text x="1010" y="140" class="label">Lane / lock</text><text x="1010" y="170" class="small">ordering and persistence safety</text>
+  <path d="M265 147 L330 147" class="line"/><path d="M550 147 L615 147" class="line"/><path d="M835 147 L900 147" class="line"/>
+  <rect x="170" y="300" width="260" height="105" class="box" fill="#ede9fe"/>
+  <text x="300" y="340" class="label">Prompt assembly</text><text x="300" y="370" class="small">system · history · bootstrap · skills</text><text x="300" y="392" class="small">memory · runtime · tools</text>
+  <rect x="470" y="300" width="260" height="105" class="box" fill="#fee2e2"/>
+  <text x="600" y="340" class="label">OpenClaw runner</text><text x="600" y="370" class="small">workspace · sandbox · policy</text><text x="600" y="392" class="small">harness selection · fallback</text>
+  <rect x="770" y="300" width="260" height="105" class="box" fill="#e0f2fe"/>
+  <text x="900" y="340" class="label">Pi Agent Runtime</text><text x="900" y="370" class="small">AgentSession · Agent Loop</text><text x="900" y="392" class="small">model · tools · results</text>
+  <path d="M1010 195 C1010 245 300 245 300 300" class="line"/>
+  <path d="M430 352 L470 352" class="line"/><path d="M730 352 L770 352" class="line"/>
+  <rect x="270" y="515" width="260" height="95" class="box" fill="#dcfce7"/>
+  <text x="400" y="555" class="label">Events</text><text x="400" y="584" class="small">message · tool · lifecycle</text>
+  <rect x="670" y="515" width="260" height="95" class="box" fill="#dbeafe"/>
+  <text x="800" y="555" class="label">Delivery</text><text x="800" y="584" class="small">reply dispatcher / Gateway events</text>
+  <path d="M900 405 C900 465 400 465 400 515" class="line"/><path d="M530 562 L670 562" class="line"/><path d="M800 515 C800 460 1040 460 1040 195" class="line"/>
+  <text x="600" y="675" class="small">Control plane and runtime meet at the routed, policy-bound session.</text>
+</svg>

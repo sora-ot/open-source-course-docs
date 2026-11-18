@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<title>Selenium 房源练习页</title>
+<style>
+body { font-family: sans-serif; max-width: 900px; margin: 30px auto; line-height: 1.7; }
+section { border-top: 1px solid #ccc; padding: 16px 0; }
+button,input,select { font: inherit; padding: 5px; }
+.house { padding: 8px; } .price { margin: 0 15px; }
+#hover-tip { display: none; } #hover-area:hover #hover-tip { display: inline; }
+#hover-area { display: inline-block; background: #eef; padding: 12px; }
+#captcha { font: bold 36px monospace; display: inline-block; padding: 10px; }
+iframe { width: 95%; height: 260px; } #bottom { margin-top: 700px; }
+</style>
+<h1>房源搜索</h1>
+<form id="search-form">
+  <label>地区 <input id="area" name="area" value="海淀"></label>
+  <button id="search" type="submit">搜索</button>
+</form>
+<p id="status" aria-live="polite"></p>
+<ul id="houses" data-version="0"></ul>
+<button id="next" type="button">下一页</button>
+<section>
+  <h2>下拉框与输入</h2>
+  <select id="region"><option value="hd">海淀</option><option value="cy">朝阳</option></select>
+  <input id="note" value="原有内容">
+  <label><input id="only-single" type="checkbox">只看单间（练习复选框状态）</label>
+  <p id="mixed">房源描述<span>近地铁</span></p>
+  <img id="photo" src="sample.svg" width="180" height="60" alt="房源示意图">
+  <div id="background" style="width:180px;height:60px;background-image:url(sample.svg)"></div>
+</section>
+<section>
+  <h2>等待与鼠标动作</h2>
+  <button id="load-delayed">延迟添加元素</button><div id="delayed-container"></div>
+  <button id="reveal">显示隐藏输入框</button><input id="hidden-field" style="display:none">
+  <div id="hover-area">把鼠标移到这里 <span id="hover-tip">已悬停</span></div>
+  <button id="double" ondblclick="document.querySelector('#double-result').textContent='已双击'">双击我</button>
+  <span id="double-result"></span>
+</section>
+<section>
+  <h2>弹窗、下载与截图</h2>
+  <button id="alert" onclick="alert('练习提示')">提示框</button>
+  <button id="confirm" onclick="document.querySelector('#confirm-result').textContent=confirm('继续采集？')?'已确认':'已取消'">确认框</button>
+  <span id="confirm-result"></span>
+  <button id="prompt" onclick="document.querySelector('#prompt-result').textContent=prompt('输入备注','')??'已取消'">输入弹窗</button>
+  <span id="prompt-result"></span>
+  <a id="download" href="sample.txt" download="sample.txt">下载样例文件</a>
+  <span id="captcha">1234</span>
+</section>
+<section>
+  <h2>iframe</h2><iframe id="outer-frame" src="frame.html" title="外层练习文档"></iframe>
+</section>
+<p id="bottom">页面底部</p>
+<script>
+const data = {
+  '海淀': [[{key:'A',kind:'单间',price:2500},{key:'B',kind:'整租',price:6500}], [{key:'C',kind:'单间',price:2800}]],
+  '朝阳': [[{key:'D',kind:'整租',price:7000}], [{key:'E',kind:'单间',price:3000}]]
+};
+let currentArea = '海淀', currentPage = 0, version = 0;
+function render(area, page) {
+  currentArea = area; currentPage = page;
+  document.querySelector('#status').textContent = '正在加载';
+  document.querySelector('#next').disabled = true;
+  setTimeout(() => {
+    const houses = data[area]?.[page] ?? [];
+    document.querySelector('#houses').innerHTML = houses.map(h =>
+      `<li class="house" data-key="${h.key}"><a class="detail-link" href="detail.html?id=${h.key}">${h.key}：${area} ${h.kind} ${h.price}元</a><span class="price">${h.price}</span><a class="new-tab" target="_blank" href="detail.html?id=${h.key}">新标签页打开 ${h.key}</a></li>`).join('');
+    document.querySelector('#houses').dataset.version = String(++version);
+    document.querySelector('#status').textContent = `${area} 第${page+1}页，${houses.length}条房源`;
+    document.querySelector('#next').disabled = page + 1 >= (data[area]?.length ?? 0);
+  }, 200);
+}
+document.querySelector('#search-form').addEventListener('submit', event => {
+  event.preventDefault(); render(document.querySelector('#area').value.trim(), 0);
+});
+document.querySelector('#next').onclick = () => render(currentArea, currentPage + 1);
+document.querySelector('#load-delayed').onclick = () => setTimeout(() => {
+  document.querySelector('#delayed-container').innerHTML = '<p id="loaded">加载完成</p>';
+}, 700);
+document.querySelector('#reveal').onclick = () => setTimeout(() => document.querySelector('#hidden-field').style.display='inline', 500);
+render('海淀', 0);
+</script>
+</html>
